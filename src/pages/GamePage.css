@@ -1,0 +1,62 @@
+:root {
+    --container-height: 95vh;
+}
+.container {
+    height: var(--container-height);
+    background-color: #333333;
+    overflow: hidden;
+}
+
+.splitter-layout {
+  height: var(--container-height);
+}
+
+.splitter-layout .layout-pane {
+  overflow: hidden;
+}
+
+.splitter-layout > .layout-splitter {
+  width: 7px;
+  background-color: #363636;
+}
+
+.splitter-layout .layout-splitter:hover {
+  background-color: #494949;
+}
+
+.splitter-layout.layout-changing > .layout-splitter {
+  background-color: #494949;
+}
+
+
+.gameSection {
+	width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+
+.gameSection_inner_wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.consoleSection {
+  background-color: black;
+  overflow-y:hidden;
+}
+
+.editorSection {
+  height: calc(var(--container-height));
+  overflow: hidden;
+}
+
+.left-nav-bar {
+  background-color: #333333;
+  color: white;
+  width:50vw;
+  height: var(--container-height);
+}

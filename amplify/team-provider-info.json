@@ -1,0 +1,15 @@
+{
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-robobot-prod-135139-authRole",
+            "UnauthRoleArn": "arn:aws:iam::491381585205:role/amplify-robobot-prod-135139-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::491381585205:role/amplify-robobot-prod-135139-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-robobot-prod-135139-deployment",
+            "UnauthRoleName": "amplify-robobot-prod-135139-unauthRole",
+            "StackName": "amplify-robobot-prod-135139",
+            "StackId": "arn:aws:cloudformation:us-west-2:491381585205:stack/amplify-robobot-prod-135139/3d315870-80ed-11ea-8aa7-0ad539b374b4",
+            "AmplifyAppId": "dhhhwodui5gtq"
+        }
+    }
+}

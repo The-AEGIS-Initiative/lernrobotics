@@ -30,10 +30,15 @@
                     "REDIRECTURL": "http://localhost:3000/",
                     "EMAILSUBJECT": "Robobot Email Verification",
                     "EMAILMESSAGE": "Email verification link:"
+                },
+                "robobot16ea3f1aCustomMessage": {
+                    "REDIRECTURL": "https://development.d23q600urd8oik.amplifyapp.com/",
+                    "EMAILSUBJECT": "Welcome to Robobot!",
+                    "EMAILMESSAGE": "Email confirmation link:"
                 }
             },
             "auth": {
-                "robobotb02b8088": {
+                "robobot16ea3f1a": {
                     "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"464861079861-m9v3ls890ct6js8gtd33c6sa8530bam8.apps.googleusercontent.com\",\"client_secret\":\"zmON6fKLlMDZVQEgrYywqKVw\"}]"
                 }
             }

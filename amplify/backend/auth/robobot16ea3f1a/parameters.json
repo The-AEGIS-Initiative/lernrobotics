@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "robobotb02b8088_identitypool_b02b8088",
+    "identityPoolName": "robobot16ea3f1a_identitypool_16ea3f1a",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "robobob02b8088",
-    "userPoolName": "robobotb02b8088_userpool_b02b8088",
+    "resourceNameTruncated": "robobo16ea3f1a",
+    "userPoolName": "robobot16ea3f1a_userpool_16ea3f1a",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,9 +28,9 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "robobob02b8088_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "robobo16ea3f1a_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "resourceName": "robobotb02b8088",
+    "resourceName": "robobot16ea3f1a",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -52,9 +52,9 @@
         "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://development.d23q600urd8oik.amplifyapp.com/\"],\"LogoutURLs\":[\"https://development.d23q600urd8oik.amplifyapp.com/\"]}",
     "userPoolGroupList": [],
-    "verificationBucketName": "robobotb02b8088verificationbucket",
+    "verificationBucketName": "robobot16ea3f1averificationbucket",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
@@ -62,7 +62,7 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "robobotb02b8088CustomMessage",
+            "resourceName": "robobot16ea3f1aCustomMessage",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",

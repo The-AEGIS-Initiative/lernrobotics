@@ -48,6 +48,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
+    "cypress": "cypress open",
     "docs": "jsdoc -c jsdoc.conf.json"
   },
   "eslintConfig": {
@@ -66,7 +67,10 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^4.4.0",
     "jsdoc": "^3.6.3",
-    "react-app-rewired": "^2.1.5"
+    "react-app-rewired": "^2.1.5",
+    "start-server-and-test": "^1.11.0",
+    "wait-on": "^4.0.2"
   }
 }

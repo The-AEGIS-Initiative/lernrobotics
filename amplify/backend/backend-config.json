@@ -4,16 +4,21 @@
 			"build": true,
 			"providerPlugin": "awscloudformation",
 			"service": "Lambda"
+		},
+		"robobot16ea3f1aCustomMessage": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda"
 		}
 	},
 	"auth": {
-		"robobotb02b8088": {
+		"robobot16ea3f1a": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "function",
-					"resourceName": "robobotb02b8088CustomMessage",
+					"resourceName": "robobot16ea3f1aCustomMessage",
 					"triggerProvider": "Cognito",
 					"attributes": [
 						"Arn",

@@ -1,0 +1,24 @@
+{
+    "trigger": true,
+    "modules": [
+        "verification-link"
+    ],
+    "parentResource": "robobot16ea3f1a",
+    "functionName": "robobot16ea3f1aCustomMessage",
+    "resourceName": "robobot16ea3f1aCustomMessage",
+    "parentStack": "auth",
+    "triggerEnvs": [
+        {
+            "key": "RESOURCENAME",
+            "value": "resourceName"
+        }
+    ],
+    "triggerDir": "/usr/local/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/utils/../triggers/CustomMessage",
+    "triggerTemplate": "CustomMessage.json.ejs",
+    "roleName": "robobot16ea3f1aCustomMessage",
+    "skipEdit": true,
+    "REDIRECTURL": "https://development.d23q600urd8oik.amplifyapp.com/",
+    "EMAILSUBJECT": "Welcome to Robobot!",
+    "EMAILMESSAGE": "Email confirmation link:",
+    "RESOURCENAME": "resourceName"
+}

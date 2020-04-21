@@ -19,6 +19,9 @@ definitions:
               name: Check the Quality Gate on SonarCloud
               script:
               - pipe: sonarsource/sonarcloud-quality-gate:0.1.3
+      services:
+        docker:
+          memory: 2048
 
 pipelines:             
   branches:

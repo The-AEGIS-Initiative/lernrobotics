@@ -23,24 +23,30 @@ import withAuth from './components/withAuth';
 import Amplify from 'aws-amplify'
 import config from './aws-exports'
 
-console.log(`process.env.USER_BRANCH: ${process.env.USER_BRANCH}`)
+
+// Configure Amplify Environment
+const amplify_build_env = process.env.REACT_APP_BUILD_ENV;
+
+console.log(`amplify_build_env: ${amplify_build_env}`)
 if(process.env.NODE_ENV === 'development'){
   config.oauth.redirectSignIn = 'http://localhost:3000/';
   config.oauth.redirectSignOut = 'http://localhost:3000/';
 }
 
-if(process.env.USER_BRANCH === 'dev'){
+if(amplify_build_env === 'dev'){
   config.oauth.redirectSignOut = 'https://dev.robobot.aegisinitiative.io/';
   config.oauth.redirectSignOut = 'https://dev.robobot.aegisinitiative.io/';
 }
 
-if(process.env.USER_BRANCH === 'prod'){
+if(amplify_build_env === 'prod'){
   config.oauth.redirectSignOut = 'https://robobot.aegisinitiative.io/';
   config.oauth.redirectSignOut = 'https://robobot.aegisinitiative.io/';
 }
 
 Amplify.configure(config)
 
+
+// Configure markdown latex options
 const MATHJAX_SCRIPT = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
 const MATHJAX_OPTIONS = {
   tex2jax: {
@@ -51,19 +57,10 @@ const MATHJAX_OPTIONS = {
   showMathMenuMSIE: false
 };
 
-/**
-  * WebSocket connected to node.js server
-  * https://socket.io/docs/emit-cheatsheet/
-  * @memberof module:app
-  * @example <caption>Example usage of socket</caption>
-  * () => {
-  * 	socket.emit("eventServerIsListeningTo")
-  * }
-  */
-//console.log("process.env", process.env)
+// Configure and initialize socket connection to back-end
 console.log("BACKEND_URL", process.env.REACT_APP_BACKEND_URL)
 export const socket = connectSocket(process.env.REACT_APP_BACKEND_URL);
-registerInitEvent();
+registerInitEvent(); // Get assigned container address
 
 // App component containing the entire application
 function App() {

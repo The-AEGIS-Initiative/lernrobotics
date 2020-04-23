@@ -23,6 +23,22 @@ import withAuth from './components/withAuth';
 import Amplify from 'aws-amplify'
 import config from './aws-exports'
 
+console.log(`process.env.USER_BRANCH: ${process.env.USER_BRANCH}`)
+if(process.env.NODE_ENV === 'development'){
+  config.oauth.redirectSignIn = 'http://localhost:3000/';
+  config.oauth.redirectSignOut = 'http://localhost:3000/';
+}
+
+if(process.env.USER_BRANCH === 'dev'){
+  config.oauth.redirectSignOut = 'https://dev.robobot.aegisinitiative.io/';
+  config.oauth.redirectSignOut = 'https://dev.robobot.aegisinitiative.io/';
+}
+
+if(process.env.USER_BRANCH === 'prod'){
+  config.oauth.redirectSignOut = 'https://robobot.aegisinitiative.io/';
+  config.oauth.redirectSignOut = 'https://robobot.aegisinitiative.io/';
+}
+
 Amplify.configure(config)
 
 const MATHJAX_SCRIPT = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";

@@ -34,12 +34,12 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 if(amplify_build_env === 'dev'){
-  config.oauth.redirectSignOut = 'https://dev.robobot.aegisinitiative.io/';
+  config.oauth.redirectSignIn = 'https://dev.robobot.aegisinitiative.io/';
   config.oauth.redirectSignOut = 'https://dev.robobot.aegisinitiative.io/';
 }
 
 if(amplify_build_env === 'prod'){
-  config.oauth.redirectSignOut = 'https://robobot.aegisinitiative.io/';
+  config.oauth.redirectSignIn = 'https://robobot.aegisinitiative.io/';
   config.oauth.redirectSignOut = 'https://robobot.aegisinitiative.io/';
 }
 

@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "robobot16ea3f1a_identitypool_16ea3f1a",
+    "identityPoolName": "robobotd4fad0e6_identitypool_d4fad0e6",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "robobo16ea3f1a",
-    "userPoolName": "robobot16ea3f1a_userpool_16ea3f1a",
+    "resourceNameTruncated": "robobod4fad0e6",
+    "userPoolName": "robobotd4fad0e6_userpool_d4fad0e6",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,9 +28,9 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "robobo16ea3f1a_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "robobod4fad0e6_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "resourceName": "robobot16ea3f1a",
+    "resourceName": "robobotd4fad0e6",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -46,28 +46,17 @@
     },
     "useDefault": "defaultSocial",
     "hostedUI": true,
-    "triggers": "{\"CustomMessage\":[\"verification-link\"]}",
+    "triggers": "{}",
     "hostedUIDomainName": "robobot-authentication",
     "authProvidersUserPool": [
         "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://development.d23q600urd8oik.amplifyapp.com/\"],\"LogoutURLs\":[\"https://development.d23q600urd8oik.amplifyapp.com/\"]}",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.robobot.aegisinitiative.io/\",\"https://robobot.aegisinitiative.io/\"],\"LogoutURLs\":[\"https://dev.robobot.aegisinitiative.io/\"]}",
     "userPoolGroupList": [],
-    "verificationBucketName": "robobot16ea3f1averificationbucket",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "robobot16ea3f1aCustomMessage",
-            "triggerProvider": "Cognito",
-            "attributes": [
-                "Arn",
-                "Name"
-            ]
-        }
-    ]
+    "dependsOn": []
 }

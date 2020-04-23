@@ -1,31 +1,9 @@
 {
-	"function": {
-		"robobotb02b8088CustomMessage": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda"
-		},
-		"robobot16ea3f1aCustomMessage": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda"
-		}
-	},
 	"auth": {
-		"robobot16ea3f1a": {
+		"robobotd4fad0e6": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "robobot16ea3f1aCustomMessage",
-					"triggerProvider": "Cognito",
-					"attributes": [
-						"Arn",
-						"Name"
-					]
-				}
-			]
+			"dependsOn": []
 		}
 	}
 }

@@ -52,7 +52,8 @@
     "test": "react-app-rewired test --env=jsdom",
     "test:report": "npm run test -- --coverage --watchAll=false",
     "cypress": "cypress open",
-    "docs": "jsdoc -c jsdoc.conf.json"
+    "docs": "jsdoc -c jsdoc.conf.json",
+    "lint": "eslint src/**/*.js --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -71,15 +72,22 @@
   },
   "devDependencies": {
     "cypress": "^4.4.0",
+    "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.5",
     "jsdoc": "^3.6.3",
+    "lint-staged": "^10.1.7",
+    "prettier": "2.0.5",
     "react-app-rewired": "^2.1.5",
     "start-server-and-test": "^1.11.0",
     "wait-on": "^4.0.2"
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run-script test:report"
+      "pre-push": "npm run-script test:report",
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
   }
 }

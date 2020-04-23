@@ -47,6 +47,8 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:dev": "REACT_APP_BUILD_ENV=dev react-app-rewired build",
+    "build:prod": "REACT_APP_BUILD_ENV=prod react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "cypress": "cypress open",
     "docs": "jsdoc -c jsdoc.conf.json"

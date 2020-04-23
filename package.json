@@ -76,5 +76,10 @@
     "react-app-rewired": "^2.1.5",
     "start-server-and-test": "^1.11.0",
     "wait-on": "^4.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test:report"
+    }
   }
 }

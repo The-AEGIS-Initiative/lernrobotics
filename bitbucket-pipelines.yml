@@ -5,30 +5,38 @@ clone:
 
 definitions:
       caches:
-            sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
+        sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
       steps:
-      - step: &build-test-sonarcloud
-              name: Build, test and analyze on SonarCloud
-              caches:
-              - node         
-              - sonar
-              script: # Build your project and run
-              - npm install
-              - pipe: sonarsource/sonarcloud-scan:1.0.1
-      - step: &check-quality-gate-sonarcloud
-              name: Check the Quality Gate on SonarCloud
-              script:
-              - pipe: sonarsource/sonarcloud-quality-gate:0.1.3
-      services:
-        docker:
-          memory: 2048
+        - step: &jest-test-coverage-report
+         name: Run jest tests and get coverage report
+         caches:
+          - node
+         script: 
+          - npm install
+          - pipe: npm run-script test:report
+        - step: &build-test-sonarcloud
+          name: Build, test and analyze on SonarCloud
+          caches:
+          - node         
+          - sonar
+          script: # Build your project and run
+          - pipe: sonarsource/sonarcloud-scan:1.0.1
+        - step: &check-quality-gate-sonarcloud
+          name: Check the Quality Gate on SonarCloud
+          script:
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.3
+        services:
+          docker:
+            memory: 2048
 
 pipelines:             
   branches:
     '**':
+      - step: *jest-test-coverage-report
       - step: *build-test-sonarcloud
       - step: *check-quality-gate-sonarcloud
   pull-requests:
     '**':
+      - step: *jest-test-coverage-report
       - step: *build-test-sonarcloud
       - step: *check-quality-gate-sonarcloud

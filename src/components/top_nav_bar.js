@@ -9,7 +9,6 @@ import {
   ArrowLeftOutlined
 } from '@ant-design/icons';
 
-import LoginRegisterModal from './login_register_modal'
 import { getData } from '../components/HttpController';
 import { AppContext } from '../contexts/AppContext'
 
@@ -21,7 +20,6 @@ import { Auth } from 'aws-amplify';
 function TopNavBar ({type}) {
   const [currentTab, setCurrentTab] = useState('')
   const appContext = useContext(AppContext)
-  const LoginRegisterModalRef = useRef();
 
   var lineHeight = "4vh"
   if(type == "main"){
@@ -89,7 +87,6 @@ function TopNavBar ({type}) {
         </Menu>
       </div>
 
-      <LoginRegisterModal ref={LoginRegisterModalRef} />
     </div>
   );
 }

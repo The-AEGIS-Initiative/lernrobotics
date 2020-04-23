@@ -15,10 +15,8 @@ import { stopUserCode } from './sockets/emit';
 import { UnityContent } from "react-unity-webgl";
 
 import { GamePageProvider } from './contexts/GamePageContext';
-import { AppContextProvider } from './contexts/AppContext';
 
 import loadScript from 'load-script'
-import withAuth from './components/withAuth';
 
 import Amplify from 'aws-amplify'
 import config from './aws-exports'
@@ -85,24 +83,20 @@ function App() {
   }
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <AppContextProvider>
-      	<Switch>
-          <Route exact path="/" component={HomePage} />
-      		<Route exact path="/game/:level" render={
-              (props) =>
-              <GamePageProvider>
-                <GamePage
-                  unityContent={constructUnityContent("robobot")}
-                  level={props.match.params.level}
-                  {...props}
-                />
-              </GamePageProvider>
-            }
-          />
-      	</Switch>
-      </AppContextProvider>
-    </BrowserRouter>
+  	<Switch>
+      <Route exact path="/" component={HomePage} />
+  		<Route exact path="/game/:level" render={
+          (props) =>
+          <GamePageProvider>
+            <GamePage
+              unityContent={constructUnityContent("robobot")}
+              level={props.match.params.level}
+              {...props}
+            />
+          </GamePageProvider>
+        }
+      />
+  	</Switch>
   );
 }
 

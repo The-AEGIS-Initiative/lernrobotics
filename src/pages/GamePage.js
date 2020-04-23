@@ -20,7 +20,6 @@ import { useWindowSize } from '../hooks/useWindowSize';
 
 import TopNavBar from '../components/top_nav_bar';
 import MarkdownViewer from '../components/markdown_viewer'
-import withAuth from '../components/withAuth';
 
 // Contains Unity game, code editor, and console
 function GamePage({unityContent, level}) {

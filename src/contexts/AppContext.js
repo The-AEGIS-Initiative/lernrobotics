@@ -21,15 +21,15 @@ export class AppContextProvider extends React.Component {
   }
 
   setAuth() {
-    /**Auth.currentAuthenticatedUser()
-      .then(user => {
-        console.log({ user });
-        this.setState({isAuth: true});
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({isAuth: false});
-      })*/
+    Auth.currentAuthenticatedUser()
+        .then(user => {
+          console.log({ user });
+          this.setState({isAuth: true});
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({isAuth: false});
+        })
   }
 
 

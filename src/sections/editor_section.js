@@ -50,7 +50,7 @@ function EditorSection({ level, width }) {
       // If user is not logged in
       fetchDefaultCode();
     }
-  }, [appContext.isAuth, fetchDefaultCode, level, width]); // Re-render on authentication status change
+  }, [appContext.isAuth, level, width]); // Re-render on authentication status change
 
   // Capture Ctrl+S from editor to prevent annoying pop-ups
   useEffect(() => {

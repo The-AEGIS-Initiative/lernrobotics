@@ -16,7 +16,7 @@ definitions:
                     - npm run-script test:report
                     artifacts:
                     - test-report.xml
-                    - coverage/**/*
+                    - coverage/lcov.info
 
       - step: &build-test-sonarcloud
                     name: Build, test and analyze on SonarCloud

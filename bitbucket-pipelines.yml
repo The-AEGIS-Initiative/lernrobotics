@@ -13,7 +13,7 @@ definitions:
                     - node
                     script: 
                     - npm install
-                    - pipe: npm run-script test:report
+                    - npm run-script test:report
                     artifacts:
                     - coverage/**
 

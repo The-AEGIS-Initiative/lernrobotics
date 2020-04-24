@@ -15,7 +15,7 @@ definitions:
                     - npm install
                     - npm run-script test:report
                     artifacts:
-                    - coverage/**
+                    - test-report.xml
 
       - step: &build-test-sonarcloud
                     name: Build, test and analyze on SonarCloud

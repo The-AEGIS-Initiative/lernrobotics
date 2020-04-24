@@ -74,6 +74,7 @@
     "cypress": "^4.4.0",
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.5",
+    "jest-sonar-reporter": "^2.0.0",
     "jsdoc": "^3.6.3",
     "lint-staged": "^10.1.7",
     "prettier": "2.0.5",
@@ -89,5 +90,8 @@
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
+  },
+  "jest": {
+    "testResultsProcessor": "jest-sonar-reporter"
   }
 }

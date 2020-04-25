@@ -58,5 +58,5 @@
     },
     "permissions": [],
     "dependsOn": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://development-robobot.aegisinitiative.io/\",\"https://robobot.aegisinitiative.io/\"],\"LogoutURLs\":[\"https://development-robobot.aegisinitiative.io/\",\"https://robobot.aegisinitiative.io/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://development-robobot.aegisinitiative.io/\",\"https://robobot.aegisinitiative.io/\",\"http://localhost:3000/\"],\"LogoutURLs\":[\"https://development-robobot.aegisinitiative.io/\",\"https://robobot.aegisinitiative.io/\",\"http://localhost:3000/\"]}"
 }

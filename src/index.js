@@ -11,24 +11,27 @@ import config from "./aws-exports";
 
 // Configure Amplify Environment
 const amplify_build_env = process.env.REACT_APP_BUILD_ENV;
+var configUpdate = config;
 
 console.log(`amplify_build_env: ${amplify_build_env}`);
 if (process.env.NODE_ENV === "development") {
-  config.oauth.redirectSignIn = "http://localhost:3000/";
-  config.oauth.redirectSignOut = "http://localhost:3000/";
+  configUpdate.oauth.redirectSignIn = "http://localhost:3000/";
+  configUpdate.oauth.redirectSignOut = "http://localhost:3000/";
 }
 
 if (amplify_build_env === "dev") {
-  config.oauth.redirectSignIn = "https://dev.robobot.aegisinitiative.io/";
-  config.oauth.redirectSignOut = "https://dev.robobot.aegisinitiative.io/";
+  configUpdate.oauth.redirectSignIn = "https://dev.robobot.aegisinitiative.io/";
+  configUpdate.oauth.redirectSignOut =
+    "https://dev.robobot.aegisinitiative.io/";
 }
 
 if (amplify_build_env === "prod") {
-  config.oauth.redirectSignIn = "https://robobot.aegisinitiative.io/";
-  config.oauth.redirectSignOut = "https://robobot.aegisinitiative.io/";
+  configUpdate.oauth.redirectSignIn = "https://robobot.aegisinitiative.io/";
+  configUpdate.oauth.redirectSignOut = "https://robobot.aegisinitiative.io/";
 }
 
-Amplify.configure(config);
+console.log(configUpdate);
+Amplify.configure(configUpdate);
 
 ReactDOM.render(
   <BrowserRouter basename={process.env.PUBLIC_URL}>

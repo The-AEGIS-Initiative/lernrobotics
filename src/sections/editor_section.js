@@ -33,8 +33,9 @@ function EditorSection({ level, width }) {
     console.log("editor width", width);
     if (appContext.isAuth) {
       getData(
-        `${process.env.REACT_APP_BACKEND_URL}/user/code/${level}`,
+        `${appContext.backEndURL}/user/code/${appContext.username}/${level}`,
         (res) => {
+          console.log(res);
           const jsonData = res.json().then((jsonData) => {
             if (jsonData.code == "") {
               // If user has no saved progress, use default code
@@ -83,8 +84,13 @@ function EditorSection({ level, width }) {
   // POST user code to database
   const pushUserCode = () => {
     if (appContext.isAuth) {
-      const endpoint = `${process.env.REACT_APP_BACKEND_URL}/user/code`;
-      const data = { level: level, code: content };
+      console.log(`Pushing user code to ${appContext.backEndURL}/user/code`);
+      const endpoint = `${appContext.backEndURL}/user/code`;
+      const data = {
+        username: appContext.username,
+        level: level,
+        code: content,
+      };
       postData(endpoint, data, () => {});
     }
   };
@@ -130,8 +136,8 @@ function EditorSection({ level, width }) {
             style={{ backgroundColor: "#575757", borderColor: "#575757" }}
             loading={gamePageContext.isLoading}
             onClick={() => {
-              submitUserCode(editorRef.current.editor.getValue());
               pushUserCode();
+              submitUserCode(editorRef.current.editor.getValue());
             }}
           >
             Submit

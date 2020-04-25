@@ -37,8 +37,14 @@ const MATHJAX_OPTIONS = {
 };
 
 // Configure and initialize socket connection to back-end
-console.log("BACKEND_URL", process.env.REACT_APP_BACKEND_URL);
-export const socket = connectSocket(process.env.REACT_APP_BACKEND_URL);
+if (process.env.REACT_APP_BACKEND_URL == null) {
+  var backEndURL = "http://localhost:8000";
+} else {
+  var backEndURL = process.env.REACT_APP_BACKEND_URL;
+}
+console.log("BACKEND_URL", backEndURL);
+export var socket = connectSocket(backEndURL);
+
 registerInitEvent(); // Get assigned container address
 
 // App component containing the entire application

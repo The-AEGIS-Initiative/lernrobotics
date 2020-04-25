@@ -47,9 +47,14 @@ function GamePage({ unityContent, level }) {
       gamePageContext.setLoading(false);
 
       const game_server_url = sessionStorage.getItem("gameServerUrl");
-      const subdomain = game_server_url.match(/ec2-\d*-\d*-\d*-\d*/g);
-      const port = game_server_url.match(/\d\d\d\d/g);
-      const url = `wss://${subdomain}.aegisinitiative.io:${port}/websocket`;
+      if (game_server_url.match(/.*localhost.*/g)) {
+        var url = `ws://${game_server_url}`;
+      } else {
+        var subdomain = game_server_url.match(/ec2-\d*-\d*-\d*-\d*/g);
+        var port = game_server_url.match(/\d\d\d\d/g);
+        var url = `wss://${subdomain}.aegisinitiative.io:${port}/websocket`;
+      }
+
       console.log(url);
       const dataPacket = `${url},${level}`;
 

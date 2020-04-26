@@ -3,7 +3,7 @@
 DO NOT CHANGE
 -----------------------------------------------
 """
-from game.game_api import Component
+from game.game_api import AEGISCore
 import numpy as np
 
 class Robobot(AEGISCore):

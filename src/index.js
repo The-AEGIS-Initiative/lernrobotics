@@ -20,9 +20,10 @@ if (process.env.NODE_ENV === "development") {
 }
 
 if (amplify_build_env === "dev") {
-  configUpdate.oauth.redirectSignIn = "https://dev.robobot.aegisinitiative.io/";
+  configUpdate.oauth.redirectSignIn =
+    "https://development-robobot.aegisinitiative.io/";
   configUpdate.oauth.redirectSignOut =
-    "https://dev.robobot.aegisinitiative.io/";
+    "https://development-robobot.aegisinitiative.io/";
 }
 
 if (amplify_build_env === "prod") {

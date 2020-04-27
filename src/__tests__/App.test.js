@@ -7,6 +7,16 @@ import App from "../App";
 import { AppContextProvider } from "../contexts/AppContext";
 
 describe("App routing", () => {
+  window.matchMedia =
+    window.matchMedia ||
+    function () {
+      return {
+        matches: false,
+        addListener: function () {},
+        removeListener: function () {},
+      };
+    };
+
   const history = createMemoryHistory();
   const { container, getByText, getAllByText } = render(
     <Router history={history}>

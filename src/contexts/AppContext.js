@@ -19,18 +19,37 @@ export class AppContextProvider extends React.Component {
       checkAuth: this.setAuth,
       username: "",
       backENDURL: "",
+      user: null,
+      user_group: null,
     };
   }
 
   setAuth() {
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log(user);
-        this.setState({ isAuth: true, username: user.username });
+        //console.log(user);
+        const access_token = user.signInUserSession.accessToken;
+        var user_group = "user";
+        if (access_token.payload["cognito:groups"] != null) {
+          user_group = access_token.payload["cognito:groups"][0];
+        }
+        //console.log(user_group)
+        this.setState({
+          isAuth: true,
+          username: user.username,
+          user: user,
+          user_group: user_group,
+        });
       })
       .catch((err) => {
+        console.log("User Not logged in");
         console.log(err);
-        this.setState({ isAuth: false, username: "" });
+        this.setState({
+          isAuth: false,
+          username: "",
+          user: null,
+          user_group: null,
+        });
       });
   }
 
@@ -39,11 +58,11 @@ export class AppContextProvider extends React.Component {
     Hub.listen("auth", (data) => {
       const { payload } = data;
       if (payload.event === "signIn") {
-        this.setState({ isAuth: true });
+        this.setAuth();
       }
       if (payload.event === "signOut") {
         console.log("a user has signed out!");
-        this.setState({ isAuth: false });
+        this.setAuth();
       }
     });
     this.setAuth();

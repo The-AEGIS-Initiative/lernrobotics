@@ -1,10 +1,12 @@
 /** App.js
  * @module app
  */
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 
 import GamePage from "./pages/GamePage";
 import HomePage from "./pages/HomePage";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
+import AdminPage from "./pages/AdminPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
@@ -15,6 +17,8 @@ import { stopUserCode } from "./sockets/emit";
 import { UnityContent } from "react-unity-webgl";
 
 import { GamePageProvider } from "./contexts/GamePageContext";
+import { AppContext } from "./contexts/AppContext";
+import { ProtectedRoute } from "./hooks/auth";
 
 import loadScript from "load-script";
 
@@ -49,6 +53,8 @@ registerInitEvent(); // Get assigned container address
 
 // App component containing the entire application
 function App() {
+  const appContext = useContext(AppContext);
+  console.log(appContext.user);
   //const location = useLocation();
 
   useEffect(() => {
@@ -84,6 +90,14 @@ function App() {
             />
           </GamePageProvider>
         )}
+      />
+      <Route exact path="/unauthorized" component={UnauthorizedPage} />
+      <ProtectedRoute
+        exact
+        path="/admin"
+        component={AdminPage}
+        protection_level="admin"
+        user={appContext.user}
       />
     </Switch>
   );

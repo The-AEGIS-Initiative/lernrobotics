@@ -68,7 +68,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-robobot-dev-191612-deployment",
-					"S3Key": "amplify-builds/AdminQueries68290a65-674e73526c75544b4963-build.zip"
+					"S3Key": "amplify-builds/AdminQueries68290a65-4e445632645864743167-build.zip"
 				}
 			}
 		},

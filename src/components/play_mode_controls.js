@@ -55,7 +55,7 @@ function PlayModeControls({ editor_content, level }) {
         style={{ backgroundColor: "#575757", borderColor: "#575757" }}
         loading={gamePageContext.isLoading}
         onClick={() => {
-          submitUserCode(editor_content);
+          submitUserCode(gamePageContext.editorContent);
         }}
       >
         Submit

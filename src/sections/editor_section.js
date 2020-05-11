@@ -14,15 +14,13 @@ import { submitUserCode, stopUserCode } from "../sockets/emit";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
 
-import PlayModeControls from "../components/play_mode_controls";
-
 /**
  * Component for the text editor.
  *
  * @component
  */
 
-function EditorSection({ level, width }) {
+function EditorSection({ level }) {
   // creating the Editor class
   const appContext = useContext(AppContext);
   const gamePageContext = useContext(GamePageContext);
@@ -32,7 +30,6 @@ function EditorSection({ level, width }) {
 
   useEffect(() => {
     // If user is authenticated
-    console.log("editor width", width);
     if (appContext.isAuth) {
       getData(
         `${appContext.backEndURL}/user/code/${appContext.username}/${level}`,
@@ -53,7 +50,7 @@ function EditorSection({ level, width }) {
       // If user is not logged in
       fetchDefaultCode();
     }
-  }, [appContext.isAuth, level, width]); // Re-render on authentication status change
+  }, [appContext.isAuth, level]); // Re-render on authentication status change
 
   // Capture Ctrl+S from editor to prevent annoying pop-ups
   useEffect(() => {
@@ -75,38 +72,31 @@ function EditorSection({ level, width }) {
       .then((response) => response.text())
       .then((text) => {
         setContent(text);
+        gamePageContext.setEditorContent(text);
       });
   };
 
   // Update code editor content
   const onChange = (newValue) => {
     setContent(newValue);
+    gamePageContext.setEditorContent(newValue);
   };
 
   return (
-    <div>
-      <Col style={{ width: { width } }}>
-        <Row>
-          <AceEditor
-            ref={editorRef}
-            mode="python"
-            theme="monokai"
-            onChange={onChange}
-            value={content}
-            name="UNIQUE_ID_OF_DIV"
-            editorProps={{ $blockScrolling: true }}
-            showPrintMargin={false}
-            height="91vh"
-            width={width}
-            fontSize="16px"
-            style={{ zIndex: 0 }}
-          />
-        </Row>
-        <Row type="flex" style={{ justifyContent: "flex-end" }}>
-          <PlayModeControls level={level} editor_content={content} />
-        </Row>
-      </Col>
-    </div>
+    <AceEditor
+      ref={editorRef}
+      mode="python"
+      theme="monokai"
+      onChange={onChange}
+      value={content}
+      name="UNIQUE_ID_OF_DIV"
+      editorProps={{ $blockScrolling: true }}
+      showPrintMargin={false}
+      height="91vh"
+      width="100%"
+      fontSize="16px"
+      style={{ zIndex: 0 }}
+    />
   );
 }
 

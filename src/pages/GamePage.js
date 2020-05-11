@@ -22,6 +22,7 @@ import TopNavBar from "../components/top_nav_bar";
 import MarkdownViewer from "../components/markdown_viewer";
 import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
+import PlayModeControls from "../components/play_mode_controls";
 
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
@@ -80,8 +81,14 @@ function GamePage({ unityContent, level }) {
               ></MarkdownViewer>
             </TabPane>
           </Tabs>
-
-          <EditorSection level={level} width={`100%`} />
+          <Col>
+            <Row>
+              <EditorSection level={level} />
+            </Row>
+            <Row type="flex" style={{ justifyContent: "flex-end" }}>
+              <PlayModeControls level={level} />
+            </Row>
+          </Col>
         </SplitterLayout>
       </div>
     </div>

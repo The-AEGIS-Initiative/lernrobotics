@@ -20,6 +20,7 @@ import { useWindowSize } from "../hooks/useWindowSize";
 
 import TopNavBar from "../components/top_nav_bar";
 import MarkdownViewer from "../components/markdown_viewer";
+import UnityPlayer from "../components/unity_player";
 
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
@@ -47,6 +48,7 @@ function GamePage({ unityContent, level }) {
       gamePageContext.setLoading(false);
 
       const game_server_url = sessionStorage.getItem("gameServerUrl");
+
       if (game_server_url.match(/.*localhost.*/g)) {
         var url = `ws://${game_server_url}`;
       } else {
@@ -81,15 +83,24 @@ function GamePage({ unityContent, level }) {
     ) {
       gameHeight = gameRef.current.offsetHeight;
       setGameWidth(gameRef.current.offsetWidth);
+      console.log(`gameHeight: ${gameHeight}`);
+      console.log(`windowHeight: ${windowSize.height}`);
 
       let tabsWidth = tabsRef.current.offsetWidth;
 
       let navbarHeight = navbarRef.current.offsetHeight;
 
       setConsoleHeight(windowSize.height - navbarHeight - gameHeight);
+      console.log(`consoleHeight: ${consoleHeight}`);
       setEditorWidth(windowSize.width - tabsWidth - 7);
     }
-  }, [gameRef.current, windowSize.height, windowSize.width, resizedFlag]);
+  }, [
+    gameRef.current,
+    windowSize.height,
+    windowSize.width,
+    resizedFlag,
+    gamePageContext.isLoading,
+  ]);
 
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
@@ -107,11 +118,8 @@ function GamePage({ unityContent, level }) {
               <Tabs tabPosition={"left"} style={{ color: "white" }}>
                 <TabPane tab="Game" key="1">
                   <div ref={gameRef}>
-                    <Row type="flex" className="gameSection" id="game-section">
-                      <Unity
-                        unityContent={unityContent}
-                        className="gameSection_inner_wrapper"
-                      />
+                    <Row type="flex">
+                      <UnityPlayer unityContent={unityContent} />
                     </Row>
                   </div>
                   <Row

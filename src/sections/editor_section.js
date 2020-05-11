@@ -14,6 +14,8 @@ import { submitUserCode, stopUserCode } from "../sockets/emit";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
 
+import PlayModeControls from "../components/play_mode_controls";
+
 /**
  * Component for the text editor.
  *
@@ -81,20 +83,6 @@ function EditorSection({ level, width }) {
     setContent(newValue);
   };
 
-  // POST user code to database
-  const pushUserCode = () => {
-    if (appContext.isAuth) {
-      console.log(`Pushing user code to ${appContext.backEndURL}/user/code`);
-      const endpoint = `${appContext.backEndURL}/user/code`;
-      const data = {
-        username: appContext.username,
-        level: level,
-        code: content,
-      };
-      postData(endpoint, data, () => {});
-    }
-  };
-
   return (
     <div>
       <Col style={{ width: { width } }}>
@@ -114,34 +102,8 @@ function EditorSection({ level, width }) {
             style={{ zIndex: 0 }}
           />
         </Row>
-
         <Row type="flex" style={{ justifyContent: "flex-end" }}>
-          <Button
-            type="primary"
-            style_module={styles.submit}
-            style={{
-              backgroundColor: "#575757",
-              borderColor: "#575757",
-            }}
-            loading={gamePageContext.isLoading}
-            onClick={() => {
-              stopUserCode();
-            }}
-          >
-            Stop
-          </Button>
-          <Button
-            type="primary"
-            style_module={styles.submit}
-            style={{ backgroundColor: "#575757", borderColor: "#575757" }}
-            loading={gamePageContext.isLoading}
-            onClick={() => {
-              pushUserCode();
-              submitUserCode(editorRef.current.editor.getValue());
-            }}
-          >
-            Submit
-          </Button>
+          <PlayModeControls level={level} editor_content={content} />
         </Row>
       </Col>
     </div>

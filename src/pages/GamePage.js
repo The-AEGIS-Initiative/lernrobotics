@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import { Row, Col, Tabs } from "antd";
 
@@ -28,25 +28,15 @@ function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
 
   // Refs for controlling various DOM element sizes
-  const [consoleHeight, setConsoleHeight] = useState(null);
-  const [editorWidth, setEditorWidth] = useState(null);
   const [resizedFlag, setResizedflag] = useState(false);
-  const [gameWidth, setGameWidth] = useState(null);
-  const gameRef = useRef(null);
-  const tabsRef = useRef(null);
-  const consoleRef = useRef(null);
-  const navbarRef = useRef(null);
+
   const windowSize = useWindowSize();
 
   const { TabPane } = Tabs;
 
-  var gameHeight;
-
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
-      <div ref={navbarRef}>
-        <TopNavBar type="sub" />
-      </div>
+      <TopNavBar type="sub" />
       <div type="flex" className="container">
         <SplitterLayout
           onDragEnd={() => {

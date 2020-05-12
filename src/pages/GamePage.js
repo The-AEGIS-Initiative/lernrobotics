@@ -10,7 +10,6 @@ import "react-splitter-layout/lib/index.css";
 import "./GamePage.css";
 
 import GameSection from "../sections/game_section";
-import EditorSection from "../sections/editor_section";
 import ConsoleSection from "../sections/console_section";
 
 import { GamePageContext } from "../contexts/GamePageContext";
@@ -23,6 +22,7 @@ import MarkdownViewer from "../components/markdown_viewer";
 import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
 import PlayModeControls from "../components/play_mode_controls";
+import CodeEditor from "../components/code_editor";
 
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
@@ -34,6 +34,10 @@ function GamePage({ unityContent, level }) {
   const windowSize = useWindowSize();
 
   const { TabPane } = Tabs;
+
+  const handleEditorChange = (content) => {
+    gamePageContext.setEditorContent(content);
+  };
 
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
@@ -83,10 +87,14 @@ function GamePage({ unityContent, level }) {
           </Tabs>
           <Col>
             <Row>
-              <EditorSection level={level} />
+              <CodeEditor
+                level_name={level}
+                mode="python"
+                handleChange={(content) => handleEditorChange(content)}
+              />
             </Row>
             <Row type="flex" style={{ justifyContent: "flex-end" }}>
-              <PlayModeControls level={level} />
+              <PlayModeControls level_name={level} />
             </Row>
           </Col>
         </SplitterLayout>

@@ -39,6 +39,7 @@ function ConsoleSection({ height, width }) {
         Clear
       </button>
       <div
+        className="console"
         style={{
           overflowY: "scroll",
           height: `100%`,

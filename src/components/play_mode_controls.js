@@ -14,7 +14,7 @@ import { AppContext } from "../contexts/AppContext";
  * @component
  */
 
-function PlayModeControls({ editor_content, level }) {
+function PlayModeControls({ editor_content, level_name }) {
   // creating the Editor class
   const appContext = useContext(AppContext);
   const gamePageContext = useContext(GamePageContext);
@@ -26,7 +26,7 @@ function PlayModeControls({ editor_content, level }) {
       const endpoint = `${appContext.backEndURL}/user/code`;
       const data = {
         username: appContext.username,
-        level: level,
+        level_name: level_name,
         code: editor_content,
       };
       postData(endpoint, data, () => {});

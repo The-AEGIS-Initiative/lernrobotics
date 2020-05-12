@@ -1,6 +1,6 @@
 describe("Submit user code", () => {
   it("visits the hello_world level", () => {
-    cy.visit("http://localhost:3000");
+    cy.visit(Cypress.env("baseUrl"));
     cy.get("a").eq(0).click();
   });
 
@@ -17,7 +17,7 @@ describe("Submit user code", () => {
 
     cy.contains("Submit").click();
 
-    cy.wait(20000);
+    cy.wait(15000);
     cy.get(".console").within(() => {
       cy.get("span", { timeout: 30000 }).contains("Robot Initialized", {
         timeout: 30000,

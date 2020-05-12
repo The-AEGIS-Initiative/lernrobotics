@@ -54,8 +54,8 @@
     "test:report": "npm run test -- --coverage --watchAll=false",
     "e2e:local": "cypress run --env baseUrl=http://localhost:3000/",
     "e2e:dev": "cypress run --env baseUrl=https://development-robobot.aegisinitiative.io/",
-    "cypress:local": "run-p --race start e2e:local",
-    "cypress:dev": "run-p --race start e2e:dev",
+    "cypress:local": "run-s start e2e:local",
+    "cypress:dev": "run-s --race start e2e:dev",
     "docs": "jsdoc -c jsdoc.conf.json",
     "lint": "eslint src/**/*.js --fix"
   },
@@ -89,7 +89,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run-script e2e:local",
+      "pre-push": "npm run-script cypress:local",
       "pre-commit": "lint-staged"
     }
   },

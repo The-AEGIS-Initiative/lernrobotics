@@ -6,7 +6,7 @@ export const LevelBuilderContext = createContext();
 // Contains:
 // isLoading: loading status of unity webgl client
 // setLoading: set loading status of unity webgl client
-export class levelBuilderProvider extends React.Component {
+export class LevelBuilderProvider extends React.Component {
   setTaskContent = (content) => {
     if (this.editMode === false) {
       console.log("ERROR: Mutating task content in non-edit mode!");

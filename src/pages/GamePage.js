@@ -25,7 +25,7 @@ import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 
 // Contains Unity game, code editor, and console
-function GamePage({ unityContent, level }) {
+function GamePage({ level }) {
   const gamePageContext = useContext(GamePageContext);
 
   // Refs for controlling various DOM element sizes
@@ -52,11 +52,7 @@ function GamePage({ unityContent, level }) {
             <TabPane tab="Game" key="1" style={{ width: "100%" }}>
               <HorizontalSplitLayout
                 top_section={
-                  <UnityPlayer
-                    unityContent={unityContent}
-                    level={level}
-                    style={{ width: "100%" }}
-                  />
+                  <UnityPlayer level_name={level} style={{ width: "100%" }} />
                 }
                 bottom_section={
                   <ConsoleSection style={{ backgroundColor: "black" }} />

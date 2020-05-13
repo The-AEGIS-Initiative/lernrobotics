@@ -15,10 +15,9 @@ import connectSocket from "socket.io-client";
 import { registerInitEvent } from "./sockets/events.js";
 import { stopUserCode } from "./sockets/emit";
 
-import { UnityContent } from "react-unity-webgl";
-
 import { GamePageProvider } from "./contexts/GamePageContext";
 import { AppContext } from "./contexts/AppContext";
+import { LevelBuilderProvider } from "./contexts/LevelBuilderContext";
 import { ProtectedRoute } from "./hooks/auth";
 
 import loadScript from "load-script";
@@ -68,14 +67,6 @@ function App() {
     stopUserCode();
   }, [location])*/
 
-  // Construct unityContent object based on level parameter
-  const constructUnityContent = (level) => {
-    return new UnityContent(
-      `/unity_webgl/${level}/Build/${level}.json`,
-      `/unity_webgl/${level}/Build/UnityLoader.js`
-    );
-  };
-
   return (
     <Switch>
       <Route exact path="/" component={HomePage} />
@@ -84,11 +75,7 @@ function App() {
         path="/game/:level"
         render={(props) => (
           <GamePageProvider>
-            <GamePage
-              unityContent={constructUnityContent("robobot")}
-              level={props.match.params.level}
-              {...props}
-            />
+            <GamePage level={props.match.params.level} {...props} />
           </GamePageProvider>
         )}
       />
@@ -102,8 +89,12 @@ function App() {
       />
       <ProtectedRoute
         exact
-        path="/admin/levelbuilder"
-        component={LevelBuilderPage}
+        path="/admin/levelBuilder"
+        component={(props) => (
+          <GamePageProvider>
+            <LevelBuilderPage />
+          </GamePageProvider>
+        )}
         protection_level="admin"
         user={appContext.user}
       />

@@ -1,13 +1,19 @@
 import React, { useEffect, useContext } from "react";
 import Unity from "react-unity-webgl";
 import { GamePageContext } from "../contexts/GamePageContext";
+import { UnityContent } from "react-unity-webgl";
 
-function UnityPlayer({ unityContent, level }) {
+function UnityPlayer({ level_name }) {
   const gamePageContext = useContext(GamePageContext);
+  const unityContent = new UnityContent(
+    `/unity_webgl/robobot/Build/robobot.json`,
+    `/unity_webgl/robobot/Build/UnityLoader.js`
+  );
 
   useEffect(() => {
     // When unity webgl has loaded, send assigned port
     // to unity so that unity knows which websocket to connect
+
     unityContent.on("Loaded", () => {
       gamePageContext.setLoading(false);
 
@@ -22,7 +28,7 @@ function UnityPlayer({ unityContent, level }) {
       }
 
       console.log(url);
-      const dataPacket = `${url},${level}`;
+      const dataPacket = `${url},${level_name}`;
 
       // Send url to unity webgl
       // See the following for details:
@@ -32,7 +38,11 @@ function UnityPlayer({ unityContent, level }) {
       console.log("Sent port to unity client");
       console.log("Game loaded");
     });
-  }, [gamePageContext, level, unityContent]);
+
+    unityContent.on("SaveLevelData", (jsonString) => {
+      console.log(`Level data json: ${jsonString}`);
+    });
+  }, [gamePageContext, unityContent]);
 
   return (
     <Unity

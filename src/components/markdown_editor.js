@@ -32,6 +32,10 @@ function MarkdownEditor({ level_name, handleChange }) {
       onDragEnd={() => {
         setResizedflag(!resizedFlag);
       }}
+      style={{
+        height: "100%",
+        width: "100%",
+      }}
     >
       <Col>
         <Row>
@@ -40,6 +44,7 @@ function MarkdownEditor({ level_name, handleChange }) {
             mode="markdown"
             handleChange={(e) => {
               setContent(e);
+              console.log(content);
               handleChange(e);
             }}
           />
@@ -57,4 +62,4 @@ function MarkdownEditor({ level_name, handleChange }) {
   );
 }
 
-export default CodeEditor;
+export default MarkdownEditor;

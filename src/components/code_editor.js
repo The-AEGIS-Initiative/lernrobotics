@@ -70,6 +70,7 @@ function CodeEditor({ level_name, mode, handleChange }) {
       width="100%"
       fontSize="16px"
       style={{ zIndex: 0 }}
+      className="ace-editor"
     />
   );
 }

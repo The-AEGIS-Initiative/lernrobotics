@@ -38,11 +38,11 @@ definitions:
 pipelines:             
   branches:
     '**':
-      - step: *jest-test-coverage-report
-      - step: *build-test-sonarcloud
-      - step: *check-quality-gate-sonarcloud
+      #- step: *jest-test-coverage-report
+      #- step: *build-test-sonarcloud
+      #- step: *check-quality-gate-sonarcloud
   pull-requests:
     '**':
-      - step: *jest-test-coverage-report
-      - step: *build-test-sonarcloud
-      - step: *check-quality-gate-sonarcloud
+      #- step: *jest-test-coverage-report
+      #- step: *build-test-sonarcloud
+      #- step: *check-quality-gate-sonarcloud

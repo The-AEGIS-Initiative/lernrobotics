@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import AdminPage from "./pages/AdminPage";
 import LevelBuilderPage from "./pages/LevelBuilderPage";
+import LoginPage from "./pages/LoginPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
@@ -96,12 +97,13 @@ function App({ unityContent }) {
         path="/admin/levelBuilder"
         component={(props) => (
           <GamePageProvider>
-            <LevelBuilderPage />
+            <LevelBuilderPage unityContent={unityContent} {...props} />
           </GamePageProvider>
         )}
         protection_level="admin"
         user={appContext.user}
       />
+      <Route exact path="/login-endpoint" component={LoginPage} />
     </Switch>
   );
 }

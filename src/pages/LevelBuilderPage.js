@@ -26,7 +26,7 @@ import CodeEditor from "../components/code_editor";
 import MarkdownEditor from "../components/markdown_editor";
 
 // Contains Unity game, code editor, and console
-function LevelBuilderPage() {
+function LevelBuilderPage({ unityContent }) {
   // Refs for controlling various DOM element sizes
   const [resizedFlag, setResizedflag] = useState(false);
 
@@ -56,7 +56,11 @@ function LevelBuilderPage() {
           style={{ color: "white", width: "100%", height: "100%" }}
         >
           <TabPane tab="Game" key="1">
-            <UnityPlayer level_name="level_builder" style={{ width: "100%" }} />
+            <UnityPlayer
+              unityContent={unityContent}
+              level_name="level_builder"
+              style={{ width: "100%" }}
+            />
           </TabPane>
           <TabPane tab="Prompt" key="2">
             <MarkdownEditor

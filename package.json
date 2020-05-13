@@ -89,7 +89,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run-script e2e:local",
+      "pre-push": "BROWSER=none npm start && npm run-script e2e:local",
       "pre-commit": "lint-staged"
     }
   },

@@ -24,7 +24,7 @@ function CodeEditor({ level_name, mode, handleChange }) {
 
   useEffect(() => {
     fetchDefaultCode();
-  }, [fetchDefaultCode, level_name]); // Re-render on authentication status change
+  }, [level_name]); // Re-render on authentication status change
 
   // Capture Ctrl+S from editor to prevent annoying pop-ups
   useEffect(() => {

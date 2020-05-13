@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 
 import { Row, Col, Tabs } from "antd";
 
-import Unity from "react-unity-webgl";
-
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 
@@ -25,7 +23,7 @@ import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 
 // Contains Unity game, code editor, and console
-function GamePage({ level }) {
+function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
 
   // Refs for controlling various DOM element sizes
@@ -52,7 +50,11 @@ function GamePage({ level }) {
             <TabPane tab="Game" key="1" style={{ width: "100%" }}>
               <HorizontalSplitLayout
                 top_section={
-                  <UnityPlayer level_name={level} style={{ width: "100%" }} />
+                  <UnityPlayer
+                    unityContent={unityContent}
+                    level_name={level}
+                    style={{ width: "100%" }}
+                  />
                 }
                 bottom_section={
                   <ConsoleSection style={{ backgroundColor: "black" }} />

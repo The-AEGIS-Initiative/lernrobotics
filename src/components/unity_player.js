@@ -3,12 +3,8 @@ import Unity from "react-unity-webgl";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { UnityContent } from "react-unity-webgl";
 
-function UnityPlayer({ level_name }) {
+function UnityPlayer({ unityContent, level_name }) {
   const gamePageContext = useContext(GamePageContext);
-  const unityContent = new UnityContent(
-    `/unity_webgl/robobot/Build/robobot.json`,
-    `/unity_webgl/robobot/Build/UnityLoader.js`
-  );
 
   useEffect(() => {
     // When unity webgl has loaded, send assigned port

@@ -6,6 +6,8 @@ import * as serviceWorker from "./serviceWorker";
 import { AppContextProvider } from "./contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
 
+import { UnityContent } from "react-unity-webgl";
+
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
 
@@ -34,10 +36,15 @@ if (amplify_build_env === "prod") {
 console.log(configUpdate);
 Amplify.configure(configUpdate);
 
+const unityContent = new UnityContent(
+  `/unity_webgl/robobot/Build/robobot.json`,
+  `/unity_webgl/robobot/Build/UnityLoader.js`
+);
+
 ReactDOM.render(
   <BrowserRouter basename={process.env.PUBLIC_URL}>
     <AppContextProvider>
-      <App />
+      <App unityContent={unityContent} />
     </AppContextProvider>
   </BrowserRouter>,
   document.getElementById("root")

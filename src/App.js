@@ -52,7 +52,7 @@ export var socket = connectSocket(backEndURL);
 registerInitEvent(); // Get assigned container address
 
 // App component containing the entire application
-function App() {
+function App({ unityContent }) {
   const appContext = useContext(AppContext);
   console.log(appContext.user);
   //const location = useLocation();
@@ -75,7 +75,11 @@ function App() {
         path="/game/:level"
         render={(props) => (
           <GamePageProvider>
-            <GamePage level={props.match.params.level} {...props} />
+            <GamePage
+              unityContent={unityContent}
+              level={props.match.params.level}
+              {...props}
+            />
           </GamePageProvider>
         )}
       />

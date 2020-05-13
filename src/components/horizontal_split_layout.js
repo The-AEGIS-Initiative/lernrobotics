@@ -38,7 +38,7 @@ function HorizontalSplitLayout({
       console.log(`dependentHeight: ${dependentHeight}`);
       console.log(`dependentWidth: ${dependentWidth}`);
     }
-  }, [topRef.current, botRef.current, update_flag]);
+  }, [update_flag, dependent, parent_height, dependentHeight, dependentWidth]);
 
   if (dependent === "top") {
     return (

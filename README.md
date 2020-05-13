@@ -1,88 +1,58 @@
-Repository: [https://github.com/TeachRobo/front-end](https://github.com/TeachRobo/front-end)
+Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbucket.org/theaegisinitiative/front-end/)
 
-Documentation: [https://teachrobo.github.io/front-end/](https://teachrobo.github.io/front-end/)
+# Development Usage
 
-# Usage
-## Using npm
-Update node_modules with
-#### `npm ci`
-\
-Obtain .env.development file from admin and place in project root
-\
-Start nodejs server using
-#### `npm start`
+## Step 1: Basic Git Stuff
 
-## Using Docker
-#### `docker run -p 5000:5000 kevinkqi/robobot-frontend:latest`
+- git init
+- git remote add origin \<repo-url>
+- git pull origin master
+- npm install
+- git checkout -b "<your-branch-name>"
 
+## Step 2: Install AWS CLI and Configure IAM User
 
-# Development Guidelines
-Please read this section before making any changes!
-## Contributing
-#### Branch before making changes!
-#### `git checkout -b <your-branch-name>`
-\
-Push the new branch to github and set it as the upstream branch using the `-u` option
-#### `git push -u origin <your-branch-name>`
-\
-Make frequent commits (On your branch)
+- https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
+- restart terminal
+- aws configure
+  - AWS Access Key: \*\*
+  - AWS Secret Access Key: \*\*
+  - Default region name: _us-west-2_
+  - Default output format: _json_
 
-Each commit should be described easily in 1 line. Commits that require multiple lines should be split into smaller commits.
-#### `git commit -m "<commit description>"`
-\
-Push commits to your upstream branch using
-#### `git push`
-\
-Once your changes are complete and fully functional, create a merge request on github and ask someone to confirm it.
-\
-\
-When your branch is no longer needed, you should delete it
-#### `git branch -d <your-branch-name>`
-Delete the upstream branch (<b>Do not delete branches that are not yours!</b>)
-#### `git push origin --delete <your-branch-name>`
-## Installing npm modules
-Use --save when installing npm modules to ensure dependencies are installed locally.
-#### `npm install --save <package-name>`
+## Step 2: Setup Amplify CLI and Project
 
-## Documenting Your Code
-#### Document your code <b>BEFORE</b> pushing changes!
+- npm install -g @aws-amplify/cli
+- amplify init
+  - Do you want to use an existing environment? _Yes_
+  - Choose the environment you would like to use: _dev_
+  - Choose your default editor: _Your preferred editor_
+  - Do you want to use an AWS Profile: _Y_
+    - Select your preferred profile
+- amplify pull
 
- This project uses `jsdoc` (for javascript) and `better-docs` (for react components)
+## Step 3: Development Workflow
 
-See [https://devhints.io/jsdoc](https://devhints.io/jsdoc) for jsdoc syntax
-\
-\
-See [https://www.inkoop.io/blog/a-guide-to-js-docs-for-react-js/](https://www.inkoop.io/blog/a-guide-to-js-docs-for-react-js/) for react specific documentation
-\
-\
-\
-<b>BEFORE</b> pushing changes, generate html documentation files using
-#### `npm run docs`
-\
-View current local documentation at
-#### `docs/index.html`
-\
-View master branch documentation at
-#### [https://teachrobo.github.io/front-end/](https://teachrobo.github.io/front-end/)
+- Run app using:
 
+  npm start
 
+- Ensure Robobot-backend is running in a 2nd terminal
 
-# Project File Structure
-### React App
+- Start cypress in a 3rd terminal:
 
-##### `src/sections/`
-Components composing the main pieces of the gamePage
-##### `src/pages/`
-Components referenced by react-router-dom
-##### `src/components/`
-Custom modular React components
-##### `public/`
-Assets available publicly. Includes Index.html which is served to the browser on load.
-##### `App.js / index.js`
-Wrappers around entire React app for browser consumption
-##### `package.json`
-Config file for app-wide settings
-##### `package-lock.json`
-Contains all dependencies information
-##### `node_modules/`
-Includes installed dependencies. Use npm ci to install correct dependency versions according to package-lock.json.
+  npx cypress open --env baseUrl=localhost:3000
+
+- Make your changes and ensure cypress tests pass
+- git add <your-changed-files>
+- git commit -m "<your-commit-message>"
+- git push -U origin <your-branch-name>
+  - A pre-push git hook will run your changes against the cypress testing suite to ensure passes
+
+If your push succeeds, it will trigger the amplify CI/CD pipeline. Every branch automatically gets provisioned its
+own build on AWS Amplify.
+
+- Log in the Amplify Console
+- Find your branch and monitor for errors
+- If everything passes, you may submit a PR to merge your branch into the development branch
+  - If you can't figure out why your build won't pass on Amplify, ask the admins for help!

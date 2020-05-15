@@ -90,7 +90,6 @@ function App({ unityContent }) {
         path="/admin"
         component={AdminPage}
         protection_level="admin"
-        user={appContext.user}
       />
       <ProtectedRoute
         exact
@@ -101,7 +100,6 @@ function App({ unityContent }) {
           </GamePageProvider>
         )}
         protection_level="admin"
-        user={appContext.user}
       />
       <Route exact path="/login-endpoint" component={LoginPage} />
     </Switch>

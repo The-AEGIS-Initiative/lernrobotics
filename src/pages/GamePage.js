@@ -38,6 +38,7 @@ function GamePage({ unityContent, level }) {
 
   useEffect(() => {
     async function fetchData() {
+      console.log(appContext.user);
       const username = appContext.username;
       const level_name = level;
       const levelData = await graphqlController.getLevel({

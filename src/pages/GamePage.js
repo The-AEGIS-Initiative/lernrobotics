@@ -22,10 +22,11 @@ import HorizontalSplitLayout from "../components/horizontal_split_layout";
 import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 
+import * as graphqlController from "../graphql/graphql-controller";
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
-
+  const appContext = useContext(AppContext);
   // Refs for controlling various DOM element sizes
   const [resizedFlag, setResizedflag] = useState(false);
 
@@ -33,9 +34,23 @@ function GamePage({ unityContent, level }) {
 
   const { TabPane } = Tabs;
 
-  const handleEditorChange = (content) => {
-    gamePageContext.setEditorContent(content);
-  };
+  useEffect(async () => {
+    if (appContext.isAuth) {
+      const username = appContext.username;
+      const level_name = level;
+      const progressData = await graphqlController.getProgress({
+        username: username,
+        level_name: level_name,
+      });
+      console.log(progressData);
+      if (progressData === []) {
+        // No existing progress
+        // TODO: Load default code
+      } else {
+        gamePageContext.setEditorContent(progressData[0].user_code);
+      }
+    }
+  }, []);
 
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
@@ -85,11 +100,7 @@ function GamePage({ unityContent, level }) {
           </Tabs>
           <Col>
             <Row>
-              <CodeEditor
-                level_name={level}
-                mode="python"
-                handleChange={(content) => handleEditorChange(content)}
-              />
+              <CodeEditor mode="python" />
             </Row>
             <Row type="flex" style={{ justifyContent: "flex-end" }}>
               <PlayModeControls level_name={level} />

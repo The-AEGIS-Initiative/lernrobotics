@@ -5,10 +5,10 @@ export const onCreateProgress = /* GraphQL */ `
   subscription OnCreateProgress($owner: String!) {
     onCreateProgress(owner: $owner) {
       id
-      username
+      createdAt
       level_name
       user_code
-      completed
+      stars
       owner
     }
   }
@@ -17,10 +17,10 @@ export const onUpdateProgress = /* GraphQL */ `
   subscription OnUpdateProgress($owner: String!) {
     onUpdateProgress(owner: $owner) {
       id
-      username
+      createdAt
       level_name
       user_code
-      completed
+      stars
       owner
     }
   }
@@ -29,10 +29,55 @@ export const onDeleteProgress = /* GraphQL */ `
   subscription OnDeleteProgress($owner: String!) {
     onDeleteProgress(owner: $owner) {
       id
-      username
+      createdAt
       level_name
       user_code
-      completed
+      stars
+      owner
+    }
+  }
+`;
+export const onCreateLevel = /* GraphQL */ `
+  subscription OnCreateLevel($owner: String) {
+    onCreateLevel(owner: $owner) {
+      id
+      level_name
+      creator
+      published
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const onUpdateLevel = /* GraphQL */ `
+  subscription OnUpdateLevel($owner: String) {
+    onUpdateLevel(owner: $owner) {
+      id
+      level_name
+      creator
+      published
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const onDeleteLevel = /* GraphQL */ `
+  subscription OnDeleteLevel($owner: String) {
+    onDeleteLevel(owner: $owner) {
+      id
+      level_name
+      creator
+      published
+      default_code
+      task
+      tutorial
+      level_data
       owner
     }
   }

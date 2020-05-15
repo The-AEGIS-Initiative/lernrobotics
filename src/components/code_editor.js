@@ -11,6 +11,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import { postData, getData } from "../components/HttpController";
 import { submitUserCode, stopUserCode } from "../sockets/emit";
+import { GamePageContext } from "../contexts/GamePageContext";
 
 /**
  * Component for the text editor.
@@ -18,13 +19,9 @@ import { submitUserCode, stopUserCode } from "../sockets/emit";
  * @component
  */
 
-function CodeEditor({ level_name, mode, handleChange }) {
+function CodeEditor({ mode }) {
   const editorRef = useRef();
-  const [content, setContent] = useState("");
-
-  useEffect(() => {
-    fetchDefaultCode();
-  }, [level_name]); // Re-render on authentication status change
+  const gamePageContext = useContext(GamePageContext);
 
   // Capture Ctrl+S from editor to prevent annoying pop-ups
   useEffect(() => {
@@ -40,29 +37,13 @@ function CodeEditor({ level_name, mode, handleChange }) {
     }
   }, [editorRef]); // Run when editorRef is assigned
 
-  // Fetch default code from public/default_code/*.py
-  const fetchDefaultCode = () => {
-    fetch(`/default_code/${level_name}.py`)
-      .then((response) => response.text())
-      .then((text) => {
-        setContent(text);
-        handleChange(text);
-      });
-  };
-
-  // Update code editor content
-  const onChange = (newValue) => {
-    setContent(newValue);
-    handleChange(newValue);
-  };
-
   return (
     <AceEditor
       ref={editorRef}
       mode={mode}
       theme="monokai"
-      onChange={onChange}
-      value={content}
+      onChange={gamePageContext.setEditorContent}
+      value={gamePageContext.editorContent}
       name="UNIQUE_ID_OF_DIV"
       editorProps={{ $blockScrolling: true }}
       showPrintMargin={false}
@@ -70,7 +51,6 @@ function CodeEditor({ level_name, mode, handleChange }) {
       width="100%"
       fontSize="16px"
       style={{ zIndex: 0 }}
-      className="ace-editor"
     />
   );
 }

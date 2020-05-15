@@ -16,7 +16,6 @@ export class GamePageProvider extends React.Component {
   };
 
   setEditorContent = (content) => {
-    console.log(content);
     this.setState({ editorContent: content });
   };
 

@@ -3,6 +3,7 @@ type Progress @model
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "progressByLevelName")
 {
   id: ID!
+  createdAt: AWSDateTime
   level_name: String!
   user_code: String
   stars: Int!
@@ -19,6 +20,8 @@ type Level @model
 {
 	id: ID!
 	level_name: String!
+	creator: String!
+	published: Boolean!
 	default_code: String!
 	task: String!
 	tutorial: String!

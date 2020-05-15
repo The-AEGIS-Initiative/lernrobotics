@@ -8,6 +8,8 @@ import TopNavBar from "../components/top_nav_bar";
 import { AppContext } from "../contexts/AppContext";
 import { Auth } from "aws-amplify";
 
+import { upsertProgress } from "../graphql/graphql-controller";
+
 const { Meta } = Card;
 
 function HomePage() {
@@ -54,14 +56,13 @@ function HomePage() {
         </ul>
       </nav>
       <Button
-        onClick={() => {
-          Auth.currentAuthenticatedUser()
-            .then((user) => {
-              console.log(user.username);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+        onClick={async () => {
+          var jsonObject = await upsertProgress({
+            username: "test",
+            level_name: "hello_wld",
+            user_code: "cosdfawie2.0",
+          });
+          console.log(jsonObject);
         }}
       >
         {" "}

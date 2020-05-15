@@ -8,13 +8,15 @@ import { submitUserCode, stopUserCode } from "../sockets/emit";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
 
+import * as graphqlController from "../graphql/graphql-controller";
+
 /**
  * Component for the text editor.
  *
  * @component
  */
 
-function PlayModeControls({ editor_content, level_name }) {
+function PlayModeControls({ level_name }) {
   // creating the Editor class
   const appContext = useContext(AppContext);
   const gamePageContext = useContext(GamePageContext);
@@ -22,14 +24,11 @@ function PlayModeControls({ editor_content, level_name }) {
   // POST user code to database
   const pushUserCode = () => {
     if (appContext.isAuth) {
-      console.log(`Pushing user code to ${appContext.backEndURL}/user/code`);
-      const endpoint = `${appContext.backEndURL}/user/code`;
-      const data = {
+      graphqlController.createProgress({
         username: appContext.username,
         level_name: level_name,
-        code: editor_content,
-      };
-      postData(endpoint, data, () => {});
+        user_code: gamePageContext.editorContent,
+      });
     }
   };
 
@@ -56,6 +55,7 @@ function PlayModeControls({ editor_content, level_name }) {
         loading={gamePageContext.isLoading}
         onClick={() => {
           submitUserCode(gamePageContext.editorContent);
+          pushUserCode();
         }}
       >
         Submit

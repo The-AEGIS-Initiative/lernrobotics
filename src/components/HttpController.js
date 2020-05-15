@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
 /**
  * Custom Hook to GET data from API

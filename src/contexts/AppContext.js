@@ -24,8 +24,8 @@ export class AppContextProvider extends React.Component {
     };
   }
 
-  setAuth() {
-    Auth.currentAuthenticatedUser()
+  async setAuth() {
+    await Auth.currentAuthenticatedUser()
       .then((user) => {
         //console.log(user);
         const access_token = user.signInUserSession.accessToken;
@@ -65,6 +65,7 @@ export class AppContextProvider extends React.Component {
         this.setAuth();
       }
     });
+
     this.setAuth();
 
     if (process.env.REACT_APP_BACKEND_URL == null) {

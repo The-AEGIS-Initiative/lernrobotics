@@ -106,6 +106,7 @@
   "config": {
     "pre-git": {
       "commit-msg": "simple",
+      "pre-commit":["npx lint-staged"],
       "pre-push": ["npm test"],
       "post-commit": [],
       "post-checkout": [],

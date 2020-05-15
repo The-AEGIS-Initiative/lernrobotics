@@ -2,7 +2,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "./mutations";
 import * as queries from "./queries";
 
-export const createProgress = async ({ username, level_name, user_code }) => {
+export const createProgress = async ({ level_name, user_code }) => {
   const data = await API.graphql(
     graphqlOperation(mutations.createProgress, {
       input: { level_name: level_name, user_code: user_code, stars: 0 },
@@ -10,18 +10,15 @@ export const createProgress = async ({ username, level_name, user_code }) => {
   );
 };
 
-export const upsertProgress = async ({ username, level_name, user_code }) => {
+export const upsertProgress = async ({ level_name, user_code }) => {
   const currentProgress = await getProgress({
-    username: username,
     level_name: level_name,
   });
 
-  console.log(currentProgress);
   if (currentProgress.length == 0) {
     // Create progress
     console.log("Creating now progress");
     await createProgress({
-      username: username,
       level_name: level_name,
       user_code: user_code,
       stars: 0,
@@ -39,13 +36,7 @@ export const upsertProgress = async ({ username, level_name, user_code }) => {
   }
 };
 
-export const updateProgress = async ({
-  id,
-  username,
-  level_name,
-  user_code,
-  stars,
-}) => {
+export const updateProgress = async ({ id, level_name, user_code, stars }) => {
   const data = await API.graphql(
     graphqlOperation(mutations.updateProgress, {
       input: { id: id, user_code: user_code },
@@ -53,7 +44,7 @@ export const updateProgress = async ({
   );
 };
 
-export const getProgress = async ({ username, level_name }) => {
+export const getProgress = async ({ level_name }) => {
   const data = await API.graphql(
     graphqlOperation(queries.progressByLevelName, { level_name: level_name })
   );
@@ -63,4 +54,12 @@ export const getProgress = async ({ username, level_name }) => {
   });
 
   return dataByDate;
+};
+
+export const getLevel = async ({ level_name }) => {
+  const data = await API.graphql(
+    graphqlOperation(queries.getLevelByName, { level_name: level_name })
+  );
+  const levelData = data.data.getLevelByName.items;
+  return levelData;
 };

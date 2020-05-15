@@ -14,6 +14,7 @@ import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
 
 import { useWindowSize } from "../hooks/useWindowSize";
+import { useHistory } from "react-router-dom";
 
 import TopNavBar from "../components/top_nav_bar";
 import MarkdownViewer from "../components/markdown_viewer";
@@ -27,6 +28,7 @@ import * as graphqlController from "../graphql/graphql-controller";
 function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
   const appContext = useContext(AppContext);
+  const history = useHistory();
   // Refs for controlling various DOM element sizes
   const [resizedFlag, setResizedflag] = useState(false);
 
@@ -34,23 +36,34 @@ function GamePage({ unityContent, level }) {
 
   const { TabPane } = Tabs;
 
-  useEffect(async () => {
-    if (appContext.isAuth) {
+  useEffect(() => {
+    async function fetchData() {
       const username = appContext.username;
       const level_name = level;
+      const levelData = await graphqlController.getLevel({
+        level_name: level_name,
+      });
       const progressData = await graphqlController.getProgress({
         username: username,
         level_name: level_name,
       });
       console.log(progressData);
-      if (progressData === []) {
-        // No existing progress
-        // TODO: Load default code
+      console.log(levelData);
+      if (progressData.length == 0) {
+        if (levelData.length == 0) {
+          // No level data, invalid level!
+          history.push("/"); // Redirect to home
+        } else {
+          gamePageContext.setEditorContent(levelData[0].default_code);
+        }
       } else {
         gamePageContext.setEditorContent(progressData[0].user_code);
       }
     }
-  }, []);
+    if (appContext.isAuth) {
+      fetchData();
+    }
+  }, [gamePageContext.isLoading]);
 
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
@@ -65,11 +78,7 @@ function GamePage({ unityContent, level }) {
             <TabPane tab="Game" key="1" style={{ width: "100%" }}>
               <HorizontalSplitLayout
                 top_section={
-                  <UnityPlayer
-                    unityContent={unityContent}
-                    level_name={level}
-                    style={{ width: "100%" }}
-                  />
+                  <UnityPlayer unityContent={unityContent} level_name={level} />
                 }
                 bottom_section={
                   <ConsoleSection style={{ backgroundColor: "black" }} />

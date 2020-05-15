@@ -56,11 +56,15 @@ function LevelBuilderPage({ unityContent }) {
           style={{ color: "white", width: "100%", height: "100%" }}
         >
           <TabPane tab="Game" key="1">
-            <UnityPlayer
-              unityContent={unityContent}
-              level_name="level_builder"
-              style={{ width: "100%" }}
-            />
+            <Row style={{ height: "87vh" }}>
+              <UnityPlayer
+                unityContent={unityContent}
+                level_name="level_builder"
+              />
+            </Row>
+            <Row>
+              <p> Control bar goes here </p>
+            </Row>
           </TabPane>
           <TabPane tab="Prompt" key="2">
             <MarkdownEditor

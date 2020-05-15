@@ -8,7 +8,7 @@ import TopNavBar from "../components/top_nav_bar";
 import { AppContext } from "../contexts/AppContext";
 import { Auth } from "aws-amplify";
 
-import { upsertProgress } from "../graphql/graphql-controller";
+import * as graphqlController from "../graphql/graphql-controller";
 
 const { Meta } = Card;
 
@@ -57,10 +57,8 @@ function HomePage() {
       </nav>
       <Button
         onClick={async () => {
-          var jsonObject = await upsertProgress({
-            username: "test",
-            level_name: "hello_wld",
-            user_code: "cosdfawie2.0",
+          var jsonObject = await graphqlController.getLevel({
+            level_name: "hello_world",
           });
           console.log(jsonObject);
         }}

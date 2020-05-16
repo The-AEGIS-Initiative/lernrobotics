@@ -29,8 +29,9 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
       // Send url to unity webgl
       // See the following for details:
       // https://github.com/elraccoone/react-unity-webgl/wiki/Communication-Guide
+
       unityContent.send("WebSocket Manager", "ConnectWS", dataPacket);
-      setKeyboardInput();
+
       console.log("Sent port to unity client");
       console.log("Game loaded"); // This log is used by cypress testing, update test if changed
     });
@@ -44,7 +45,7 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
     if (!gamePageContext.isLoading) {
       setKeyboardInput();
     }
-  }, [inFocus]);
+  }, [gamePageContext.isLoading, inFocus]);
 
   const setKeyboardInput = () => {
     console.log(inFocus);
@@ -60,7 +61,6 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
     <Unity
       unityContent={unityContent}
       style={{
-        width: "100%",
         aspectRatio: 16 / 9,
       }}
     />

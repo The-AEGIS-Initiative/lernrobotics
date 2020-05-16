@@ -32,6 +32,7 @@ class MarkdownViewer extends React.Component {
   }
 
   componentWillMount() {
+    console.log(this.props.markdownText);
     if (this.props.markdownSrc) {
       fetch(this.props.markdownSrc)
         .then((response) => {

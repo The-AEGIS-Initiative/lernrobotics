@@ -50,7 +50,6 @@
     "build": "react-app-rewired build",
     "build:dev": "REACT_APP_BUILD_ENV=dev REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
     "build:prod": "REACT_APP_BUILD_ENV=prod REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
-    "test": "npm run cypress:local",
     "test:report": "npm run test -- --coverage --watchAll=false",
     "e2e:local": "cypress run --env baseUrl=http://localhost:3000/",
     "e2e:dev": "cypress run --env baseUrl=https://development-robobot.aegisinitiative.io/",
@@ -88,11 +87,6 @@
     "start-server-and-test": "^1.11.0",
     "wait-on": "^4.0.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
   },
@@ -109,7 +103,7 @@
         "npx lint-staged"
       ],
       "pre-push": [
-        "npm test"
+        "npm cypress:local"
       ],
       "post-commit": [],
       "post-checkout": [],

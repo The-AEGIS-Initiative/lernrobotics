@@ -29,8 +29,12 @@ function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
   const appContext = useContext(AppContext);
   const history = useHistory();
+
   // Refs for controlling various DOM element sizes
   const [resizedFlag, setResizedflag] = useState(false);
+  const [task, setTask] = useState("");
+  const [tutorial, setTutorial] = useState("");
+  const [levelData, setLevelData] = useState("");
 
   const windowSize = useWindowSize();
 
@@ -44,21 +48,23 @@ function GamePage({ unityContent, level }) {
       const levelData = await graphqlController.getLevel({
         level_name: level_name,
       });
-      const progressData = await graphqlController.getProgress({
-        username: username,
-        level_name: level_name,
-      });
-      console.log(progressData);
-      console.log(levelData);
-      if (progressData.length == 0) {
-        if (levelData.length == 0) {
-          // No level data, invalid level!
-          history.push("/"); // Redirect to home
-        } else {
-          gamePageContext.setEditorContent(levelData[0].default_code);
-        }
+      if (levelData.length == 0) {
+        // No level data, invalid level!
+        // history.push("/"); // Redirect to home
       } else {
-        gamePageContext.setEditorContent(progressData[0].user_code);
+        setTask(levelData[0].task);
+        setTutorial(levelData[0].tutorial);
+        setLevelData(levelData[0].level_data);
+
+        const progressData = await graphqlController.getProgress({
+          username: username,
+          level_name: level_name,
+        });
+        if (progressData.length == 0) {
+          gamePageContext.setEditorContent(levelData[0].default_code);
+        } else {
+          gamePageContext.setEditorContent(progressData[0].user_code);
+        }
       }
     }
     if (appContext.isAuth) {
@@ -79,7 +85,11 @@ function GamePage({ unityContent, level }) {
             <TabPane tab="Game" key="1" style={{ width: "100%" }}>
               <HorizontalSplitLayout
                 top_section={
-                  <UnityPlayer unityContent={unityContent} level_name={level} />
+                  <UnityPlayer
+                    unityContent={unityContent}
+                    level_name={level}
+                    levelData={levelData}
+                  />
                 }
                 bottom_section={
                   <ConsoleSection style={{ backgroundColor: "black" }} />
@@ -89,15 +99,11 @@ function GamePage({ unityContent, level }) {
                 update_flags={resizedFlag}
               />
             </TabPane>
-            <TabPane tab="Prompt" key="2">
-              <MarkdownViewer
-                markdownSrc={`/prompts/${level}.md`}
-              ></MarkdownViewer>
+            <TabPane tab="Task" key="2">
+              <MarkdownViewer markdownText={task}></MarkdownViewer>
             </TabPane>
-            <TabPane tab="Learn" key="3">
-              <MarkdownViewer
-                markdownSrc={`/level_specs/${level}.md`}
-              ></MarkdownViewer>
+            <TabPane tab="Tutorial" key="3">
+              <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
             </TabPane>
             <TabPane tab="Help" key="4">
               <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>

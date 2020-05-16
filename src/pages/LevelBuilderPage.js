@@ -29,6 +29,7 @@ import MarkdownEditor from "../components/markdown_editor";
 function LevelBuilderPage({ unityContent }) {
   // Refs for controlling various DOM element sizes
   const [resizedFlag, setResizedflag] = useState(false);
+  const [tabKey, setTabKey] = useState("1");
 
   const windowSize = useWindowSize();
 
@@ -43,6 +44,10 @@ function LevelBuilderPage({ unityContent }) {
   const [tutorialContent, setTutorialContent] = useState("");
   const [defaultCodeContent, setDefaultCodeContent] = useState("");
 
+  const handleTabChange = (key) => {
+    setTabKey(key);
+  };
+
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
       <TopNavBar type="sub" />
@@ -53,6 +58,8 @@ function LevelBuilderPage({ unityContent }) {
       <div type="flex" className="container">
         <Tabs
           tabPosition={"left"}
+          activeKey={tabKey}
+          onChange={handleTabChange}
           style={{ color: "white", width: "100%", height: "100%" }}
         >
           <TabPane tab="Game" key="1">
@@ -60,6 +67,7 @@ function LevelBuilderPage({ unityContent }) {
               <UnityPlayer
                 unityContent={unityContent}
                 level_name="level_builder"
+                inFocus={tabKey == "1"}
               />
             </Row>
             <Row>

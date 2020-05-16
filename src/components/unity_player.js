@@ -1,9 +1,9 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Unity from "react-unity-webgl";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { UnityContent } from "react-unity-webgl";
 
-function UnityPlayer({ unityContent, level_name }) {
+function UnityPlayer({ unityContent, level_name, inFocus }) {
   const gamePageContext = useContext(GamePageContext);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function UnityPlayer({ unityContent, level_name }) {
       // See the following for details:
       // https://github.com/elraccoone/react-unity-webgl/wiki/Communication-Guide
       unityContent.send("WebSocket Manager", "ConnectWS", dataPacket);
-
+      setKeyboardInput();
       console.log("Sent port to unity client");
       console.log("Game loaded"); // This log is used by cypress testing, update test if changed
     });
@@ -38,7 +38,23 @@ function UnityPlayer({ unityContent, level_name }) {
     unityContent.on("SaveLevelData", (jsonString) => {
       console.log(`Level data json: ${jsonString}`);
     });
-  }, [gamePageContext, unityContent]);
+  }, []);
+
+  useEffect(() => {
+    if (!gamePageContext.isLoading) {
+      setKeyboardInput();
+    }
+  }, [inFocus]);
+
+  const setKeyboardInput = () => {
+    console.log(inFocus);
+    if (inFocus) {
+      // unityContent.send only allows sending strings
+      unityContent.send("WebSocket Manager", "SetKeyboardInput", "true");
+    } else {
+      unityContent.send("WebSocket Manager", "SetKeyboardInput", "false");
+    }
+  };
 
   return (
     <Unity

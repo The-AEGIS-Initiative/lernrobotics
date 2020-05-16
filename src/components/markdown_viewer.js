@@ -7,6 +7,9 @@ import ReactDOM from "react-dom";
 import md from "markdown-it";
 import mj from "markdown-it-mathjax";
 
+/**
+ * Render markdown content
+ */
 class MarkdownViewer extends React.Component {
   constructor(props) {
     super(props);

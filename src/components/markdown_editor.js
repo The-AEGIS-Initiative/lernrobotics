@@ -18,9 +18,7 @@ import CodeEditor from "../components/code_editor";
 import PlayModeControls from "../components/play_mode_controls";
 
 /**
- * Component for the text editor.
- *
- * @component
+ * Split-view markdown editor
  */
 
 function MarkdownEditor({ level_name, handleChange }) {

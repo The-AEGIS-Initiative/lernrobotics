@@ -40,11 +40,13 @@ function GamePage({ unityContent, level }) {
 
   const { TabPane } = Tabs;
 
+  // Fetch level data and user progress from graphql api
   useEffect(() => {
     async function fetchData() {
-      console.log(appContext.user);
       const username = appContext.username;
       const level_name = level;
+
+      // Fetch level data
       const levelData = await graphqlController.getLevel({
         level_name: level_name,
       });
@@ -52,22 +54,27 @@ function GamePage({ unityContent, level }) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
       } else {
+        // Set task, tutorial, and leveldata content
         setTask(levelData[0].task);
         setTutorial(levelData[0].tutorial);
         setLevelData(levelData[0].level_data);
 
+        // Fetch user progress
         const progressData = await graphqlController.getProgress({
           username: username,
           level_name: level_name,
         });
         if (progressData.length == 0) {
+          // No user progress
           gamePageContext.setEditorContent(levelData[0].default_code);
         } else {
+          // Existing user progress
           gamePageContext.setEditorContent(progressData[0].user_code);
         }
       }
     }
     if (appContext.isAuth) {
+      // Wrapper to call async function inside useEffect()
       fetchData();
     }
   }, [gamePageContext.isLoading]);

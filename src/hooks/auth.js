@@ -2,6 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { Route, Redirect, useHistory } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
 
+/**
+ * Authentication protected route HOC
+ */
 export function ProtectedRoute({
   component: Component,
   protection_level,

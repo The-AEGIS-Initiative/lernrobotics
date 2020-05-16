@@ -2,6 +2,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from "./mutations";
 import * as queries from "./queries";
 
+// Create new user progress
 export const createProgress = async ({ level_name, user_code }) => {
   const data = await API.graphql(
     graphqlOperation(mutations.createProgress, {
@@ -10,6 +11,7 @@ export const createProgress = async ({ level_name, user_code }) => {
   );
 };
 
+// Update or create user progress if does not exist
 export const upsertProgress = async ({ level_name, user_code }) => {
   const currentProgress = await getProgress({
     level_name: level_name,
@@ -36,6 +38,7 @@ export const upsertProgress = async ({ level_name, user_code }) => {
   }
 };
 
+// Update user progress
 export const updateProgress = async ({ id, level_name, user_code, stars }) => {
   const data = await API.graphql(
     graphqlOperation(mutations.updateProgress, {
@@ -44,6 +47,7 @@ export const updateProgress = async ({ id, level_name, user_code, stars }) => {
   );
 };
 
+// Get current progress
 export const getProgress = async ({ level_name }) => {
   const data = await API.graphql(
     graphqlOperation(queries.progressByLevelName, { level_name: level_name })
@@ -56,6 +60,7 @@ export const getProgress = async ({ level_name }) => {
   return dataByDate;
 };
 
+// Get level data
 export const getLevel = async ({ level_name }) => {
   const data = await API.graphql(
     graphqlOperation(queries.getLevelByName, { level_name: level_name })

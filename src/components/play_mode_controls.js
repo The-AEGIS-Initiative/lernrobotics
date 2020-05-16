@@ -11,9 +11,8 @@ import { AppContext } from "../contexts/AppContext";
 import * as graphqlController from "../graphql/graphql-controller";
 
 /**
- * Component for the text editor.
- *
- * @component
+ * Control bar for submitting user code and other
+ * gameplay controls
  */
 
 function PlayModeControls({ level_name }) {
@@ -21,7 +20,7 @@ function PlayModeControls({ level_name }) {
   const appContext = useContext(AppContext);
   const gamePageContext = useContext(GamePageContext);
 
-  // POST user code to database
+  // POST user code to graphql API
   const pushUserCode = () => {
     if (appContext.isAuth) {
       graphqlController.createProgress({

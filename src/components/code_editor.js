@@ -14,9 +14,7 @@ import { submitUserCode, stopUserCode } from "../sockets/emit";
 import { GamePageContext } from "../contexts/GamePageContext";
 
 /**
- * Component for the text editor.
- *
- * @component
+ * Code editor
  */
 
 function CodeEditor({ mode }) {

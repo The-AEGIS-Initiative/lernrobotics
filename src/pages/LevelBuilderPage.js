@@ -43,18 +43,26 @@ function LevelBuilderPage({ unityContent }) {
   const [taskContent, setTaskContent] = useState("");
   const [tutorialContent, setTutorialContent] = useState("");
   const [defaultCodeContent, setDefaultCodeContent] = useState("");
+  const [levelData, setLevelData] = useState("");
+
+  useEffect(() => {
+    unityContent.on("SaveLevelData", (jsonString) => {
+      console.log(`Level data json: ${jsonString}`);
+      setLevelData(jsonString);
+    });
+  }, [unityContent]);
 
   const handleTabChange = (key) => {
     setTabKey(key);
   };
 
+  const publishLevelData = () => {};
+
+  const pushLevelData = () => {};
+
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
       <TopNavBar type="sub" />
-      <Row>
-        <Button onClick={() => setEditMode(true)}>Edit Mode</Button>
-        <Button onClick={() => setEditMode(false)}>Play Test Mode</Button>
-      </Row>
       <div type="flex" className="container">
         <Tabs
           tabPosition={"left"}
@@ -63,16 +71,26 @@ function LevelBuilderPage({ unityContent }) {
           style={{ color: "white", width: "100%", height: "100%" }}
         >
           <TabPane tab="Game" key="1">
-            <Row style={{ height: "87vh" }}>
-              <UnityPlayer
-                unityContent={unityContent}
-                level_name="level_builder"
-                inFocus={tabKey == "1"}
-              />
-            </Row>
-            <Row>
-              <p> Control bar goes here </p>
-            </Row>
+            <SplitterLayout
+              onDragEnd={() => {
+                setResizedflag(!resizedFlag);
+              }}
+            >
+              <Row style={{ height: "95vh" }}>
+                <UnityPlayer
+                  unityContent={unityContent}
+                  level_name="level_builder"
+                  inFocus={tabKey == "1"}
+                />
+              </Row>
+              <Row style={{ height: "95vh" }}>
+                <CodeEditor
+                  mode="python"
+                  placeholder={defaultCodeContent}
+                  handleChange={(value) => setDefaultCodeContent(value)}
+                />
+              </Row>
+            </SplitterLayout>
           </TabPane>
           <TabPane tab="Prompt" key="2">
             <MarkdownEditor
@@ -98,6 +116,10 @@ function LevelBuilderPage({ unityContent }) {
           </TabPane>
         </Tabs>
       </div>
+      <Row>
+        <Button onClick={pushLevelData()}>Save Level</Button>
+        <Button onClick={publishLevelData()}>Publish Level</Button>
+      </Row>
     </div>
   );
 }

@@ -60,11 +60,190 @@ export const getProgress = async ({ level_name }) => {
   return dataByDate;
 };
 
+// Create level
+export const createLevel = async ({
+  level_name,
+  creator,
+  default_code,
+  task,
+  tutorial,
+  level_data,
+}) => {
+  const data = await API.graphql(
+    graphqlOperation(mutations.createLevel, {
+      input: {
+        level_name: level_name,
+        default_code: default_code,
+        task: task,
+        creator: creator,
+        tutorial: tutorial,
+        level_data: level_data,
+      },
+    })
+  );
+};
+
+// Create published level
+export const createPublishedLevel = async ({
+  level_name,
+  creator,
+  default_code,
+  task,
+  tutorial,
+  level_data,
+}) => {
+  const data = await API.graphql(
+    graphqlOperation(mutations.createPublishedLevel, {
+      input: {
+        level_name: level_name,
+        creator: creator,
+        default_code: default_code,
+        task: task,
+        tutorial: tutorial,
+        level_data: level_data,
+      },
+    })
+  );
+};
+
 // Get level data
 export const getLevel = async ({ level_name }) => {
   const data = await API.graphql(
     graphqlOperation(queries.getLevelByName, { level_name: level_name })
   );
+
   const levelData = data.data.getLevelByName.items;
+
   return levelData;
+};
+
+// Get published level data
+export const getPublishedLevel = async ({ level_name }) => {
+  const data = await API.graphql(
+    graphqlOperation(queries.getPublishedLevelByName, {
+      level_name: level_name,
+    })
+  );
+
+  const levelData = data.data.getPublishedLevelByName.items;
+
+  return levelData;
+};
+
+// Update level data
+export const updateLevel = async ({
+  id,
+  level_name,
+  creator,
+  default_code,
+  task,
+  tutorial,
+  level_data,
+}) => {
+  const data = await API.graphql(
+    graphqlOperation(mutations.updateLevel, {
+      input: {
+        id: id,
+        level_name: level_name,
+        default_code: default_code,
+        task: task,
+        creator: creator,
+        tutorial: tutorial,
+        level_data: level_data,
+      },
+    })
+  );
+};
+
+// Update level data
+export const updatePublishedLevel = async ({
+  id,
+  level_name,
+  creator,
+  default_code,
+  task,
+  tutorial,
+  level_data,
+}) => {
+  const data = await API.graphql(
+    graphqlOperation(mutations.updatePublishedLevel, {
+      input: {
+        id: id,
+        level_name: level_name,
+        default_code: default_code,
+        task: task,
+        creator: creator,
+        tutorial: tutorial,
+        level_data: level_data,
+      },
+    })
+  );
+};
+
+// Usert level data
+export const upsertLevel = async ({
+  level_name,
+  creator,
+  default_code,
+  task,
+  tutorial,
+  level_data,
+}) => {
+  const level = await getLevel({ level_name: level_name });
+
+  if (level.length == 0) {
+    // No existing level data
+    await createLevel({
+      level_name: level_name,
+      creator: creator,
+      default_code: default_code,
+      task: task,
+      tutorial: tutorial,
+      level_data: level_data,
+    });
+  } else {
+    await updateLevel({
+      id: level[0].id,
+      level_name: level_name,
+      creator: level[0].creator,
+      default_code: default_code,
+      task: task,
+      tutorial: tutorial,
+      level_data: level_data,
+    });
+  }
+};
+
+// Usert published level data
+export const upsertPublishedLevel = async ({
+  level_name,
+  creator,
+  default_code,
+  task,
+  tutorial,
+  level_data,
+}) => {
+  const level = await getPublishedLevel({ level_name: level_name });
+
+  if (level.length == 0) {
+    // No existing level data
+    await createPublishedLevel({
+      level_name: level_name,
+      creator: creator,
+      default_code: default_code,
+      task: task,
+      tutorial: tutorial,
+      level_data: level_data,
+    });
+  } else {
+    await updatePublishedLevel({
+      id: level[0].id,
+      level_name: level_name,
+      creator: level[0].creator,
+      default_code: default_code,
+      task: task,
+      tutorial: tutorial,
+      level_data: level_data,
+    });
+  }
 };

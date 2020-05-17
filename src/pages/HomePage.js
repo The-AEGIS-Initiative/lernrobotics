@@ -57,8 +57,13 @@ function HomePage() {
       </nav>
       <Button
         onClick={async () => {
-          var jsonObject = await graphqlController.getLevel({
-            level_name: "hello_world",
+          var jsonObject = await graphqlController.upsertPublishedLevel({
+            level_name: "hello_wrlsdfd",
+            default_code: "wefsd",
+            creator: "kevinqisdfs12dwas",
+            task: "new task!!!23rwoijaf971yqiufh",
+            tutorial: "new tutorials!!!",
+            level_data: "q3298rf",
           });
           console.log(jsonObject);
         }}

@@ -123,7 +123,13 @@ function GamePage({ unityContent, level }) {
           </Tabs>
           <Col>
             <Row>
-              <CodeEditor mode="python" />
+              <CodeEditor
+                mode="python"
+                placeholder={gamePageContext.editorContent}
+                handleChange={(value) =>
+                  gamePageContext.setEditorContent(value)
+                }
+              />
             </Row>
             <Row type="flex" style={{ justifyContent: "flex-end" }}>
               <PlayModeControls level_name={level} />

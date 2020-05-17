@@ -11,15 +11,15 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import { postData, getData } from "../components/HttpController";
 import { submitUserCode, stopUserCode } from "../sockets/emit";
-import { GamePageContext } from "../contexts/GamePageContext";
 
 /**
  * Code editor
  */
 
-function CodeEditor({ mode }) {
+function CodeEditor({ mode, placeholder, handleChange }) {
   const editorRef = useRef();
-  const gamePageContext = useContext(GamePageContext);
+
+  const [content, setContent] = useState(placeholder);
 
   // Capture Ctrl+S from editor to prevent annoying pop-ups
   useEffect(() => {
@@ -35,13 +35,20 @@ function CodeEditor({ mode }) {
     }
   }, [editorRef]); // Run when editorRef is assigned
 
+  useEffect(() => {
+    setContent(placeholder);
+  }, [placeholder]);
+
   return (
     <AceEditor
       ref={editorRef}
       mode={mode}
       theme="monokai"
-      onChange={gamePageContext.setEditorContent}
-      value={gamePageContext.editorContent}
+      onChange={(value) => {
+        handleChange(value);
+        setContent(value);
+      }}
+      value={content}
       name="UNIQUE_ID_OF_DIV"
       editorProps={{ $blockScrolling: true }}
       showPrintMargin={false}

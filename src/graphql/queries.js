@@ -65,7 +65,6 @@ export const getLevel = /* GraphQL */ `
       id
       level_name
       creator
-      published
       default_code
       task
       tutorial
@@ -85,7 +84,6 @@ export const listLevels = /* GraphQL */ `
         id
         level_name
         creator
-        published
         default_code
         task
         tutorial
@@ -115,7 +113,70 @@ export const getLevelByName = /* GraphQL */ `
         id
         level_name
         creator
-        published
+        default_code
+        task
+        tutorial
+        level_data
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getPublishedLevel = /* GraphQL */ `
+  query GetPublishedLevel($id: ID!) {
+    getPublishedLevel(id: $id) {
+      id
+      level_name
+      creator
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const listPublishedLevels = /* GraphQL */ `
+  query ListPublishedLevels(
+    $filter: ModelPublishedLevelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPublishedLevels(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        level_name
+        creator
+        default_code
+        task
+        tutorial
+        level_data
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getPublishedLevelByName = /* GraphQL */ `
+  query GetPublishedLevelByName(
+    $level_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelPublishedLevelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getPublishedLevelByName(
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        level_name
+        creator
         default_code
         task
         tutorial

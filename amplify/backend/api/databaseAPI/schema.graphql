@@ -21,10 +21,26 @@ type Level @model
 	id: ID!
 	level_name: String!
 	creator: String!
-	published: Boolean!
 	default_code: String!
 	task: String!
 	tutorial: String!
 	level_data: String!
 }
 
+type PublishedLevel @model
+	@auth(rules: [
+		{ allow: owner }, # owner full access
+		{ allow: groups, groups:["admin"] } # admin full access to levels
+		{ allow: private, operations: [read]} # private user read access for levels
+		{ allow: public, provider: iam, operations: [read]} # public guest read access for levels
+	])
+	@key(name: "byLevelName", fields: ["level_name"], queryField: "getPublishedLevelByName")
+{
+	id: ID!
+	level_name: String!
+	creator: String!
+	default_code: String!
+	task: String!
+	tutorial: String!
+	level_data: String!
+}

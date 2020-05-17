@@ -43,7 +43,6 @@ export const onCreateLevel = /* GraphQL */ `
       id
       level_name
       creator
-      published
       default_code
       task
       tutorial
@@ -58,7 +57,6 @@ export const onUpdateLevel = /* GraphQL */ `
       id
       level_name
       creator
-      published
       default_code
       task
       tutorial
@@ -73,7 +71,48 @@ export const onDeleteLevel = /* GraphQL */ `
       id
       level_name
       creator
-      published
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const onCreatePublishedLevel = /* GraphQL */ `
+  subscription OnCreatePublishedLevel($owner: String) {
+    onCreatePublishedLevel(owner: $owner) {
+      id
+      level_name
+      creator
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const onUpdatePublishedLevel = /* GraphQL */ `
+  subscription OnUpdatePublishedLevel($owner: String) {
+    onUpdatePublishedLevel(owner: $owner) {
+      id
+      level_name
+      creator
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const onDeletePublishedLevel = /* GraphQL */ `
+  subscription OnDeletePublishedLevel($owner: String) {
+    onDeletePublishedLevel(owner: $owner) {
+      id
+      level_name
+      creator
       default_code
       task
       tutorial

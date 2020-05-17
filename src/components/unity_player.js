@@ -35,10 +35,6 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
       console.log("Sent port to unity client");
       console.log("Game loaded"); // This log is used by cypress testing, update test if changed
     });
-
-    unityContent.on("SaveLevelData", (jsonString) => {
-      console.log(`Level data json: ${jsonString}`);
-    });
   }, []);
 
   useEffect(() => {

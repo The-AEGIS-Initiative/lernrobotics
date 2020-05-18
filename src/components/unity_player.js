@@ -44,7 +44,7 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
   }, [gamePageContext.isLoading, inFocus]);
 
   const setKeyboardInput = () => {
-    console.log(inFocus);
+    console.log(`Unity capturing keyboard input: ${inFocus}`);
     if (inFocus) {
       // unityContent.send only allows sending strings
       unityContent.send("WebSocket Manager", "SetKeyboardInput", "true");
@@ -57,6 +57,7 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
     <Unity
       unityContent={unityContent}
       style={{
+        width: "100%",
         aspectRatio: 16 / 9,
       }}
     />

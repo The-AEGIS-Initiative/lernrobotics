@@ -58,7 +58,7 @@ function HomePage() {
       <Button
         onClick={async () => {
           var jsonObject = await graphqlController.upsertPublishedLevel({
-            level_name: "hello_wrlsdfd",
+            level_name: "test",
             default_code: "wefsd",
             creator: "kevinqisdfs12dwas",
             task: "new task!!!23rwoijaf971yqiufh",

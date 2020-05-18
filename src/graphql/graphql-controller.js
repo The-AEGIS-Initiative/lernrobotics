@@ -140,6 +140,15 @@ export const updateLevel = async ({
   tutorial,
   level_data,
 }) => {
+  console.log({
+    id,
+    level_name,
+    creator,
+    default_code,
+    task,
+    tutorial,
+    level_data,
+  });
   const data = await API.graphql(
     graphqlOperation(mutations.updateLevel, {
       input: {

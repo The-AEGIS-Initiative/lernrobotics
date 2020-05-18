@@ -93,10 +93,14 @@ function App({ unityContent }) {
       />
       <ProtectedRoute
         exact
-        path="/admin/levelBuilder"
+        path="/admin/levelBuilder/:level_name"
         component={(props) => (
           <GamePageProvider>
-            <LevelBuilderPage unityContent={unityContent} {...props} />
+            <LevelBuilderPage
+              unityContent={unityContent}
+              levelName={props.match.params.level_name}
+              {...props}
+            />
           </GamePageProvider>
         )}
         protection_level="admin"

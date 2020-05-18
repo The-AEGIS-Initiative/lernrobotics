@@ -24,6 +24,7 @@ import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 
 import * as graphqlController from "../graphql/graphql-controller";
+
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
@@ -80,7 +81,7 @@ function GamePage({ unityContent, level }) {
   }, [gamePageContext.isLoading]);
 
   return (
-    <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
+    <div style={{ flex: 1, height: "100vh", overflow: "scroll" }}>
       <TopNavBar type="sub" />
       <div type="flex" className="container">
         <SplitterLayout

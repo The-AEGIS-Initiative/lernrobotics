@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 
 import { Row, Col, Tabs, Button } from "antd";
 
@@ -7,9 +7,6 @@ import Unity from "react-unity-webgl";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import "./GamePage.css";
-
-import GameSection from "../sections/game_section";
-import ConsoleSection from "../sections/console_section";
 
 import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
@@ -25,17 +22,22 @@ import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 import MarkdownEditor from "../components/markdown_editor";
 
+import * as graphqlController from "../graphql/graphql-controller";
+
 // Contains Unity game, code editor, and console
-function LevelBuilderPage({ unityContent }) {
+function LevelBuilderPage({ unityContent, levelName }) {
   // Refs for controlling various DOM element sizes
+  const appContext = useContext(AppContext);
+  const gamePageContext = useContext(GamePageContext);
+
   const [resizedFlag, setResizedflag] = useState(false);
   const [tabKey, setTabKey] = useState("1");
+
+  const levelNameRef = useRef(null);
 
   const windowSize = useWindowSize();
 
   const { TabPane } = Tabs;
-
-  const level_name = "hello_world";
 
   var playTestMode = false;
 
@@ -56,13 +58,44 @@ function LevelBuilderPage({ unityContent }) {
     setTabKey(key);
   };
 
-  const publishLevelData = () => {};
+  const publishLevelData = async () => {
+    pushLevelData();
+    console.log(levelName);
+    console.log(defaultCodeContent);
+    console.log(appContext.username);
+    console.log(taskContent);
+    console.log(tutorialContent);
+    console.log(levelData);
+    var jsonObject = await graphqlController.upsertPublishedLevel({
+      level_name: levelName,
+      default_code: defaultCodeContent,
+      creator: appContext.username,
+      task: taskContent,
+      tutorial: tutorialContent,
+      level_data: levelData,
+    });
+  };
 
-  const pushLevelData = () => {};
+  const pushLevelData = async () => {
+    console.log(levelName);
+    console.log(defaultCodeContent);
+    console.log(appContext.username);
+    console.log(taskContent);
+    console.log(tutorialContent);
+    console.log(levelData);
+    var jsonObject = await graphqlController.upsertLevel({
+      level_name: levelName,
+      default_code: defaultCodeContent,
+      creator: appContext.username,
+      task: taskContent,
+      tutorial: tutorialContent,
+      level_data: levelData,
+    });
+  };
 
   return (
     <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
-      <TopNavBar type="sub" />
+      <TopNavBar type="sub" levelName={levelName} />
       <div type="flex" className="container">
         <Tabs
           tabPosition={"left"}
@@ -71,55 +104,55 @@ function LevelBuilderPage({ unityContent }) {
           style={{ color: "white", width: "100%", height: "100%" }}
         >
           <TabPane tab="Game" key="1">
-            <SplitterLayout
-              onDragEnd={() => {
-                setResizedflag(!resizedFlag);
-              }}
-            >
-              <Row style={{ height: "95vh" }}>
-                <UnityPlayer
-                  unityContent={unityContent}
-                  level_name="level_builder"
-                  inFocus={tabKey == "1"}
-                />
-              </Row>
-              <Row style={{ height: "95vh" }}>
-                <CodeEditor
-                  mode="python"
-                  placeholder={defaultCodeContent}
-                  handleChange={(value) => setDefaultCodeContent(value)}
-                />
-              </Row>
-            </SplitterLayout>
+            <UnityPlayer
+              unityContent={unityContent}
+              level_name="level_builder"
+              inFocus={tabKey == "1"}
+            />
           </TabPane>
-          <TabPane tab="Prompt" key="2">
+          <TabPane tab="Default Code" key="2">
+            <CodeEditor
+              mode="python"
+              placeholder={defaultCodeContent}
+              handleChange={(value) => setDefaultCodeContent(value)}
+            />
+            <Row>
+              <Button
+                onClick={pushLevelData}
+                loading={gamePageContext.isLoading}
+              >
+                Save Level
+              </Button>
+              <Button
+                onClick={publishLevelData}
+                loading={gamePageContext.isLoading}
+              >
+                Publish Level
+              </Button>
+            </Row>
+          </TabPane>
+          <TabPane tab="Prompt" key="3">
             <MarkdownEditor
-              level_name={level_name}
               handleChange={(e) => {
                 setTaskContent(e);
               }}
             />
           </TabPane>
-          <TabPane tab="Learn" key="3">
+          <TabPane tab="Learn" key="4">
             <MarkdownEditor
-              level_name={level_name}
               handleChange={(e) => {
                 setTutorialContent(e);
               }}
             />
           </TabPane>
-          <TabPane tab="Help" key="4">
+          <TabPane tab="Help" key="5">
             <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
           </TabPane>
-          <TabPane tab="API " key="5">
+          <TabPane tab="API " key="6">
             <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
           </TabPane>
         </Tabs>
       </div>
-      <Row>
-        <Button onClick={pushLevelData()}>Save Level</Button>
-        <Button onClick={publishLevelData()}>Publish Level</Button>
-      </Row>
     </div>
   );
 }

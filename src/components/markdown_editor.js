@@ -21,7 +21,7 @@ import PlayModeControls from "../components/play_mode_controls";
  * Split-view markdown editor
  */
 
-function MarkdownEditor({ level_name, handleChange }) {
+function MarkdownEditor({ handleChange }) {
   const [content, setContent] = useState("");
   const [resizedFlag, setResizedflag] = useState(false);
 
@@ -38,11 +38,9 @@ function MarkdownEditor({ level_name, handleChange }) {
       <Col>
         <Row>
           <CodeEditor
-            level_name={level_name}
             mode="markdown"
             handleChange={(e) => {
               setContent(e);
-              console.log(content);
               handleChange(e);
             }}
           />
@@ -51,9 +49,6 @@ function MarkdownEditor({ level_name, handleChange }) {
       <Col>
         <Row>
           <MarkdownViewer markdownText={content}></MarkdownViewer>
-        </Row>
-        <Row type="flex" style={{ justifyContent: "flex-end" }}>
-          <PlayModeControls level_name={level_name} />
         </Row>
       </Col>
     </SplitterLayout>

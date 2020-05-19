@@ -37,13 +37,21 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 
 - Run app using:
 
-  `npm start`
+  - `npm start`
 
 - Run Robobot back-end in a 2nd terminal
 
 - Start cypress in a 3rd terminal:
 
-  `npm test`
+  - `npm test`
+
+### While making changes:
+
+Test, test, test!
+
+Anything you build that is not covered by the test suite will probably end up broken.
+
+This project uses primarily Cypress for running tests. See Writing Tests section below for details.
 
 ### After making changes:
 
@@ -59,14 +67,24 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
     - chore(ci): semantic commit without triggering new version
 
 - `git push -U origin <your-branch-name>`
-
   - A pre-push git hook will run your changes against the cypress testing suite to ensure passes
 
-- You may submit a PR to merge your branch into the development branch.
+### Pull Requests and Merging
+
+When your changes are complete, make a pull request into the `master` branch.
 
 - Once your PR is approved, you may merge your branch into the master branch. This will trigger a rebuild of the development-robobot app.
 
-- Log-in to Amplify console and confirm that the development branch is green.
+- Log-in to the AWS Amplify console and confirm that the development branch is green.
   - If there are errors, fix them ASAP.
 
 # Testing
+
+Cypress tests are stored in the `cypress/integration/` folder. This project breaks up the tests into 2 folders:
+
+- `cypress/integration/front-end-only`
+  - These tests only require the front-end (this app) running.
+- `cypress/integratoin/front-and-back-end`
+  - These tests require the back-end to be running. These are usually end-2-end (E2E) tests.
+
+Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html)

@@ -18,9 +18,9 @@ import "./commands";
 
 Cypress.Commands.add("login", () => {
   cy.visit(`${Cypress.env("baseUrl")}/login-endpoint`);
-  cy.get(".username-input").type(Cypress.env("username"));
-  cy.get(".password-input").type(Cypress.env("password"));
-  cy.get(".sign-in-button").click();
+  cy.get("[data-cy=username-input]").type("test");
+  cy.get("[data-cy=password-input]").type("password");
+  cy.get("[data-cy=sign-in-button]").click();
 });
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

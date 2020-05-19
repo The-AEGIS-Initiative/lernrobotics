@@ -104,7 +104,7 @@
         "npx lint-staged"
       ],
       "pre-push": [
-        "npm run-script cypress:local"
+        "npm run-script e2e:local"
       ],
       "post-commit": [],
       "post-checkout": [],

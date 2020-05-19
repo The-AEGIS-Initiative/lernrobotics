@@ -8,7 +8,7 @@ describe("Login", () => {
   });
 
   it("visit login endpoint", () => {
-    cy.visit(`${Cypress.env("baseUrl")}login-endpoint`);
+    cy.visit(`${Cypress.env("baseUrl")}/login-endpoint`);
   });
 
   it("should be able to login", () => {
@@ -22,10 +22,10 @@ describe("Login", () => {
 
 describe("Unauthorized Access", () => {
   it(`should not be allowed access to protected routes`, () => {
-    cy.visit(`${Cypress.env("baseUrl")}admin`);
+    cy.visit(`${Cypress.env("baseUrl")}/admin`);
     cy.contains("Unauthorized");
 
-    cy.visit(`${Cypress.env("baseUrl")}admin/levelbuilder`);
+    cy.visit(`${Cypress.env("baseUrl")}/admin/levelbuilder/level`);
     cy.contains("Unauthorized");
   });
 });

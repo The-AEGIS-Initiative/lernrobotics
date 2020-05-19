@@ -1,6 +1,6 @@
 Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbucket.org/theaegisinitiative/front-end/)
 
-# Development Usage
+# Development Setup
 
 ## Step 1: Basic Git Stuff
 
@@ -31,7 +31,7 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
     - Select your profile from Step 2
 - `amplify pull`
 
-## Step 3: Development Workflow
+# Development Workflow
 
 ### Before making changes:
 
@@ -51,6 +51,13 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 
 - `git add <your-changed-files>`
 - `git commit -m "<your-commit-message>"`
+
+  - Commit message should follow semantic convention such as:
+    - major(api): API rewrite, not backwards compatible!
+    - feat(log): add new logging feature
+    - fix(config): always load config first
+    - chore(ci): semantic commit without triggering new version
+
 - `git push -U origin <your-branch-name>`
 
   - A pre-push git hook will run your changes against the cypress testing suite to ensure passes
@@ -61,3 +68,5 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 
 - Log-in to Amplify console and confirm that the development branch is green.
   - If there are errors, fix them ASAP.
+
+# Testing

@@ -48,8 +48,10 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 
 - Create a `cypress.env.json` file in the root directory
 - Add the following to the `cypress.env.json` file (replace with your test account credentials):
+
   ```
   username: <Your-test-account-username>
+
   password: <Your-test-account-password>
   ```
 

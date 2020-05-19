@@ -35,22 +35,14 @@ function MarkdownEditor({ handleChange }) {
         width: "100%",
       }}
     >
-      <Col>
-        <Row>
-          <CodeEditor
-            mode="markdown"
-            handleChange={(e) => {
-              setContent(e);
-              handleChange(e);
-            }}
-          />
-        </Row>
-      </Col>
-      <Col>
-        <Row>
-          <MarkdownViewer markdownText={content}></MarkdownViewer>
-        </Row>
-      </Col>
+      <CodeEditor
+        mode="markdown"
+        handleChange={(e) => {
+          setContent(e);
+          handleChange(e);
+        }}
+      />
+      <MarkdownViewer markdownText={content}></MarkdownViewer>
     </SplitterLayout>
   );
 }

@@ -61,6 +61,7 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
       unityContent={unityContent}
       style={{
         width: "100%",
+        height: "100%",
         aspectRatio: 16 / 9,
       }}
     />

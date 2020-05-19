@@ -1,3 +1,9 @@
 .green-go-button {
-    background-color:#00FF00 ;
+  background-color: #00ff00;
+}
+
+.dark_control_buttons {
+  background-color: #575757;
+  border-color: #575757;
+  color: white;
 }

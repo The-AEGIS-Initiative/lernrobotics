@@ -80,19 +80,19 @@ function TopNavBar({ type }) {
           )}
 
           {!appContext.isAuth && (
-            <Menu.Item key="login/register">
+            <Menu.Item key="login/register" data-cy="login-register-link">
               <p>Login / Register</p>
             </Menu.Item>
           )}
 
           {appContext.isAuth && (
-            <Menu.Item key="logout">
+            <Menu.Item key="logout" data-cy="logout-link">
               <p>Logout</p>
             </Menu.Item>
           )}
 
           {appContext.isAuth && appContext.user_group === "admin" && (
-            <Menu.Item key="admin">
+            <Menu.Item key="admin" data-cy="admin-console-link">
               <Link to={"/admin"}>Admin Console</Link>
             </Menu.Item>
           )}

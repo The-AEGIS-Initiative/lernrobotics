@@ -6,6 +6,7 @@ import styles from "../style_modules/button.module.css";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-monokai";
+import "./code_editor.css";
 
 import { useHotkeys } from "react-hotkeys-hook";
 
@@ -40,23 +41,29 @@ function CodeEditor({ mode, placeholder, handleChange }) {
   }, [placeholder]);
 
   return (
-    <AceEditor
-      ref={editorRef}
-      mode={mode}
-      theme="monokai"
-      onChange={(value) => {
-        handleChange(value);
-        setContent(value);
+    <div
+      style={{
+        display: "flex",
+        height: "auto",
+        width: "100%",
       }}
-      value={content}
-      name="UNIQUE_ID_OF_DIV"
-      editorProps={{ $blockScrolling: true }}
-      showPrintMargin={false}
-      height="91vh"
-      width="100%"
-      fontSize="16px"
-      style={{ zIndex: 0 }}
-    />
+    >
+      <AceEditor
+        ref={editorRef}
+        mode={mode}
+        theme="monokai"
+        onChange={(value) => {
+          handleChange(value);
+          setContent(value);
+        }}
+        value={content}
+        name="UNIQUE_ID_OF_DIV"
+        editorProps={{ $blockScrolling: true }}
+        showPrintMargin={false}
+        fontSize="16px"
+        style={{ zIndex: 0 }}
+      />
+    </div>
   );
 }
 

@@ -6,7 +6,7 @@ import Unity from "react-unity-webgl";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
-import "./GamePage.css";
+import "./LevelBuilderPage.css";
 
 import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
@@ -23,6 +23,8 @@ import CodeEditor from "../components/code_editor";
 import MarkdownEditor from "../components/markdown_editor";
 
 import * as graphqlController from "../graphql/graphql-controller";
+
+import styles from "../style_modules/button.module.css";
 
 // Contains Unity game, code editor, and console
 function LevelBuilderPage({ unityContent, levelName }) {
@@ -94,64 +96,75 @@ function LevelBuilderPage({ unityContent, levelName }) {
   };
 
   return (
-    <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
-      <TopNavBar type="sub" levelName={levelName} />
-      <div type="flex" className="container">
-        <Tabs
-          tabPosition={"left"}
-          activeKey={tabKey}
-          onChange={handleTabChange}
-          style={{ color: "white", width: "100%", height: "100%" }}
+    <div className="container">
+      <TopNavBar type="sub" levelName={levelName} className="nav-container" />
+
+      <Tabs
+        tabPosition={"left"}
+        activeKey={tabKey}
+        onChange={handleTabChange}
+        className="content-container"
+      >
+        <TabPane tab="Game" key="1">
+          <UnityPlayer
+            unityContent={unityContent}
+            level_name="level_builder"
+            inFocus={tabKey == "1"}
+          />
+        </TabPane>
+        <TabPane tab="Default Code" key="2">
+          <CodeEditor
+            mode="python"
+            placeholder={defaultCodeContent}
+            handleChange={(value) => setDefaultCodeContent(value)}
+          />
+        </TabPane>
+        <TabPane tab="Prompt" key="3">
+          <MarkdownEditor
+            handleChange={(e) => {
+              setTaskContent(e);
+            }}
+          />
+        </TabPane>
+        <TabPane tab="Learn" key="4">
+          <MarkdownEditor
+            handleChange={(e) => {
+              setTutorialContent(e);
+            }}
+          />
+        </TabPane>
+        <TabPane tab="Help" key="5">
+          <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
+        </TabPane>
+
+        <TabPane tab="API " key="6">
+          <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
+        </TabPane>
+      </Tabs>
+
+      <div className="footer-container">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
         >
-          <TabPane tab="Game" key="1">
-            <UnityPlayer
-              unityContent={unityContent}
-              level_name="level_builder"
-              inFocus={tabKey == "1"}
-            />
-          </TabPane>
-          <TabPane tab="Default Code" key="2">
-            <CodeEditor
-              mode="python"
-              placeholder={defaultCodeContent}
-              handleChange={(value) => setDefaultCodeContent(value)}
-            />
-            <Row>
-              <Button
-                onClick={pushLevelData}
-                loading={gamePageContext.isLoading}
-              >
-                Save Level
-              </Button>
-              <Button
-                onClick={publishLevelData}
-                loading={gamePageContext.isLoading}
-              >
-                Publish Level
-              </Button>
-            </Row>
-          </TabPane>
-          <TabPane tab="Prompt" key="3">
-            <MarkdownEditor
-              handleChange={(e) => {
-                setTaskContent(e);
-              }}
-            />
-          </TabPane>
-          <TabPane tab="Learn" key="4">
-            <MarkdownEditor
-              handleChange={(e) => {
-                setTutorialContent(e);
-              }}
-            />
-          </TabPane>
-          <TabPane tab="Help" key="5">
-            <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
-          </TabPane>
-          <TabPane tab="API " key="6">
-            <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
-          </TabPane>
-        </Tabs>
+          <Button
+            onClick={pushLevelData}
+            loading={gamePageContext.isLoading}
+            className={styles.dark_control_buttons}
+          >
+            Save Level
+          </Button>
+          <Button
+            onClick={publishLevelData}
+            loading={gamePageContext.isLoading}
+            className={styles.dark_control_buttons}
+          >
+            Publish Level
+          </Button>
+        </div>
       </div>
     </div>
   );

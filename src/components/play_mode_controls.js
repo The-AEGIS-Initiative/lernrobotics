@@ -32,14 +32,17 @@ function PlayModeControls({ level_name }) {
   };
 
   return (
-    <div type="flex" style={{ justifyContent: "flex-end" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignContent: "flex-end",
+        justifyContent: "flex-end",
+      }}
+    >
       <Button
         type="primary"
-        style_module={styles.submit}
-        style={{
-          backgroundColor: "#575757",
-          borderColor: "#575757",
-        }}
+        className={styles.dark_control_buttons}
         loading={gamePageContext.isLoading}
         onClick={() => {
           stopUserCode();
@@ -49,8 +52,7 @@ function PlayModeControls({ level_name }) {
       </Button>
       <Button
         type="primary"
-        style_module={styles.submit}
-        style={{ backgroundColor: "#575757", borderColor: "#575757" }}
+        className={styles.dark_control_buttons}
         loading={gamePageContext.isLoading}
         onClick={() => {
           submitUserCode(gamePageContext.editorContent);

@@ -60,13 +60,9 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 ### Before making changes:
 
 - Run app using:
-
   - `npm start`
-
 - Run Robobot back-end in a 2nd terminal
-
 - Start cypress in a 3rd terminal:
-
   - `npm test`
 
 ### While making changes:

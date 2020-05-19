@@ -81,63 +81,58 @@ function GamePage({ unityContent, level }) {
   }, [gamePageContext.isLoading]);
 
   return (
-    <div style={{ flex: 1, height: "100vh", overflow: "scroll" }}>
-      <TopNavBar type="sub" />
-      <div type="flex" className="container">
-        <SplitterLayout
-          onDragEnd={() => {
-            setResizedflag(!resizedFlag);
-          }}
-        >
-          <Tabs tabPosition={"left"} style={{ color: "white", width: "100%" }}>
-            <TabPane tab="Game" key="1" style={{ width: "100%" }}>
-              <HorizontalSplitLayout
-                top_section={
-                  <UnityPlayer
-                    unityContent={unityContent}
-                    level_name={level}
-                    levelData={levelData}
-                  />
-                }
-                bottom_section={
-                  <ConsoleSection style={{ backgroundColor: "black" }} />
-                }
-                dependent="bottom"
-                parent_height={windowSize.height - 6}
-                update_flags={resizedFlag}
-              />
-            </TabPane>
-            <TabPane tab="Task" key="2">
-              <MarkdownViewer markdownText={task}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="Tutorial" key="3">
-              <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="Help" key="4">
-              <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="API " key="5">
-              <MarkdownViewer
-                markdownSrc={`/game_api_docs.md`}
-              ></MarkdownViewer>
-            </TabPane>
-          </Tabs>
-          <Col>
-            <Row>
-              <CodeEditor
-                mode="python"
-                placeholder={gamePageContext.editorContent}
-                handleChange={(value) =>
-                  gamePageContext.setEditorContent(value)
-                }
-              />
-            </Row>
-            <Row type="flex" style={{ justifyContent: "flex-end" }}>
-              <PlayModeControls level_name={level} />
-            </Row>
-          </Col>
-        </SplitterLayout>
-      </div>
+    <div className="container">
+      <TopNavBar type="sub" className="nav-container" />
+      <SplitterLayout
+        className="content-container"
+        onDragEnd={() => {
+          setResizedflag(!resizedFlag);
+        }}
+      >
+        <Tabs tabPosition={"left"} style={{ color: "white", width: "100%" }}>
+          <TabPane tab="Game" key="1">
+            <HorizontalSplitLayout
+              top_section={
+                <UnityPlayer
+                  unityContent={unityContent}
+                  level_name={level}
+                  levelData={levelData}
+                />
+              }
+              bottom_section={
+                <ConsoleSection style={{ backgroundColor: "black" }} />
+              }
+              dependent="bottom"
+              parent_height={windowSize.height - 6}
+              update_flags={resizedFlag}
+            />
+          </TabPane>
+          <TabPane tab="Task" key="2">
+            <MarkdownViewer markdownText={task}></MarkdownViewer>
+          </TabPane>
+          <TabPane tab="Tutorial" key="3">
+            <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
+          </TabPane>
+          <TabPane tab="Help" key="4">
+            <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
+          </TabPane>
+          <TabPane tab="API " key="5">
+            <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
+          </TabPane>
+        </Tabs>
+        <div className="right-section-container">
+          <div className="content-container">
+            <CodeEditor
+              mode="python"
+              placeholder={gamePageContext.editorContent}
+              handleChange={(value) => gamePageContext.setEditorContent(value)}
+            />
+          </div>
+          <div className="footer-container">
+            <PlayModeControls level_name={level} />
+          </div>
+        </div>
+      </SplitterLayout>
     </div>
   );
 }

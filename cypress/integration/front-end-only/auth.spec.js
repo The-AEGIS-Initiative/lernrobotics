@@ -4,7 +4,7 @@ describe("Login", () => {
   });
 
   it(`has a login button`, () => {
-    cy.contains("Login / Register");
+    cy.get("[data-cy=login-register-link]").should("exist");
   });
 
   it("visit login endpoint", () => {
@@ -12,10 +12,11 @@ describe("Login", () => {
   });
 
   it("should be able to login", () => {
-    cy.get(".username-input").type("test");
-    cy.get(".password-input").type("password");
-    cy.get(".sign-in-button").click();
-    cy.contains("Logout");
+    cy.get("[data-cy=username-input]").type("test");
+    cy.get("[data-cy=password-input]").type("password");
+    cy.get("[data-cy=sign-in-button]").click();
+    cy.get("[data-cy=logout-link]").should("exist");
+    cy.get("[data-cy=admin-console-link]").should("not.exist");
     cy.contains("Admin").should("not.exist");
   });
 });

@@ -34,8 +34,7 @@ test:
         - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
     test:
       commands:
-        - 'docker run -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock aegisinitiative/robobot-back-end:latest'
-        - 'npx cypress run --env baseUrl=$DEV_URL --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+        - 'npx start-test 'npm start' 3000 'npm run-script test:$USER_BRANCH'
     postTest:
       commands:
         - npx mochawesome-merge cypress/report/mochawesome-report/mochawesome*.json > cypress/report/mochawesome.json

@@ -12,8 +12,6 @@ import LoginPage from "./pages/LoginPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
-import connectSocket from "socket.io-client";
-import { registerInitEvent } from "./sockets/events.js";
 import { stopUserCode } from "./sockets/emit";
 
 import { GamePageProvider } from "./contexts/GamePageContext";
@@ -40,17 +38,6 @@ const MATHJAX_OPTIONS = {
   showMathMenu: false,
   showMathMenuMSIE: false,
 };
-
-// Configure and initialize socket connection to back-end
-if (process.env.REACT_APP_BACKEND_URL == null) {
-  var backEndURL = "http://localhost:8000";
-} else {
-  var backEndURL = process.env.REACT_APP_BACKEND_URL;
-}
-console.log("BACKEND_URL", backEndURL);
-export var socket = connectSocket(backEndURL);
-
-registerInitEvent(); // Get assigned container address
 
 // App component containing the entire application
 function App({ unityContent }) {

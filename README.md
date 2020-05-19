@@ -31,6 +31,28 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
     - Select your profile from Step 2
 - `amplify pull`
 
+## Step 3: Create a Robobot Account
+
+- Go to [https://development-robobot.aegisinitiative.io/](https://development-robobot.aegisinitiative.io/)
+
+- Create 2 accounts:
+
+  - General purpose developer admin account
+    - This is the account you will use when interacting with the app
+  - Test account
+    - This will be the test account Cypress uses to run tests. Do not use this account manually.
+
+- Contact an admin to give your developer account admin status
+
+## Step 4: Configure Cypress Environment
+
+- Create a `cypress.env.json` file in the root directory
+- Add the following to the `cypress.env.json` file (replace with your test account credentials):
+  ```
+  username: <Your-test-account-username>
+  password: <Your-test-account-password>
+  ```
+
 # Development Workflow
 
 ### Before making changes:
@@ -78,7 +100,7 @@ When your changes are complete, make a pull request into the `master` branch.
 - Log-in to the AWS Amplify console and confirm that the development branch is green.
   - If there are errors, fix them ASAP.
 
-# Testing
+# Writing Tests
 
 Cypress tests are stored in the `cypress/integration/` folder. This project breaks up the tests into 2 folders:
 

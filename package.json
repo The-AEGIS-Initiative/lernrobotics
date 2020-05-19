@@ -52,7 +52,6 @@
     "build:prod": "REACT_APP_BUILD_ENV=prod REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
     "test": "cypress open --env baseUrl=http://localhost:3000",
     "test:local": "cypress run --env baseUrl=http://localhost:3000",
-    "test:local:front-end-only": "cypress run --spec 'cypress/integration/front-end-only/*.spec.js' --env baseUrl=http://localhost:3000",
     "test:staging:": "cypress run --env baseUrl=$CYPRESS_BASE_URL --reporter mochawesome --reporter-options 'reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss'",
     "test:dev": "cypress run --spec 'cypress/integration/front-end-only/*.spec.js' --env baseUrl=$CYPRESS_BASE_URL --reporter mochawesome --reporter-options 'reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss'",
     "cypress:local": "run-p --race start e2e:local",
@@ -105,7 +104,7 @@
         "npx lint-staged"
       ],
       "pre-push": [
-        "npm run-script e2e:local"
+        "npm run-script test:local"
       ],
       "post-commit": [],
       "post-checkout": [],

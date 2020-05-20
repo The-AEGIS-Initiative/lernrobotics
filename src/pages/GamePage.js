@@ -46,11 +46,11 @@ function GamePage({ unityContent, level }) {
     async function fetchData() {
       const username = appContext.username;
       const level_name = level;
-
       // Fetch level data
       const levelData = await graphqlController.getLevel({
         level_name: level_name,
       });
+
       if (levelData.length == 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
@@ -59,26 +59,56 @@ function GamePage({ unityContent, level }) {
         setTask(levelData[0].task);
         setTutorial(levelData[0].tutorial);
         setLevelData(levelData[0].level_data);
+      }
 
-        // Fetch user progress
-        const progressData = await graphqlController.getProgress({
-          username: username,
-          level_name: level_name,
-        });
-        if (progressData.length == 0) {
-          // No user progress
-          gamePageContext.setEditorContent(levelData[0].default_code);
-        } else {
-          // Existing user progress
-          gamePageContext.setEditorContent(progressData[0].user_code);
-        }
+      // Fetch user progress
+      const progressData = await graphqlController.getProgress({
+        username: username,
+        level_name: level_name,
+      });
+
+      if (progressData.length == 0) {
+        // No user progress
+        gamePageContext.setEditorContent(levelData[0].default_code);
+      } else {
+        // Existing user progress
+        gamePageContext.setEditorContent(progressData[0].user_code);
       }
     }
+
     if (appContext.isAuth) {
       // Wrapper to call async function inside useEffect()
       fetchData();
+    } else {
+      fetchHelloWorld();
     }
   }, [gamePageContext.isLoading]);
+
+  const fetchHelloWorld = () => {
+    fetch("/level_specs/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setTutorial(data);
+      });
+
+    fetch("/prompts/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setTask(data);
+      });
+
+    fetch("/default_code/hello_world.py")
+      .then((r) => r.text())
+      .then((data) => {
+        gamePageContext.setEditorContent(data);
+      });
+
+    fetch("/level_specs/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setLevelData(data);
+      });
+  };
 
   return (
     <div className="container">

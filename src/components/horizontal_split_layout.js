@@ -42,7 +42,7 @@ function HorizontalSplitLayout({
 
   if (dependent === "top") {
     return (
-      <div>
+      <div style={{ width: "100%" }}>
         <div ref={topRef}>
           <Row
             style={{
@@ -58,7 +58,7 @@ function HorizontalSplitLayout({
     );
   } else {
     return (
-      <div>
+      <div style={{ width: "100%" }}>
         <div ref={topRef}>
           <Row>{top_section}</Row>
         </div>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Card, Button } from "antd";
 
+import LoginRegisterModal from "../components/login_register_modal";
 import GamePage from "./GamePage";
 import TopNavBar from "../components/top_nav_bar";
 import { AppContext } from "../contexts/AppContext";
@@ -55,9 +56,10 @@ function HomePage() {
           </Card>
         </ul>
       </nav>
-      <Button
+      <LoginRegisterModal />
+      {/**<Button
         onClick={async () => {
-          var jsonObject = await graphqlController.getLevelAsGuest({
+          var jsonObject = await graphqlController.getLevel({
             level_name: "hello_world",
           });
           console.log(jsonObject);
@@ -65,7 +67,7 @@ function HomePage() {
       >
         {" "}
         User{" "}
-      </Button>
+      </Button>*/}
     </div>
   );
 }

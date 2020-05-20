@@ -22,6 +22,7 @@ import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
 import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
+import LoginRegisterModal from "../components/login_register_modal";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
@@ -110,6 +111,8 @@ function GamePage({ unityContent, level }) {
       });
   };
 
+  const handleGuestLogin = () => {};
+
   return (
     <div className="container">
       <TopNavBar type="sub" className="nav-container" />
@@ -163,6 +166,7 @@ function GamePage({ unityContent, level }) {
           </div>
         </div>
       </SplitterLayout>
+      <LoginRegisterModal onSubmit={handleGuestLogin} />
     </div>
   );
 }

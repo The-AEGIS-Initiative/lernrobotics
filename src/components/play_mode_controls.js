@@ -23,11 +23,15 @@ function PlayModeControls({ level_name }) {
   // POST user code to graphql API
   const pushUserCode = () => {
     if (appContext.isAuth) {
+      submitUserCode(gamePageContext.editorContent);
       graphqlController.createProgress({
         username: appContext.username,
         level_name: level_name,
         user_code: gamePageContext.editorContent,
       });
+    } else {
+      // Guest user
+      appContext.setAuthModalVisible(true);
     }
   };
 
@@ -55,7 +59,6 @@ function PlayModeControls({ level_name }) {
         className={styles.dark_control_buttons}
         loading={gamePageContext.isLoading}
         onClick={() => {
-          submitUserCode(gamePageContext.editorContent);
           pushUserCode();
         }}
       >

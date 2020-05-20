@@ -13,6 +13,7 @@ export class AppContextProvider extends React.Component {
   constructor(props) {
     super(props);
     this.setAuth = this.setAuth.bind(this);
+    this.setAuthModalVisible = this.setAuthModalVisible.bind(this);
     this.state = {
       isAuth: false,
       setAuth: this.setAuth,
@@ -21,7 +22,13 @@ export class AppContextProvider extends React.Component {
       backENDURL: "",
       user: null,
       user_group: null,
+      authModalVisible: false,
+      setAuthModalVisible: this.setAuthModalVisible,
     };
+  }
+
+  setAuthModalVisible(isVisible) {
+    this.setState({ authModalVisible: isVisible });
   }
 
   async setAuth() {
@@ -40,6 +47,7 @@ export class AppContextProvider extends React.Component {
           user: user,
           user_group: user_group,
         });
+        this.setAuthModalVisible(false);
       })
       .catch((err) => {
         console.log("User Not logged in");

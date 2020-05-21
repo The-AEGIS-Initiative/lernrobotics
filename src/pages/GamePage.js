@@ -119,6 +119,7 @@ function GamePage({ unityContent, level }) {
 
   const handleGuestLogin = () => {};
 
+  // Necessary check to ensure unity content waits until level data is fetched
   if (levelData != "") {
     //console.log(`levelData: ${levelData}`);
     return (

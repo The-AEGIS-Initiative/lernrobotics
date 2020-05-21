@@ -37,6 +37,7 @@ function GamePage({ unityContent, level }) {
   const [task, setTask] = useState("");
   const [tutorial, setTutorial] = useState("");
   const [levelData, setLevelData] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const windowSize = useWindowSize();
 
@@ -48,20 +49,22 @@ function GamePage({ unityContent, level }) {
       const username = appContext.username;
       const level_name = level;
       // Fetch level data
-      const levelData = await graphqlController.getLevel({
+      const data = await graphqlController.getLevel({
         level_name: level_name,
       });
-
-      if (levelData.length == 0) {
+      if (data.length == 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
+        console.log("wefodi");
       } else {
         // Set task, tutorial, and leveldata content
-        setTask(levelData[0].task);
-        setTutorial(levelData[0].tutorial);
-        setLevelData(levelData[0].level_data);
+        setTask(data[0].task);
+        setTutorial(data[0].tutorial);
+        setLevelData(data[0].level_data);
       }
-
+      //console.log(`task: ${task}`);
+      //console.log(`levelData: ${levelData}`);
+      //console.log(`levelData2: ${data[0].level_data}`);
       // Fetch user progress
       const progressData = await graphqlController.getProgress({
         username: username,
@@ -70,7 +73,7 @@ function GamePage({ unityContent, level }) {
 
       if (progressData.length == 0) {
         // No user progress
-        gamePageContext.setEditorContent(levelData[0].default_code);
+        gamePageContext.setEditorContent(data[0].default_code);
       } else {
         // Existing user progress
         gamePageContext.setEditorContent(progressData[0].user_code);
@@ -83,9 +86,12 @@ function GamePage({ unityContent, level }) {
     } else {
       fetchHelloWorld();
     }
-  }, [gamePageContext.isLoading]);
+    setIsLoading(false);
+    //console.log(`levelData: ${levelData}`);
+  }, []);
 
   const fetchHelloWorld = () => {
+    console.log("fetching default level");
     fetch("/level_specs/hello_world.md")
       .then((r) => r.text())
       .then((data) => {
@@ -113,62 +119,71 @@ function GamePage({ unityContent, level }) {
 
   const handleGuestLogin = () => {};
 
-  return (
-    <div className="container">
-      <TopNavBar type="sub" className="nav-container" />
-      <SplitterLayout
-        className="content-container"
-        onDragEnd={() => {
-          setResizedflag(!resizedFlag);
-        }}
-      >
-        <Tabs tabPosition={"left"} style={{ color: "white", width: "100%" }}>
-          <TabPane tab="Game" key="1">
-            <HorizontalSplitLayout
-              top_section={
-                <UnityPlayer
-                  unityContent={unityContent}
-                  level_name={level}
-                  levelData={levelData}
-                />
-              }
-              bottom_section={
-                <ConsoleSection style={{ backgroundColor: "black" }} />
-              }
-              dependent="bottom"
-              parent_height={windowSize.height - 6}
-              update_flags={resizedFlag}
-            />
-          </TabPane>
-          <TabPane tab="Task" key="2">
-            <MarkdownViewer markdownText={task}></MarkdownViewer>
-          </TabPane>
-          <TabPane tab="Tutorial" key="3">
-            <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
-          </TabPane>
-          <TabPane tab="Help" key="4">
-            <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
-          </TabPane>
-          <TabPane tab="API " key="5">
-            <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
-          </TabPane>
-        </Tabs>
-        <div className="right-section-container">
-          <div className="content-container">
-            <CodeEditor
-              mode="python"
-              placeholder={gamePageContext.editorContent}
-              handleChange={(value) => gamePageContext.setEditorContent(value)}
-            />
+  if (levelData != "") {
+    //console.log(`levelData: ${levelData}`);
+    return (
+      <div className="container">
+        <TopNavBar type="sub" className="nav-container" />
+        <SplitterLayout
+          className="content-container"
+          onDragEnd={() => {
+            setResizedflag(!resizedFlag);
+          }}
+        >
+          <Tabs tabPosition={"left"} style={{ color: "white", width: "100%" }}>
+            <TabPane tab="Game" key="1">
+              <HorizontalSplitLayout
+                top_section={
+                  <UnityPlayer
+                    unityContent={unityContent}
+                    level_name={level}
+                    levelData={levelData}
+                  />
+                }
+                bottom_section={
+                  <ConsoleSection style={{ backgroundColor: "black" }} />
+                }
+                dependent="bottom"
+                parent_height={windowSize.height - 6}
+                update_flags={resizedFlag}
+              />
+            </TabPane>
+            <TabPane tab="Task" key="2">
+              <MarkdownViewer markdownText={task}></MarkdownViewer>
+            </TabPane>
+            <TabPane tab="Tutorial" key="3">
+              <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
+            </TabPane>
+            <TabPane tab="Help" key="4">
+              <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
+            </TabPane>
+            <TabPane tab="API " key="5">
+              <MarkdownViewer
+                markdownSrc={`/game_api_docs.md`}
+              ></MarkdownViewer>
+            </TabPane>
+          </Tabs>
+          <div className="right-section-container">
+            <div className="content-container">
+              <CodeEditor
+                mode="python"
+                placeholder={gamePageContext.editorContent}
+                handleChange={(value) =>
+                  gamePageContext.setEditorContent(value)
+                }
+              />
+            </div>
+            <div className="footer-container">
+              <PlayModeControls level_name={level} />
+            </div>
           </div>
-          <div className="footer-container">
-            <PlayModeControls level_name={level} />
-          </div>
-        </div>
-      </SplitterLayout>
-      <LoginRegisterModal onSubmit={handleGuestLogin} />
-    </div>
-  );
+        </SplitterLayout>
+        <LoginRegisterModal onSubmit={handleGuestLogin} />
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default GamePage;

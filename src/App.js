@@ -58,10 +58,10 @@ function App({ unityContent }) {
   return (
     <Switch>
       <Route exact path="/" component={HomePage} />
-      <Route
+      <ProtectedRoute
         exact
         path="/game/:level"
-        render={(props) => (
+        component={(props) => (
           <GamePageProvider>
             <GamePage
               unityContent={unityContent}
@@ -70,6 +70,7 @@ function App({ unityContent }) {
             />
           </GamePageProvider>
         )}
+        protection_level="user"
       />
       <Route exact path="/unauthorized" component={UnauthorizedPage} />
       <ProtectedRoute

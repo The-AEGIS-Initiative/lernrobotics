@@ -13,27 +13,26 @@ export function ProtectedRoute({
   const appContext = useContext(AppContext);
   const history = useHistory();
 
-  useEffect(() => {
-    if (!appContext.isAuth) {
-      checkAuthStatus();
-    }
-    async function checkAuthStatus() {
-      return await appContext.setAuth();
-    }
-  }, []);
-
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (
+        if (appContext.isLoadingAuth) {
+          console.log("Still loading auth state");
+          return <h1> Loading </h1>;
+        } else if (
+          !appContext.isLoadingAuth &&
           appContext.user &&
           protection_level === "admin" &&
           appContext.user_group === "admin"
         ) {
           console.log("Admin protected route access authorized ");
           return <Component {...rest} {...props} />;
-        } else if (appContext.user && protection_level === "user") {
+        } else if (
+          !appContext.isLoadingAuth &&
+          appContext.user &&
+          protection_level === "user"
+        ) {
           console.log("User protected route access authorized ");
           return <Component {...rest} {...props} />;
         } else {

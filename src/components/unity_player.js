@@ -3,13 +3,13 @@ import Unity from "react-unity-webgl";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { UnityContent } from "react-unity-webgl";
 
-function UnityPlayer({ unityContent, level_name, inFocus }) {
+function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   const gamePageContext = useContext(GamePageContext);
 
   useEffect(() => {
     // When unity webgl has loaded, send assigned port
     // to unity so that unity knows which websocket to connect
-
+    //console.log(`levelData: ${levelData}`);
     unityContent.on("Loaded", () => {
       gamePageContext.setLoading(false);
 
@@ -24,7 +24,8 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
         }
 
         console.log(url);
-        const dataPacket = `${url},${level_name}`;
+        console.log(`levelData: ${levelData}`);
+        const dataPacket = `${url};blank_scene;${levelData}`;
 
         // Send url to unity webgl
         // See the following for details:
@@ -55,7 +56,7 @@ function UnityPlayer({ unityContent, level_name, inFocus }) {
       unityContent.send("WebSocket Manager", "SetKeyboardInput", "false");
     }
   };
-
+  //console.log(`levelData: ${levelData}`);
   return (
     <Unity
       unityContent={unityContent}

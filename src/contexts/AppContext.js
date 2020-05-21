@@ -14,7 +14,10 @@ export class AppContextProvider extends React.Component {
     super(props);
     this.setAuth = this.setAuth.bind(this);
     this.setAuthModalVisible = this.setAuthModalVisible.bind(this);
+
     this.state = {
+      loadingAuth: true,
+      setLoadingAuth: this.setLoadingAuth,
       isAuth: false,
       setAuth: this.setAuth,
       checkAuth: this.setAuth,
@@ -31,7 +34,29 @@ export class AppContextProvider extends React.Component {
     this.setState({ authModalVisible: isVisible });
   }
 
+  checkAuthStatusCache() {
+    const userCookie = localStorage.getItem("user");
+    if (userCookie == null || userCookie == false) {
+      this.setState({
+        isAuth: false,
+        username: "",
+        user: null,
+        user_group: null,
+      });
+      return false;
+    } else {
+      this.setState({
+        isAuth: true,
+        username: userCookie.username,
+        user_group: userCookie.user_group,
+      });
+      return true;
+    }
+  }
+
   async setAuth() {
+    //checkAuthStatusCache();
+
     await Auth.currentAuthenticatedUser()
       .then((user) => {
         //console.log(user);
@@ -46,8 +71,13 @@ export class AppContextProvider extends React.Component {
           username: user.username,
           user: user,
           user_group: user_group,
+          isLoadingAuth: false,
         });
-        this.setAuthModalVisible(false);
+        //this.setAuthModalVisible(false);
+        localStorage.setItem("user", {
+          username: user.username,
+          user_group: user_group,
+        });
       })
       .catch((err) => {
         console.log("User Not logged in");
@@ -57,7 +87,10 @@ export class AppContextProvider extends React.Component {
           username: "",
           user: null,
           user_group: null,
+          isLoadingAuth: false,
+          authModalVisible: false,
         });
+        localStorage.setItem("user", null);
       });
   }
 

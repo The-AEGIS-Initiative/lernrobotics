@@ -25,7 +25,11 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
 
         console.log(url);
         console.log(`levelData: ${levelData}`);
-        const dataPacket = `${url};blank_scene;${levelData}`;
+
+        if (level_name != "level_builder") {
+          level_name = "blank_scene";
+        }
+        const dataPacket = `${url};${level_name};${levelData}`;
 
         // Send url to unity webgl
         // See the following for details:

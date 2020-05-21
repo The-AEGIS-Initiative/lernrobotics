@@ -26,7 +26,7 @@ export class AppContextProvider extends React.Component {
       user: null,
       user_group: null,
       authModalVisible: false,
-      setAuthModalVisible: this.setAuthModalVisible,
+      setAuthModalVisible: false,
     };
   }
 

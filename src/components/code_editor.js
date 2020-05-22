@@ -17,7 +17,7 @@ import { submitUserCode, stopUserCode } from "../sockets/emit";
  * Code editor
  */
 
-function CodeEditor({ mode, placeholder, handleChange }) {
+function CodeEditor({ mode, placeholder, handleChange, isLoading }) {
   const editorRef = useRef();
 
   const [content, setContent] = useState(placeholder);
@@ -39,6 +39,10 @@ function CodeEditor({ mode, placeholder, handleChange }) {
   useEffect(() => {
     setContent(placeholder);
   }, [placeholder]);
+
+  useEffect(() => {
+    editorRef.current.editor.resize();
+  }, [isLoading]);
 
   return (
     <div

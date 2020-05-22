@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #bae2f8;
+  height: 100vh;
+}
+
+.banner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #5ab9ea;
+  padding: 50px;
+}
+
+.banner-container .heading {
+  flex: 1;
+  font-size: 48px;
+  color: white;
+  font-family: Bebas Neue, cursive;
+}
+
+.banner-container .description {
+  font-size: 18px;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}

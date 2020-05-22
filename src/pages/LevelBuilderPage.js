@@ -122,8 +122,14 @@ function LevelBuilderPage({ unityContent, levelName }) {
     console.log(`taskContent: ${taskContent}`);
     console.log(`tutorialContent: ${tutorialContent}`);
     return (
-      <div className="container">
-        <TopNavBar type="sub" levelName={levelName} className="nav-container" />
+      <div className="level-builder-container">
+        <TopNavBar
+          type="sub"
+          levelName={levelName}
+          className="nav-container"
+          backgroundColor="#222222"
+          theme="dark"
+        />
 
         <Tabs
           tabPosition={"left"}

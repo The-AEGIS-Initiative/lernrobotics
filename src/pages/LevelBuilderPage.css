@@ -5,7 +5,7 @@ body,
   margin: 0;
 }
 
-.container {
+.level-builder-container {
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -20,6 +20,7 @@ body,
   display: flex;
   flex: 1 1 auto;
 }
+
 .footer-container {
   flex: 0 1 auto;
 }

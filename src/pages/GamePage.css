@@ -5,7 +5,7 @@ body,
   margin: 0;
 }
 
-.container {
+.game-container {
   display: flex;
   flex-flow: column;
   height: 100%;

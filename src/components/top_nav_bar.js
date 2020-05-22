@@ -13,8 +13,9 @@ import { Auth } from "aws-amplify";
 
 /**
  * Main navigation bar
+ * theme: dark or light
  */
-function TopNavBar({ type }) {
+function TopNavBar({ type, theme, backgroundColor }) {
   const [currentTab, setCurrentTab] = useState("");
   const appContext = useContext(AppContext);
 
@@ -63,14 +64,14 @@ function TopNavBar({ type }) {
           onClick={handleClick}
           selectedKeys={[currentTab]}
           mode="horizontal"
-          theme="dark"
+          theme={theme}
           style={{
             width: "100vw",
             display: "flex",
             flex: 1,
             alignContent: "center",
             justifyContent: "flex-end",
-            backgroundColor: "#222222",
+            backgroundColor: backgroundColor,
             lineHeight: lineHeight,
           }}
         >

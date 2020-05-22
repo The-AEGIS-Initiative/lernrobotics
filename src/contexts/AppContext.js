@@ -26,7 +26,7 @@ export class AppContextProvider extends React.Component {
       user: null,
       user_group: null,
       authModalVisible: false,
-      setAuthModalVisible: false,
+      setAuthModalVisible: this.setAuthModalVisible,
     };
   }
 
@@ -72,6 +72,7 @@ export class AppContextProvider extends React.Component {
           user: user,
           user_group: user_group,
           isLoadingAuth: false,
+          authModalVisible: false,
         });
         //this.setAuthModalVisible(false);
         localStorage.setItem("user", {

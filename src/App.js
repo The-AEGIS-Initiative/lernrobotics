@@ -9,6 +9,7 @@ import UnauthorizedPage from "./pages/UnauthorizedPage";
 import AdminPage from "./pages/AdminPage";
 import LevelBuilderPage from "./pages/LevelBuilderPage";
 import LoginPage from "./pages/LoginPage";
+import StartPage from "./pages/StartPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
@@ -57,7 +58,8 @@ function App({ unityContent }) {
 
   return (
     <Switch>
-      <Route exact path="/" component={HomePage} />
+      <Route exact path="/" component={StartPage} />
+      <Route exact path="/home" component={HomePage} />
       <ProtectedRoute
         exact
         path="/game/:level"

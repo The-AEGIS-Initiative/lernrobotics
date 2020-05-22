@@ -123,8 +123,13 @@ function GamePage({ unityContent, level }) {
   if (levelData != "") {
     //console.log(`levelData: ${levelData}`);
     return (
-      <div className="container">
-        <TopNavBar type="sub" className="nav-container" />
+      <div className="game-container">
+        <TopNavBar
+          type="sub"
+          className="nav-container"
+          theme="dark"
+          backgroundColor="#222222"
+        />
         <SplitterLayout
           className="content-container"
           onDragEnd={() => {

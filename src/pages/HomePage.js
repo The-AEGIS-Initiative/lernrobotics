@@ -1,5 +1,5 @@
-import React, { useRef, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useContext, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import { Card, Button } from "antd";
 
@@ -15,10 +15,19 @@ const { Meta } = Card;
 
 function HomePage() {
   const appContext = useContext(AppContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!appContext.isAuth) {
+      history.push("/");
+    }
+  }, [appContext.isAuth]);
+
+  const navBarColor = "#3a608d";
 
   return (
     <div style={{ backgroundColor: "#b2c4d9", height: "100vh" }}>
-      <TopNavBar type="main" />
+      <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
       <nav>
         <ul
           style={{

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 
 import { Row, Col, Tabs } from "antd";
 
@@ -23,6 +23,7 @@ import HorizontalSplitLayout from "../components/horizontal_split_layout";
 import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 import LoginRegisterModal from "../components/login_register_modal";
+import LoadingScreen from "../components/loading_screen";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
@@ -38,6 +39,8 @@ function GamePage({ unityContent, level }) {
   const [tutorial, setTutorial] = useState("");
   const [levelData, setLevelData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const editorRef = useRef(null);
 
   const windowSize = useWindowSize();
 
@@ -123,68 +126,80 @@ function GamePage({ unityContent, level }) {
   if (levelData != "") {
     //console.log(`levelData: ${levelData}`);
     return (
-      <div className="game-container">
-        <TopNavBar
-          type="sub"
-          className="nav-container"
-          theme="dark"
-          backgroundColor="#222222"
-        />
-        <SplitterLayout
-          className="content-container"
-          onDragEnd={() => {
-            setResizedflag(!resizedFlag);
-          }}
+      <div style={{ overflow: "hidden", height: "100vh" }}>
+        <div
+          className="game-container"
+          style={{ opacity: gamePageContext.isLoading ? 0 : 1 }}
         >
-          <Tabs tabPosition={"left"} style={{ color: "white", width: "100%" }}>
-            <TabPane tab="Game" key="1">
-              <HorizontalSplitLayout
-                top_section={
-                  <UnityPlayer
-                    unityContent={unityContent}
-                    level_name={level}
-                    levelData={levelData}
-                  />
-                }
-                bottom_section={
-                  <ConsoleSection style={{ backgroundColor: "black" }} />
-                }
-                dependent="bottom"
-                parent_height={windowSize.height - 6}
-                update_flags={resizedFlag}
-              />
-            </TabPane>
-            <TabPane tab="Task" key="2">
-              <MarkdownViewer markdownText={task}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="Tutorial" key="3">
-              <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="Help" key="4">
-              <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="API " key="5">
-              <MarkdownViewer
-                markdownSrc={`/game_api_docs.md`}
-              ></MarkdownViewer>
-            </TabPane>
-          </Tabs>
-          <div className="right-section-container">
-            <div className="content-container">
-              <CodeEditor
-                mode="python"
-                placeholder={gamePageContext.editorContent}
-                handleChange={(value) =>
-                  gamePageContext.setEditorContent(value)
-                }
-              />
+          <TopNavBar
+            type="sub"
+            className="nav-container"
+            theme="dark"
+            backgroundColor="#222222"
+          />
+          <SplitterLayout
+            className="content-container"
+            onDragEnd={() => {
+              setResizedflag(!resizedFlag);
+            }}
+          >
+            <Tabs
+              tabPosition={"left"}
+              style={{ color: "white", width: "100%" }}
+            >
+              <TabPane tab="Game" key="1">
+                <HorizontalSplitLayout
+                  top_section={
+                    <UnityPlayer
+                      unityContent={unityContent}
+                      level_name={level}
+                      levelData={levelData}
+                    />
+                  }
+                  bottom_section={
+                    <ConsoleSection style={{ backgroundColor: "black" }} />
+                  }
+                  dependent="bottom"
+                  parent_height={windowSize.height - 6}
+                  update_flags={resizedFlag}
+                />
+              </TabPane>
+              <TabPane tab="Task" key="2">
+                <MarkdownViewer markdownText={task}></MarkdownViewer>
+              </TabPane>
+              <TabPane tab="Tutorial" key="3">
+                <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
+              </TabPane>
+              <TabPane tab="Help" key="4">
+                <MarkdownViewer
+                  markdownSrc={`/instructions.md`}
+                ></MarkdownViewer>
+              </TabPane>
+              <TabPane tab="API " key="5">
+                <MarkdownViewer
+                  markdownSrc={`/game_api_docs.md`}
+                ></MarkdownViewer>
+              </TabPane>
+            </Tabs>
+            <div className="right-section-container">
+              <div className="content-container">
+                <CodeEditor
+                  mode="python"
+                  placeholder={gamePageContext.editorContent}
+                  handleChange={(value) =>
+                    gamePageContext.setEditorContent(value)
+                  }
+                  isLoading={gamePageContext.isLoading}
+                />
+              </div>
+              <div className="footer-container">
+                <PlayModeControls level_name={level} />
+              </div>
             </div>
-            <div className="footer-container">
-              <PlayModeControls level_name={level} />
-            </div>
-          </div>
-        </SplitterLayout>
-        <LoginRegisterModal onSubmit={handleGuestLogin} />
+          </SplitterLayout>
+          <LoginRegisterModal onSubmit={handleGuestLogin} />
+        </div>
+        {gamePageContext.isLoading && <LoadingScreen />}
       </div>
     );
   } else {

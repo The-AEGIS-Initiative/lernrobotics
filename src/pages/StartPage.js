@@ -24,7 +24,7 @@ function StartPage() {
   const navBarColor = "#e6ffff";
 
   return (
-    <div className="container">
+    <div className="start-page-container">
       <TopNavBar type="main" backgroundColor={navBarColor} theme="light" />
       <div className="banner-container">
         <div className="text-container">
@@ -38,17 +38,7 @@ function StartPage() {
             onClick={() => {
               appContext.setAuthModalVisible(true);
             }}
-            style={{
-              width: "150px",
-              height: "50px",
-              fontSize: "15px",
-              fontWeight: "bold",
-              color: "white",
-              backgroundColor: "#3cc732",
-              marginTop: "20px",
-              border: "0",
-              fontFamily: "Open Sans",
-            }}
+            className="start-button"
           >
             GET STARTED!
           </Button>
@@ -85,6 +75,25 @@ function StartPage() {
             </div>
           </SplitContainer>
         </div>
+      </div>
+
+      <div className="text-container">
+        <SplitContainer leftSize={9}>
+          <div style={{ width: "100%" }}>
+            <h2> Excited? </h2>
+            <Button
+              onClick={() => {
+                appContext.setAuthModalVisible(true);
+              }}
+              className="start-button"
+            >
+              GET STARTED!
+            </Button>
+          </div>
+          <div>
+            <img src="/assets/tutorial_page.png" />
+          </div>
+        </SplitContainer>
       </div>
 
       <LoginRegisterModal />

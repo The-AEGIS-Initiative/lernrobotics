@@ -1,4 +1,8 @@
-.container {
+html {
+  --default-black-color: #1d2b36;
+}
+
+.start-page-container {
   display: flex;
   flex-direction: column;
   background-color: #bae2f8;
@@ -39,14 +43,14 @@
 
 .split-container p {
   font-size: 16px;
-  color: black;
+  color: var(--default-black-color);
   font-weight: 300;
   font-family: "Montserrat", sans-serif;
 }
 
 .split-container div h2 {
   font-size: 30px;
-  color: black;
+  color: var(--default-black-color);
   font-weight: 400 !important;
   font-family: "Monserrat", sans-serif !important;
   margin-bottom: 0px;
@@ -61,5 +65,20 @@
 
 img {
   width: 100%;
-  padding: 20px;
+}
+
+.left-col img {
+  padding-right: 30px;
+}
+
+.start-page-container .start-button {
+  width: 150px;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  background-color: #3cc732;
+  margin-top: 20px;
+  border: 0;
+  font-family: Open Sans, sans-serif;
 }

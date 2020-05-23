@@ -3,6 +3,7 @@ import { Card, Button } from "antd";
 import { Link } from "react-router-dom";
 
 import "./level_card.css";
+import styles from "../style.module.css";
 
 const { Meta } = Card;
 
@@ -19,7 +20,7 @@ function LevelCard({ title, description, link }) {
       >
         <Meta title={title} description={description} />
 
-        <Button className="button">
+        <Button className={`${styles.ui_font} button`}>
           <Link to={link}>Start</Link>
         </Button>
       </Card>

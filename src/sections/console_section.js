@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import { Hook, Console, Decode } from "console-feed";
 import { GamePageContext } from "../contexts/GamePageContext";
 
+import styles from "../style.module.css";
+
 function ConsoleSection({ height, width }) {
   const gamePageContext = useContext(GamePageContext);
 
@@ -35,7 +37,11 @@ function ConsoleSection({ height, width }) {
 
   return (
     <div style={{ height: `100%`, width: "100%" }}>
-      <button style={{ color: "black" }} onClick={() => setLogs((logs) => [])}>
+      <button
+        style={{ position: "absolute", margin: 0, right: 0, zIndex: "1" }}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
+        onClick={() => setLogs((logs) => [])}
+      >
         Clear
       </button>
       <div

@@ -7,8 +7,9 @@ import LoginRegisterModal from "../components/login_register_modal";
 import TopNavBar from "../components/top_nav_bar";
 import { AppContext } from "../contexts/AppContext";
 import { Auth } from "aws-amplify";
-
+import SplitContainer from "../components/split_container";
 import "./StartPage.css";
+import styles from "../style.module.css";
 
 function StartPage() {
   const appContext = useContext(AppContext);
@@ -20,34 +21,72 @@ function StartPage() {
     }
   }, [appContext.isAuth]);
 
-  const navBarColor = "#ffffff";
+  const navBarColor = "#e6ffff";
 
   return (
     <div className="container">
       <TopNavBar type="main" backgroundColor={navBarColor} theme="light" />
       <div className="banner-container">
-        <h1 className="heading">Learn Robotics in your Browser</h1>
-        <h4 className="description">
-          We provide an educational robotics environment in your browser where
-          you can program your own autonomous robot.
-        </h4>
-        <Button
-          onClick={() => {
-            Auth.federatedSignIn();
-          }}
-          style={{
-            width: "150px",
-            height: "50px",
-            fontWeight: "bold",
-            color: "white",
-            backgroundColor: "#32CD32",
-            marginTop: "20px",
-            border: "0",
-          }}
-        >
-          GET STARTED!
-        </Button>
+        <div className="text-container">
+          <h1 className="heading">Learn Robotics in your Browser</h1>
+          <h4 className="description">
+            We provide an educational robotics environment in your browser where
+            you can program your own autonomous robot to accomplish challenging
+            tasks and compete with other robots.
+          </h4>
+          <Button
+            onClick={() => {
+              appContext.setAuthModalVisible(true);
+            }}
+            style={{
+              width: "150px",
+              height: "50px",
+              fontSize: "15px",
+              fontWeight: "bold",
+              color: "white",
+              backgroundColor: "#3cc732",
+              marginTop: "20px",
+              border: "0",
+              fontFamily: "Open Sans",
+            }}
+          >
+            GET STARTED!
+          </Button>
+        </div>
       </div>
+      <div className="text-container">
+        <SplitContainer leftSize={9}>
+          <div>
+            <h2> Learn </h2>
+            <p>
+              {" "}
+              Learn applied concepts and algorithms in Robotics in our hands-on
+              educational tutorials.{" "}
+            </p>
+          </div>
+          <div>
+            <img src="/assets/tutorial_page.png" />
+          </div>
+        </SplitContainer>
+      </div>
+
+      <div className="alt-container-background">
+        <div className="text-container">
+          <SplitContainer leftSize={15}>
+            <div>
+              <img src="/assets/game_page.png" />
+            </div>
+            <div>
+              <h2> Compete </h2>
+              <p>
+                Challenge yourself in our robotics competitions and see the
+                results of your hardwork.
+              </p>
+            </div>
+          </SplitContainer>
+        </div>
+      </div>
+
       <LoginRegisterModal />
     </div>
   );

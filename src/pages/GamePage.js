@@ -6,8 +6,8 @@ import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 
 import "./GamePage.css";
+import styles from "../style.module.css";
 
-import GameSection from "../sections/game_section";
 import ConsoleSection from "../sections/console_section";
 
 import { GamePageContext } from "../contexts/GamePageContext";
@@ -170,7 +170,7 @@ function GamePage({ unityContent, level }) {
               <TabPane tab="Tutorial" key="3">
                 <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
               </TabPane>
-              <TabPane tab="Help" key="4">
+              <TabPane tab="FAQ" key="4">
                 <MarkdownViewer
                   markdownSrc={`/instructions.md`}
                 ></MarkdownViewer>

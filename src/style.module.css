@@ -1,0 +1,17 @@
+.green-go-button {
+  background-color: #00ff00;
+}
+
+.dark_buttons {
+  background-color: #575757 !important;
+  border: 0 !important;
+  border-color: #575757 !important;
+  color: white !important;
+  margin: 1px;
+  width: 75px;
+  height: 32px;
+}
+
+.ui_font {
+  font-family: "Open Sans", sans-serif !important;
+}

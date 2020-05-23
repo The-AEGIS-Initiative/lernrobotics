@@ -62,6 +62,9 @@ body,
   height: 100%;
 }
 
+.ant-tabs-tab {
+  font-family: "Open Sans", sans-serif !important;
+}
 .ant-tabs-bar {
   height: 100%;
   color: white;

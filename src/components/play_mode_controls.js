@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { Row, Col, Button } from "antd";
-import styles from "../style_modules/button.module.css";
+import styles from "../style.module.css";
 
 import { postData, getData } from "../components/HttpController";
 import { submitUserCode, stopUserCode } from "../sockets/emit";
@@ -46,7 +46,7 @@ function PlayModeControls({ level_name }) {
     >
       <Button
         type="primary"
-        className={styles.dark_control_buttons}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
         loading={gamePageContext.isLoading}
         onClick={() => {
           stopUserCode();
@@ -56,7 +56,7 @@ function PlayModeControls({ level_name }) {
       </Button>
       <Button
         type="primary"
-        className={styles.dark_control_buttons}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
         loading={gamePageContext.isLoading}
         onClick={() => {
           pushUserCode();

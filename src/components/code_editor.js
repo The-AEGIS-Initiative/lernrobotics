@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 
 import { Row, Col, Button } from "antd";
-import styles from "../style_modules/button.module.css";
+import styles from "../style.module.css";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";

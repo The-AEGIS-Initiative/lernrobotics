@@ -7,6 +7,7 @@ import Unity from "react-unity-webgl";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import "./LevelBuilderPage.css";
+import styles from "../style.module.css";
 
 import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
@@ -23,8 +24,6 @@ import CodeEditor from "../components/code_editor";
 import MarkdownEditor from "../components/markdown_editor";
 
 import * as graphqlController from "../graphql/graphql-controller";
-
-import styles from "../style_modules/button.module.css";
 
 // Contains Unity game, code editor, and console
 function LevelBuilderPage({ unityContent, levelName }) {
@@ -188,14 +187,14 @@ function LevelBuilderPage({ unityContent, levelName }) {
             <Button
               onClick={pushLevelData}
               loading={gamePageContext.isLoading}
-              className={styles.dark_control_buttons}
+              className={styles.buttons}
             >
               Save Level
             </Button>
             <Button
               onClick={publishLevelData}
               loading={gamePageContext.isLoading}
-              className={styles.dark_control_buttons}
+              className={styles.buttons}
             >
               Publish Level
             </Button>

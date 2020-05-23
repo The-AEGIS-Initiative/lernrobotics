@@ -11,6 +11,8 @@ import { AppContext } from "../contexts/AppContext";
 
 import { Auth } from "aws-amplify";
 
+import styles from "../style.module.css";
+
 /**
  * Main navigation bar
  * theme: dark or light
@@ -77,25 +79,29 @@ function TopNavBar({ type, theme, backgroundColor }) {
         >
           {!(type === "main") && (
             <Menu.Item key="back" style={{ marginRight: "auto" }}>
-              <Link to={"/"}>Home</Link>
+              <Link to={"/"} className={`${styles.ui_font}`}>
+                Home
+              </Link>
             </Menu.Item>
           )}
 
           {!appContext.isAuth && (
             <Menu.Item key="login/register" data-cy="login-register-link">
-              <p>Login / Register</p>
+              <p className={`${styles.ui_font}`}>Login / Register</p>
             </Menu.Item>
           )}
 
           {appContext.isAuth && (
             <Menu.Item key="logout" data-cy="logout-link">
-              <p>Logout</p>
+              <p className={`${styles.ui_font}`}>Logout</p>
             </Menu.Item>
           )}
 
           {appContext.isAuth && appContext.user_group === "admin" && (
             <Menu.Item key="admin" data-cy="admin-console-link">
-              <Link to={"/admin"}>Admin Console</Link>
+              <Link to={"/admin"} className={`${styles.ui_font}`}>
+                Admin Console
+              </Link>
             </Menu.Item>
           )}
         </Menu>

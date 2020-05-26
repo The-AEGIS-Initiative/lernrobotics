@@ -65,17 +65,17 @@ function HomePage() {
           </ul>
         </nav>
         <LoginRegisterModal />
-        {/**<Button
-        onClick={async () => {
-          var jsonObject = await graphqlController.getLevel({
-            level_name: "hello_world",
-          });
-          console.log(jsonObject);
-        }}
-      >
-        {" "}
-        User{" "}
-      </Button>*/}
+        {
+          <Button
+            onClick={async () => {
+              var jsonObject = await graphqlController.listLevels();
+              console.log(jsonObject);
+            }}
+          >
+            {" "}
+            User{" "}
+          </Button>
+        }
       </div>
     </div>
   );

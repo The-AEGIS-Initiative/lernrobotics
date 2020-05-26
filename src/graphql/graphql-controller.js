@@ -106,6 +106,15 @@ export const createPublishedLevel = async ({
   );
 };
 
+// List all levels
+export const listLevels = async () => {
+  const data = await API.graphql(graphqlOperation(queries.listLevels));
+
+  const levelData = data.data.listLevels.items;
+  console.log(levelData);
+  return levelData;
+};
+
 // Get level data
 export const getLevel = async ({ level_name }) => {
   const data = await API.graphql(

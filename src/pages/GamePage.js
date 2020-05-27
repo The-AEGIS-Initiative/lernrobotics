@@ -43,6 +43,7 @@ function GamePage({ unityContent, level }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [gameOverMsg, setGameOverMsg] = useState("");
   const [gameOverVisible, setGameOverVisible] = useState(false);
+  const [timeTaken, setTimeTaken] = useState(0);
 
   const editorRef = useRef(null);
 
@@ -130,6 +131,7 @@ function GamePage({ unityContent, level }) {
       const data = JSON.parse(gameOverJson);
       setIsSuccess(data.isSuccess);
       setGameOverMsg(data.message);
+      setTimeTaken(data.timeTaken);
       setGameOverVisible(true);
     });
   }, []);
@@ -216,7 +218,7 @@ function GamePage({ unityContent, level }) {
         {gamePageContext.isLoading && <LoadingScreen />}
         <GameOverModal
           visible={gameOverVisible}
-          message={gameOverMsg}
+          message={`${gameOverMsg};Time taken: ${timeTaken} seconds`}
           isSuccess={isSuccess}
         />
       </div>

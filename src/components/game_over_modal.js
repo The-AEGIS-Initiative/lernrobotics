@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Text, useState, useEffect } from "react";
 import { Modal } from "antd";
 
 import "./game_over_modal.css";
@@ -23,7 +23,9 @@ function GameOverModal({ visible, isSuccess, message }) {
           setVisibleState(false);
         }}
       >
-        {message}
+        {message.split(";").map((value, index) => {
+          return <p>{value}</p>;
+        })}
       </Modal>
     </div>
   );

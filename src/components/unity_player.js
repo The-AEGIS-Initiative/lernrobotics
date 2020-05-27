@@ -24,7 +24,7 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
         }
 
         console.log(url);
-        console.log(`levelData: ${levelData}`);
+        // console.log(`levelData: ${levelData}`);
 
         if (level_name != "level_builder") {
           level_name = "blank_scene";

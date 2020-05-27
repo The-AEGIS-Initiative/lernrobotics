@@ -24,6 +24,7 @@ import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 import LoginRegisterModal from "../components/login_register_modal";
 import LoadingScreen from "../components/loading_screen";
+import GameOverModal from "../components/game_over_modal";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
@@ -39,6 +40,9 @@ function GamePage({ unityContent, level }) {
   const [tutorial, setTutorial] = useState("");
   const [levelData, setLevelData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [gameOverMsg, setGameOverMsg] = useState("");
+  const [gameOverVisible, setGameOverVisible] = useState(false);
 
   const editorRef = useRef(null);
 
@@ -120,6 +124,16 @@ function GamePage({ unityContent, level }) {
       });
   };
 
+  useEffect(() => {
+    unityContent.on("GameOver", (gameOverJson) => {
+      console.log(gameOverJson);
+      const data = JSON.parse(gameOverJson);
+      setIsSuccess(data.isSuccess);
+      setGameOverMsg(data.message);
+      setGameOverVisible(true);
+    });
+  }, []);
+
   const handleGuestLogin = () => {};
 
   // Necessary check to ensure unity content waits until level data is fetched
@@ -200,6 +214,11 @@ function GamePage({ unityContent, level }) {
           <LoginRegisterModal onSubmit={handleGuestLogin} />
         </div>
         {gamePageContext.isLoading && <LoadingScreen />}
+        <GameOverModal
+          visible={gameOverVisible}
+          message={gameOverMsg}
+          isSuccess={isSuccess}
+        />
       </div>
     );
   } else {

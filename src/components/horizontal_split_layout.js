@@ -32,11 +32,11 @@ function HorizontalSplitLayout({
         var height = topRef.current.offsetHeight;
         var width = topRef.current.offsetWidth;
       }
-      console.log(`height: ${height}`);
+      //console.log(`height: ${height}`);
       setDependentHeight(parent_height - height);
       setDependentWidth(width);
-      console.log(`dependentHeight: ${dependentHeight}`);
-      console.log(`dependentWidth: ${dependentWidth}`);
+      //console.log(`dependentHeight: ${dependentHeight}`);
+      //console.log(`dependentWidth: ${dependentWidth}`);
     }
   }, [update_flag, dependent, parent_height, dependentHeight, dependentWidth]);
 

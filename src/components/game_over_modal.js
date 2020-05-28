@@ -16,6 +16,7 @@ function GameOverModal({ visible, isSuccess, message }) {
         className="game-over-modal"
         title={isSuccess ? "Success!" : "Try Again!"}
         visible={visibleState}
+        footer={null}
         onOk={() => {
           setVisibleState(false);
         }}

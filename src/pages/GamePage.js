@@ -25,6 +25,7 @@ import CodeEditor from "../components/code_editor";
 import LoginRegisterModal from "../components/login_register_modal";
 import LoadingScreen from "../components/loading_screen";
 import GameOverModal from "../components/game_over_modal";
+import Leaderboard from "../components/leaderboard";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
@@ -186,12 +187,20 @@ function GamePage({ unityContent, level }) {
               <TabPane tab="Tutorial" key="3">
                 <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
               </TabPane>
-              <TabPane tab="FAQ" key="4">
+              <TabPane tab="Leaderboard" key="4">
+                <Leaderboard
+                  rankings={[
+                    { username: "kevin", time: 21, date: "today" },
+                    { username: "kevin2", time: 12, date: "today" },
+                  ]}
+                />
+              </TabPane>
+              <TabPane tab="FAQ" key="5">
                 <MarkdownViewer
                   markdownSrc={`/instructions.md`}
                 ></MarkdownViewer>
               </TabPane>
-              <TabPane tab="API " key="5">
+              <TabPane tab="API " key="6">
                 <MarkdownViewer
                   markdownSrc={`/game_api_docs.md`}
                 ></MarkdownViewer>

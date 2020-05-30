@@ -43,6 +43,10 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
       }
       console.log("Game loaded"); // This log is used by cypress testing, update test if changed
     });
+
+    unityContent.on("Start", () => {
+      console.log("Game started");
+    });
   }, []);
 
   useEffect(() => {

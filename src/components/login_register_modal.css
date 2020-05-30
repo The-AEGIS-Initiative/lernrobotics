@@ -1,5 +1,5 @@
-.section {
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15) !important;
-  padding: 40px 40px !important;
-  background-color: black;
+:root {
+  --amplify-primary-color: #5372a4;
+  --amplify-primary-tint: #ff7359;
+  --amplify-primary-shade: #e0573e;
 }

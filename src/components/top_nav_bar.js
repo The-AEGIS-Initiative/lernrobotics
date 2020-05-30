@@ -34,7 +34,7 @@ function TopNavBar({ type, theme, backgroundColor }) {
     if (click.key == "login/register") {
       // Clicking login/register button
       // LoginRegisterModalRef.current.openModal()
-      // Auth.federatedSignIn();
+      //Auth.federatedSignIn();
       appContext.setAuthModalVisible(true);
     } else if (click.key === "logout") {
       // Clicking logout button

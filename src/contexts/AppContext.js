@@ -65,6 +65,7 @@ export class AppContextProvider extends React.Component {
         if (access_token.payload["cognito:groups"] != null) {
           user_group = access_token.payload["cognito:groups"][0];
         }
+        //console.log(access_token.payload["cognito:groups"]);
         //console.log(user_group)
         this.setState({
           isAuth: true,

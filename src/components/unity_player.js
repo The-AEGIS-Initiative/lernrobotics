@@ -3,6 +3,8 @@ import Unity from "react-unity-webgl";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { UnityContent } from "react-unity-webgl";
 
+import "./unity_player.css";
+
 function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   const gamePageContext = useContext(GamePageContext);
 
@@ -66,14 +68,16 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   };
   //console.log(`levelData: ${levelData}`);
   return (
-    <Unity
-      unityContent={unityContent}
-      style={{
-        width: "100%",
-        height: "100%",
-        aspectRatio: 16 / 9,
-      }}
-    />
+    <div className="unity-player">
+      <Unity
+        unityContent={unityContent}
+        style={{
+          width: "100%",
+          height: "100%",
+          aspectRatio: 16 / 9,
+        }}
+      />
+    </div>
   );
 }
 

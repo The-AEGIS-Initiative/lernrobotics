@@ -2,7 +2,8 @@ import { List, Card } from 'antd';
 
 // TODO : onclick
 
-function LevelList({ level_list }) {
+function LevelList({ onSubmit }) {
+  var level_list = await graphqlController.listLevels();
   return (
     <div className="grid-list">
       <List

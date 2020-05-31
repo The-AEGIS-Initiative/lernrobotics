@@ -2,7 +2,7 @@ import { List, Card } from 'antd';
 
 // TODO : onclick
 
-function LevelList({ onSubmit }) {
+function LevelList({ onClick }) {
   var level_list = await graphqlController.listLevels();
   return (
     <div className="grid-list">
@@ -19,7 +19,7 @@ function LevelList({ onSubmit }) {
         dataSource={level_list}
         renderItem={item => (
           <List.Item>
-            <Card title={item[0].level_name}>TODO: Onclick link here</Card>
+            <Card title={item[0].level_name}>TODO: onClick link here</Card>
           </List.Item>
         )}
       >

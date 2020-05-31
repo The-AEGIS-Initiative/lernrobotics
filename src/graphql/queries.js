@@ -32,6 +32,35 @@ export const listProgresss = /* GraphQL */ `
     }
   }
 `;
+export const getSubmission = /* GraphQL */ `
+  query GetSubmission($id: ID!) {
+    getSubmission(id: $id) {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;
+export const listSubmissions = /* GraphQL */ `
+  query ListSubmissions(
+    $filter: ModelSubmissionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSubmissions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        username
+        score
+        level_name
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
 export const progressByLevelName = /* GraphQL */ `
   query ProgressByLevelName(
     $level_name: String

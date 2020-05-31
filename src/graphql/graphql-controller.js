@@ -265,3 +265,17 @@ export const upsertPublishedLevel = async ({
     });
   }
 };
+
+export const createSubmission = async ({ level_name, username, score }) => {
+  const submission = await API.graphql(
+    graphqlOperation(mutations.createSubmission, {
+      input: {
+        level_name: level_name,
+        username: username,
+        score: score,
+      },
+    })
+  );
+
+  return submission;
+};

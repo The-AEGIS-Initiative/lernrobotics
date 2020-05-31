@@ -44,3 +44,12 @@ type PublishedLevel @model
 	tutorial: String!
 	level_data: String!
 }
+
+type Submission @model
+{
+	id: ID!
+	username: String!
+	score: String!
+	level_name: String!
+	createdAt: AWSDateTime
+}

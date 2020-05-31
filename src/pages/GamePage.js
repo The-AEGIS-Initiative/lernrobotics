@@ -57,6 +57,7 @@ function GamePage({ unityContent, level }) {
     async function fetchData() {
       const username = appContext.username;
       const level_name = level;
+
       // Fetch level data
       const data = await graphqlController.getLevel({
         level_name: level_name,
@@ -71,15 +72,12 @@ function GamePage({ unityContent, level }) {
         setTutorial(data[0].tutorial);
         setLevelData(data[0].level_data);
       }
-      //console.log(`task: ${task}`);
-      //console.log(`levelData: ${levelData}`);
-      //console.log(`levelData2: ${data[0].level_data}`);
+
       // Fetch user progress
       const progressData = await graphqlController.getProgress({
         username: username,
         level_name: level_name,
       });
-
       if (progressData.length == 0) {
         // No user progress
         gamePageContext.setEditorContent(data[0].default_code);
@@ -127,6 +125,12 @@ function GamePage({ unityContent, level }) {
   };
 
   useEffect(() => {
+    async function updateLeaderboard(gameOverData) {
+      if (gameOverData.isSuccess) {
+        // If passed level
+        // TODO: FINIISh
+      }
+    }
     unityContent.on("GameOver", (gameOverJson) => {
       console.log(gameOverJson);
       const data = JSON.parse(gameOverJson);

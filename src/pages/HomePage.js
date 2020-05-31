@@ -68,7 +68,11 @@ function HomePage() {
         {
           <Button
             onClick={async () => {
-              var jsonObject = await graphqlController.listLevels();
+              var jsonObject = await graphqlController.createSubmission({
+                level_name: "t2",
+                score: "0",
+                username: "kev",
+              });
               console.log(jsonObject);
             }}
           >

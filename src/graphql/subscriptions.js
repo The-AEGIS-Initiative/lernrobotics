@@ -121,3 +121,36 @@ export const onDeletePublishedLevel = /* GraphQL */ `
     }
   }
 `;
+export const onCreateSubmission = /* GraphQL */ `
+  subscription OnCreateSubmission {
+    onCreateSubmission {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;
+export const onUpdateSubmission = /* GraphQL */ `
+  subscription OnUpdateSubmission {
+    onUpdateSubmission {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;
+export const onDeleteSubmission = /* GraphQL */ `
+  subscription OnDeleteSubmission {
+    onDeleteSubmission {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;

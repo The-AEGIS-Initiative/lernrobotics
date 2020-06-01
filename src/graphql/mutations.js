@@ -190,3 +190,42 @@ export const deleteSubmissions = /* GraphQL */ `
     }
   }
 `;
+export const createMarkdownDocs = /* GraphQL */ `
+  mutation CreateMarkdownDocs(
+    $input: CreateMarkdownDocsInput!
+    $condition: ModelMarkdownDocsConditionInput
+  ) {
+    createMarkdownDocs(input: $input, condition: $condition) {
+      id
+      doc_name
+      doc_content
+      createdAt
+    }
+  }
+`;
+export const updateMarkdownDocs = /* GraphQL */ `
+  mutation UpdateMarkdownDocs(
+    $input: UpdateMarkdownDocsInput!
+    $condition: ModelMarkdownDocsConditionInput
+  ) {
+    updateMarkdownDocs(input: $input, condition: $condition) {
+      id
+      doc_name
+      doc_content
+      createdAt
+    }
+  }
+`;
+export const deleteMarkdownDocs = /* GraphQL */ `
+  mutation DeleteMarkdownDocs(
+    $input: DeleteMarkdownDocsInput!
+    $condition: ModelMarkdownDocsConditionInput
+  ) {
+    deleteMarkdownDocs(input: $input, condition: $condition) {
+      id
+      doc_name
+      doc_content
+      createdAt
+    }
+  }
+`;

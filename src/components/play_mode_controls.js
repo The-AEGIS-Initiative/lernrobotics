@@ -24,11 +24,11 @@ function PlayModeControls({ level_name }) {
   const pushUserCode = async () => {
     if (appContext.isAuth) {
       submitUserCode(gamePageContext.editorContent);
-      await graphqlController.createProgress({
-        username: appContext.username,
+      const res = await graphqlController.upsertProgress({
         level_name: level_name,
         user_code: gamePageContext.editorContent,
       });
+      console.log(res);
     } else {
       // Guest user
       appContext.setAuthModalVisible(true);

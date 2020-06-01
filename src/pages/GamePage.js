@@ -46,6 +46,8 @@ function GamePage({ unityContent, level }) {
   const [gameOverVisible, setGameOverVisible] = useState(false);
   const [timeTaken, setTimeTaken] = useState(0);
   const [rankings, setRankings] = useState([]);
+  const [gameAPI, setGameAPI] = useState("");
+  const [faq, setFaq] = useState("");
 
   const windowSize = useWindowSize();
   console.log(windowSize);
@@ -89,6 +91,22 @@ function GamePage({ unityContent, level }) {
           level_name: level_name,
         });
         setRankings(rankingData);
+
+        // Fetch GameAPI
+        const gameAPIData = await graphqlController.getDoc({
+          doc_name: "GameAPI",
+        });
+        if (gameAPIData.length > 0) {
+          setGameAPI(gameAPIData[0].doc_content);
+        }
+
+        // Fetch FAQ
+        const faqData = await graphqlController.getDoc({
+          doc_name: "FAQ",
+        });
+        if (faqData.length > 0) {
+          setFaq(faqData[0].doc_content);
+        }
       }
     }
 
@@ -223,23 +241,19 @@ function GamePage({ unityContent, level }) {
                 />
               </TabPane>
               <TabPane tab="Task" key="2">
-                <MarkdownViewer markdownText={task}></MarkdownViewer>
+                <MarkdownViewer markdownText={task} />
               </TabPane>
               <TabPane tab="Tutorial" key="3">
-                <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
+                <MarkdownViewer markdownText={tutorial} />
               </TabPane>
               <TabPane tab="Leaderboard" key="4">
                 <Leaderboard rankings={rankings} />
               </TabPane>
               <TabPane tab="FAQ" key="5">
-                <MarkdownViewer
-                  markdownSrc={`/instructions.md`}
-                ></MarkdownViewer>
+                <MarkdownViewer markdownText={faq} />
               </TabPane>
               <TabPane tab="API " key="6">
-                <MarkdownViewer
-                  markdownSrc={`/game_api_docs.md`}
-                ></MarkdownViewer>
+                <MarkdownViewer markdownText={gameAPI} />
               </TabPane>
             </Tabs>
             <div className="right-section-container">

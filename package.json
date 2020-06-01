@@ -19,7 +19,6 @@
     "console-feed": "^2.8.11",
     "customize-cra": "^0.9.1",
     "dotenv": "^8.2.0",
-    "git-branch-is": "^3.1.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "load-script": "^1.0.0",
@@ -106,7 +105,7 @@
         "npx lint-staged"
       ],
       "pre-push": [
-        "if [ git-branch-is master]; then npm run-script test:local; fi"
+        "if [ `git rev-parse --abbrev-ref HEAD` == 'master']; then npm run-script test:local; fi"
       ],
       "post-commit": [],
       "post-checkout": [],

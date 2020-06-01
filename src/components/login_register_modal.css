@@ -3,3 +3,7 @@
   --amplify-primary-tint: #ff7359;
   --amplify-primary-shade: #e0573e;
 }
+
+.ant-modal-body {
+  padding: 0px;
+}

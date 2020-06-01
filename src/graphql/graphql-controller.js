@@ -265,3 +265,48 @@ export const upsertPublishedLevel = async ({
     });
   }
 };
+
+export const createSubmission = async ({ level_name, username, score }) => {
+  const submission = await API.graphql(
+    graphqlOperation(mutations.createSubmissions, {
+      input: {
+        level_name: level_name,
+        username: username,
+        score: score,
+      },
+    })
+  );
+
+  return submission;
+};
+
+export const getUserSubmission = async ({ level_name, username }) => {
+  const submission = await API.graphql(
+    graphqlOperation(queries.getLevelSubmissions, {
+      level_name: level_name,
+      filter: { username: { eq: username } },
+    })
+  );
+  return submission.data.getLevelSubmissions.items;
+};
+
+export const getLevelSubmissions = async ({ level_name }) => {
+  const submission = await API.graphql(
+    graphqlOperation(queries.getLevelSubmissions, {
+      level_name: level_name,
+    })
+  );
+  return submission.data.getLevelSubmissions.items;
+};
+
+export const updateUserSubmission = async ({ submission_id, score }) => {
+  const response = await API.graphql(
+    graphqlOperation(mutations.updateSubmissions, {
+      input: {
+        id: submission_id,
+        score: score,
+      },
+    })
+  );
+  return response;
+};

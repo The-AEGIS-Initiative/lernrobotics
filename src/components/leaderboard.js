@@ -13,17 +13,17 @@ function Leaderboard({ rankings }) {
     },
     {
       title: "Time",
-      dataIndex: "time",
-      key: "time",
-      sorter: (a, b) => a.time - b.time,
+      dataIndex: "score",
+      key: "score",
+      sorter: (a, b) => a.score - b.score,
       defaultSortOrder: "ascend",
       sortDirections: ["ascend"],
       render: (text) => <p>{text}</p>,
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (text) => <p>{text}</p>,
     },
   ];

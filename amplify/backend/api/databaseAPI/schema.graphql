@@ -44,3 +44,14 @@ type PublishedLevel @model
 	tutorial: String!
 	level_data: String!
 }
+
+type Submissions @model
+	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelSubmissions")
+	@key(name: "byUserAndLevel", fields: ["username", "level_name"], queryField: "getUserSubmission")
+{
+	id: ID!
+	username: String!
+	score: String!
+	level_name: String!
+	createdAt: AWSDateTime
+}

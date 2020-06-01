@@ -148,3 +148,45 @@ export const deletePublishedLevel = /* GraphQL */ `
     }
   }
 `;
+export const createSubmissions = /* GraphQL */ `
+  mutation CreateSubmissions(
+    $input: CreateSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
+  ) {
+    createSubmissions(input: $input, condition: $condition) {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;
+export const updateSubmissions = /* GraphQL */ `
+  mutation UpdateSubmissions(
+    $input: UpdateSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
+  ) {
+    updateSubmissions(input: $input, condition: $condition) {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;
+export const deleteSubmissions = /* GraphQL */ `
+  mutation DeleteSubmissions(
+    $input: DeleteSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
+  ) {
+    deleteSubmissions(input: $input, condition: $condition) {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;

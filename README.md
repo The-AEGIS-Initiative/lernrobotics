@@ -10,19 +10,18 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 - `npm install`
 - `git checkout -b "<your-branch-name>"`
 
-## Step 2: Install AWS CLI and Configure IAM User
-
-- https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
-- restart your terminal
-- `aws configure`
-  - AWS Access Key: \*\*
-  - AWS Secret Access Key: \*\*
-  - Default region name: _us-west-2_
-  - Default output format: _json_
-
 ## Step 2: Setup Amplify CLI and Project
 
 - `npm install -g @aws-amplify/cli`
+- `amplify configure`
+
+  - Press Enter (No need to sign in)
+  - Specify the AWS Region: `us-west-2`
+  - Specify the username : Press Enter (username doesn't matter)
+  - Press Enter (No need to create account)
+  - accessKeyId: `<YOUR_ACCESS_KEY_ID>`
+  - secretAccessKey: `<YOUR_SECRET_ACCESS_KEY>`
+
 - `amplify init`
   - Do you want to use an existing environment? _Yes_
   - Choose the environment you would like to use: _dev_

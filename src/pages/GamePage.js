@@ -45,6 +45,7 @@ function GamePage({ unityContent, level }) {
   const [gameOverMsg, setGameOverMsg] = useState("");
   const [gameOverVisible, setGameOverVisible] = useState(false);
   const [timeTaken, setTimeTaken] = useState(0);
+  const [rankings, setRankings] = useState([]);
 
   const editorRef = useRef(null);
 
@@ -71,19 +72,25 @@ function GamePage({ unityContent, level }) {
         setTask(data[0].task);
         setTutorial(data[0].tutorial);
         setLevelData(data[0].level_data);
-      }
 
-      // Fetch user progress
-      const progressData = await graphqlController.getProgress({
-        username: username,
-        level_name: level_name,
-      });
-      if (progressData.length == 0) {
-        // No user progress
-        gamePageContext.setEditorContent(data[0].default_code);
-      } else {
-        // Existing user progress
-        gamePageContext.setEditorContent(progressData[0].user_code);
+        // Fetch user progress
+        const progressData = await graphqlController.getProgress({
+          username: username,
+          level_name: level_name,
+        });
+        if (progressData.length == 0) {
+          // No user progress
+          gamePageContext.setEditorContent(data[0].default_code);
+        } else {
+          // Existing user progress
+          gamePageContext.setEditorContent(progressData[0].user_code);
+        }
+
+        // Fetch leaderboard
+        const rankingData = await graphqlController.getLevelSubmissions({
+          level_name: level_name,
+        });
+        setRankings(rankingData);
       }
     }
 
@@ -128,7 +135,38 @@ function GamePage({ unityContent, level }) {
     async function updateLeaderboard(gameOverData) {
       if (gameOverData.isSuccess) {
         // If passed level
-        // TODO: FINIISh
+        const cur_submission = await graphqlController.getUserSubmission({
+          username: appContext.username,
+          level_name: level,
+        });
+
+        if (cur_submission.length > 0) {
+          // If previous submission exists
+          const score = parseFloat(cur_submission[0].score);
+          console.log(score);
+          if (parseFloat(gameOverData.timeTaken) <= score) {
+            // TODO: Handle both maximizing score and minimizing time
+            // Update current highscore
+            console.log("updating previous entry!");
+            await graphqlController.updateUserSubmission({
+              submission_id: cur_submission[0].id,
+              score: gameOverData.timeTaken.toString(),
+            });
+          }
+        } else {
+          // Create new submission
+          await graphqlController.createSubmission({
+            level_name: level,
+            username: appContext.username,
+            score: gameOverData.timeTaken.toString(),
+          });
+        }
+
+        // Update leaderboard
+        const rankingData = await graphqlController.getLevelSubmissions({
+          level_name: level,
+        });
+        setRankings(rankingData);
       }
     }
     unityContent.on("GameOver", (gameOverJson) => {
@@ -138,6 +176,7 @@ function GamePage({ unityContent, level }) {
       setGameOverMsg(data.message);
       setTimeTaken(data.timeTaken);
       setGameOverVisible(true);
+      updateLeaderboard(data); // Submit score to leaderboard
     });
   }, []);
 
@@ -192,12 +231,7 @@ function GamePage({ unityContent, level }) {
                 <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
               </TabPane>
               <TabPane tab="Leaderboard" key="4">
-                <Leaderboard
-                  rankings={[
-                    { username: "kevin", time: 21, date: "today" },
-                    { username: "kevin2", time: 12, date: "today" },
-                  ]}
-                />
+                <Leaderboard rankings={rankings} />
               </TabPane>
               <TabPane tab="FAQ" key="5">
                 <MarkdownViewer

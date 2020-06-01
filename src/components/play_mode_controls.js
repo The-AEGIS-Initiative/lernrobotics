@@ -21,10 +21,10 @@ function PlayModeControls({ level_name }) {
   const gamePageContext = useContext(GamePageContext);
 
   // POST user code to graphql API
-  const pushUserCode = () => {
+  const pushUserCode = async () => {
     if (appContext.isAuth) {
       submitUserCode(gamePageContext.editorContent);
-      graphqlController.createProgress({
+      await graphqlController.createProgress({
         username: appContext.username,
         level_name: level_name,
         user_code: gamePageContext.editorContent,

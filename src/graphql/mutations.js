@@ -148,12 +148,12 @@ export const deletePublishedLevel = /* GraphQL */ `
     }
   }
 `;
-export const createSubmission = /* GraphQL */ `
-  mutation CreateSubmission(
-    $input: CreateSubmissionInput!
-    $condition: ModelSubmissionConditionInput
+export const createSubmissions = /* GraphQL */ `
+  mutation CreateSubmissions(
+    $input: CreateSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
   ) {
-    createSubmission(input: $input, condition: $condition) {
+    createSubmissions(input: $input, condition: $condition) {
       id
       username
       score
@@ -162,12 +162,12 @@ export const createSubmission = /* GraphQL */ `
     }
   }
 `;
-export const updateSubmission = /* GraphQL */ `
-  mutation UpdateSubmission(
-    $input: UpdateSubmissionInput!
-    $condition: ModelSubmissionConditionInput
+export const updateSubmissions = /* GraphQL */ `
+  mutation UpdateSubmissions(
+    $input: UpdateSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
   ) {
-    updateSubmission(input: $input, condition: $condition) {
+    updateSubmissions(input: $input, condition: $condition) {
       id
       username
       score
@@ -176,12 +176,12 @@ export const updateSubmission = /* GraphQL */ `
     }
   }
 `;
-export const deleteSubmission = /* GraphQL */ `
-  mutation DeleteSubmission(
-    $input: DeleteSubmissionInput!
-    $condition: ModelSubmissionConditionInput
+export const deleteSubmissions = /* GraphQL */ `
+  mutation DeleteSubmissions(
+    $input: DeleteSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
   ) {
-    deleteSubmission(input: $input, condition: $condition) {
+    deleteSubmissions(input: $input, condition: $condition) {
       id
       username
       score

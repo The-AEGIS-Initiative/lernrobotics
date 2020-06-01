@@ -45,7 +45,9 @@ type PublishedLevel @model
 	level_data: String!
 }
 
-type Submission @model
+type Submissions @model
+	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelSubmissions")
+	@key(name: "byUserAndLevel", fields: ["username", "level_name"], queryField: "getUserSubmission")
 {
 	id: ID!
 	username: String!

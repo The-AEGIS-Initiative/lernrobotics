@@ -121,9 +121,9 @@ export const onDeletePublishedLevel = /* GraphQL */ `
     }
   }
 `;
-export const onCreateSubmission = /* GraphQL */ `
-  subscription OnCreateSubmission {
-    onCreateSubmission {
+export const onCreateSubmissions = /* GraphQL */ `
+  subscription OnCreateSubmissions {
+    onCreateSubmissions {
       id
       username
       score
@@ -132,9 +132,9 @@ export const onCreateSubmission = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateSubmission = /* GraphQL */ `
-  subscription OnUpdateSubmission {
-    onUpdateSubmission {
+export const onUpdateSubmissions = /* GraphQL */ `
+  subscription OnUpdateSubmissions {
+    onUpdateSubmissions {
       id
       username
       score
@@ -143,9 +143,9 @@ export const onUpdateSubmission = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteSubmission = /* GraphQL */ `
-  subscription OnDeleteSubmission {
-    onDeleteSubmission {
+export const onDeleteSubmissions = /* GraphQL */ `
+  subscription OnDeleteSubmissions {
+    onDeleteSubmissions {
       id
       username
       score

@@ -32,9 +32,9 @@ export const listProgresss = /* GraphQL */ `
     }
   }
 `;
-export const getSubmission = /* GraphQL */ `
-  query GetSubmission($id: ID!) {
-    getSubmission(id: $id) {
+export const getSubmissions = /* GraphQL */ `
+  query GetSubmissions($id: ID!) {
+    getSubmissions(id: $id) {
       id
       username
       score
@@ -43,13 +43,13 @@ export const getSubmission = /* GraphQL */ `
     }
   }
 `;
-export const listSubmissions = /* GraphQL */ `
-  query ListSubmissions(
-    $filter: ModelSubmissionFilterInput
+export const listSubmissionss = /* GraphQL */ `
+  query ListSubmissionss(
+    $filter: ModelSubmissionsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listSubmissions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listSubmissionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         username
@@ -83,6 +83,60 @@ export const progressByLevelName = /* GraphQL */ `
         user_code
         stars
         owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getLevelSubmissions = /* GraphQL */ `
+  query GetLevelSubmissions(
+    $level_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelSubmissionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getLevelSubmissions(
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        score
+        level_name
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserSubmission = /* GraphQL */ `
+  query GetUserSubmission(
+    $username: String
+    $level_name: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelSubmissionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getUserSubmission(
+      username: $username
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        score
+        level_name
+        createdAt
       }
       nextToken
     }

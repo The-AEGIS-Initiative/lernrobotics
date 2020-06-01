@@ -65,13 +65,12 @@ function HomePage() {
           </ul>
         </nav>
         <LoginRegisterModal />
-        {
+        {/**
           <Button
             onClick={async () => {
-              var jsonObject = await graphqlController.createSubmission({
+              var jsonObject = await graphqlController.updateUserSubmission({
                 level_name: "t2",
-                score: "0",
-                username: "kev",
+                username: "kev"
               });
               console.log(jsonObject);
             }}
@@ -79,7 +78,7 @@ function HomePage() {
             {" "}
             User{" "}
           </Button>
-        }
+        */}
       </div>
     </div>
   );

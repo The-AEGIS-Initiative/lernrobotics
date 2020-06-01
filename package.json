@@ -105,7 +105,7 @@
         "npx lint-staged"
       ],
       "pre-push": [
-        "if [[ $(git rev-parse --abbrev-ref HEAD) == master ]]; then npm run-script test:local; fi"
+        "echo `if [ $(git rev-parse --abbrev-ref HEAD) == master ]; then echo hello; npm run-script test:local; fi`"
       ],
       "post-commit": [],
       "post-checkout": [],

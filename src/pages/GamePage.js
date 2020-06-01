@@ -60,7 +60,7 @@ function GamePage({ unityContent, level }) {
       const level_name = level;
 
       // Fetch level data
-      const data = await graphqlController.getLevel({
+      const data = await graphqlController.getPublishedLevel({
         level_name: level_name,
       });
       if (data.length == 0) {

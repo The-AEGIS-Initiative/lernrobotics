@@ -267,6 +267,12 @@ function GamePage({ unityContent, level }) {
           visible={gameOverVisible}
           message={`${gameOverMsg};Time taken: ${timeTaken} seconds`}
           isSuccess={isSuccess}
+          handleOk={() => {
+            setGameOverVisible(false);
+          }}
+          handleCancel={() => {
+            setGameOverVisible(false);
+          }}
         />
       </div>
     );

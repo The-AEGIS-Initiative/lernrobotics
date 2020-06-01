@@ -1,12 +1,17 @@
-import React, { useRef, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useContext, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import { Card, Button } from "antd";
 
+import LoginRegisterModal from "../components/login_register_modal";
 import GamePage from "./GamePage";
 import TopNavBar from "../components/top_nav_bar";
+import LevelCard from "../components/level_card";
+
 import { AppContext } from "../contexts/AppContext";
 import { Auth } from "aws-amplify";
+
+import "./HomePage.css";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
@@ -14,58 +19,67 @@ const { Meta } = Card;
 
 function HomePage() {
   const appContext = useContext(AppContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!appContext.isAuth) {
+      history.push("/");
+    }
+  }, [appContext.isAuth]);
+
+  const navBarColor = "#3a608d";
 
   return (
-    <div style={{ backgroundColor: "#b2c4d9", height: "100vh" }}>
-      <TopNavBar type="main" />
-      <nav>
-        <ul
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            paddingTop: "40px",
-          }}
-        >
-          <h1>
-            <b> Tutorial Module #1 - PID Controllers </b>
-          </h1>
-          <Card style={{ width: 600, margin: "30px" }}>
-            <Meta
+    <div className="home-page">
+      <div style={{ backgroundColor: "#ffffff", height: "100vh" }}>
+        <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
+        <nav>
+          <ul
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              paddingTop: "40px",
+            }}
+          >
+            <h1 className="module-title">
+              <b> Tutorial Module #1 - PID Controllers </b>
+            </h1>
+            <LevelCard
               title="Hello World"
               description="Get started with our Control Theory tutorial series!"
+              link="/game/hello_world"
             />
-            <Link to="/game/hello_world">Start!</Link>
-          </Card>
 
-          <Card
-            title="Data Abstraction"
-            description="Learn about abstraction, a powerful engineering principle!"
-            style={{ width: 600, margin: "30px" }}
-          >
-            <Link to="/game/data_abstraction">Start!</Link>
-          </Card>
+            <LevelCard
+              title="Data Abstraction"
+              description="Learn about abstraction, a powerful engineering principle!"
+              link="/game/data_abstraction"
+            />
 
-          <Card
-            title="Velocity Control"
-            description="Learn how to implement a proportional feedback controller!"
-            style={{ width: 600, margin: "30px" }}
+            <LevelCard
+              title="Velocity Control"
+              description="Learn how to implement a proportional feedback controller!"
+              link="/game/velocity_control"
+            />
+          </ul>
+        </nav>
+        <LoginRegisterModal />
+        {/**
+          <Button
+            onClick={async () => {
+              var jsonObject = await graphqlController.updateUserSubmission({
+                level_name: "t2",
+                username: "kev"
+              });
+              console.log(jsonObject);
+            }}
           >
-            <Link to="/game/velocity_control">Start!</Link>
-          </Card>
-        </ul>
-      </nav>
-      <Button
-        onClick={async () => {
-          var jsonObject = await graphqlController.getLevel({
-            level_name: "hello_world",
-          });
-          console.log(jsonObject);
-        }}
-      >
-        {" "}
-        User{" "}
-      </Button>
+            {" "}
+            User{" "}
+          </Button>
+        */}
+      </div>
     </div>
   );
 }

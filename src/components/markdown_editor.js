@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 
 import { Row, Col, Button } from "antd";
-import styles from "../style_modules/button.module.css";
+import styles from "../style.module.css";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -21,8 +21,8 @@ import PlayModeControls from "../components/play_mode_controls";
  * Split-view markdown editor
  */
 
-function MarkdownEditor({ level_name, handleChange }) {
-  const [content, setContent] = useState("");
+function MarkdownEditor({ handleChange, placeholder }) {
+  const [content, setContent] = useState(placeholder);
   const [resizedFlag, setResizedflag] = useState(false);
 
   return (
@@ -35,27 +35,15 @@ function MarkdownEditor({ level_name, handleChange }) {
         width: "100%",
       }}
     >
-      <Col>
-        <Row>
-          <CodeEditor
-            level_name={level_name}
-            mode="markdown"
-            handleChange={(e) => {
-              setContent(e);
-              console.log(content);
-              handleChange(e);
-            }}
-          />
-        </Row>
-      </Col>
-      <Col>
-        <Row>
-          <MarkdownViewer markdownText={content}></MarkdownViewer>
-        </Row>
-        <Row type="flex" style={{ justifyContent: "flex-end" }}>
-          <PlayModeControls level_name={level_name} />
-        </Row>
-      </Col>
+      <CodeEditor
+        mode="markdown"
+        placeholder={placeholder}
+        handleChange={(e) => {
+          setContent(e);
+          handleChange(e);
+        }}
+      />
+      <MarkdownViewer markdownText={content}></MarkdownViewer>
     </SplitterLayout>
   );
 }

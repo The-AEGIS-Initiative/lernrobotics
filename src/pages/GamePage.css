@@ -1,14 +1,42 @@
-:root {
-    --container-height: 95vh;
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
 }
-.container {
-    height: var(--container-height);
-    background-color: #333333;
-    overflow: hidden;
+
+.game-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  background-color: #333333;
+}
+
+.nav-container {
+  flex: 0 1 auto;
+}
+
+.content-container {
+  flex: 1 1 auto;
 }
 
 .splitter-layout {
-  height: var(--container-height);
+  position: relative;
+}
+
+.footer-container {
+  flex: 0 1 auto;
+}
+
+.right-section-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+}
+
+.splitter-layout {
+  height: 100%;
 }
 
 .splitter-layout .layout-pane {
@@ -18,6 +46,7 @@
 .splitter-layout > .layout-splitter {
   width: 7px;
   background-color: #363636;
+  height: 100%;
 }
 
 .splitter-layout .layout-splitter:hover {
@@ -28,35 +57,25 @@
   background-color: #494949;
 }
 
-
-.gameSection {
-	width: 100%;
-  height: 0;
-  padding-bottom: 56.25%;
-  position: relative;
+.ant-tabs {
+  display: flex;
+  height: 100%;
 }
 
-.gameSection_inner_wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+.ant-tabs-tab {
+  font-family: "Open Sans", sans-serif !important;
 }
-
-.consoleSection {
-  background-color: black;
-  overflow-y:hidden;
-}
-
-.editorSection {
-  height: calc(var(--container-height));
-  overflow: hidden;
-}
-
-.left-nav-bar {
-  background-color: #333333;
+.ant-tabs-bar {
+  height: 100%;
   color: white;
-  width:50vw;
-  height: var(--container-height);
+}
+
+.ant-tabs-content {
+  height: 100%;
+  width: 100% !important;
+}
+
+.ant-tabs-tabpane {
+  height: 100%;
+  width: 100%;
 }

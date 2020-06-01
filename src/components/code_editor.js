@@ -1,25 +1,26 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 
 import { Row, Col, Button } from "antd";
-import styles from "../style_modules/button.module.css";
+import styles from "../style.module.css";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-monokai";
+import "./code_editor.css";
 
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { postData, getData } from "../components/HttpController";
 import { submitUserCode, stopUserCode } from "../sockets/emit";
-import { GamePageContext } from "../contexts/GamePageContext";
 
 /**
  * Code editor
  */
 
-function CodeEditor({ mode }) {
+function CodeEditor({ mode, placeholder, handleChange, isLoading }) {
   const editorRef = useRef();
-  const gamePageContext = useContext(GamePageContext);
+
+  const [content, setContent] = useState(placeholder);
 
   // Capture Ctrl+S from editor to prevent annoying pop-ups
   useEffect(() => {
@@ -35,21 +36,38 @@ function CodeEditor({ mode }) {
     }
   }, [editorRef]); // Run when editorRef is assigned
 
+  useEffect(() => {
+    setContent(placeholder);
+  }, [placeholder]);
+
+  useEffect(() => {
+    editorRef.current.editor.resize();
+  }, [isLoading]);
+
   return (
-    <AceEditor
-      ref={editorRef}
-      mode={mode}
-      theme="monokai"
-      onChange={gamePageContext.setEditorContent}
-      value={gamePageContext.editorContent}
-      name="UNIQUE_ID_OF_DIV"
-      editorProps={{ $blockScrolling: true }}
-      showPrintMargin={false}
-      height="91vh"
-      width="100%"
-      fontSize="16px"
-      style={{ zIndex: 0 }}
-    />
+    <div
+      style={{
+        display: "flex",
+        height: "auto",
+        width: "100%",
+      }}
+    >
+      <AceEditor
+        ref={editorRef}
+        mode={mode}
+        theme="monokai"
+        onChange={(value) => {
+          handleChange(value);
+          setContent(value);
+        }}
+        value={content}
+        name="UNIQUE_ID_OF_DIV"
+        editorProps={{ $blockScrolling: true }}
+        showPrintMargin={false}
+        fontSize="16px"
+        style={{ zIndex: 0 }}
+      />
+    </div>
   );
 }
 

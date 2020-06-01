@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { Row, Col, Button } from "antd";
-import styles from "../style_modules/button.module.css";
+import styles from "../style.module.css";
 
 import { postData, getData } from "../components/HttpController";
 import { submitUserCode, stopUserCode } from "../sockets/emit";
@@ -21,25 +21,32 @@ function PlayModeControls({ level_name }) {
   const gamePageContext = useContext(GamePageContext);
 
   // POST user code to graphql API
-  const pushUserCode = () => {
+  const pushUserCode = async () => {
     if (appContext.isAuth) {
-      graphqlController.createProgress({
-        username: appContext.username,
+      submitUserCode(gamePageContext.editorContent);
+      const res = await graphqlController.upsertProgress({
         level_name: level_name,
         user_code: gamePageContext.editorContent,
       });
+      console.log(res);
+    } else {
+      // Guest user
+      appContext.setAuthModalVisible(true);
     }
   };
 
   return (
-    <div type="flex" style={{ justifyContent: "flex-end" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignContent: "flex-end",
+        justifyContent: "flex-end",
+      }}
+    >
       <Button
         type="primary"
-        style_module={styles.submit}
-        style={{
-          backgroundColor: "#575757",
-          borderColor: "#575757",
-        }}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
         loading={gamePageContext.isLoading}
         onClick={() => {
           stopUserCode();
@@ -49,11 +56,9 @@ function PlayModeControls({ level_name }) {
       </Button>
       <Button
         type="primary"
-        style_module={styles.submit}
-        style={{ backgroundColor: "#575757", borderColor: "#575757" }}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
         loading={gamePageContext.isLoading}
         onClick={() => {
-          submitUserCode(gamePageContext.editorContent);
           pushUserCode();
         }}
       >

@@ -32,17 +32,17 @@ function HorizontalSplitLayout({
         var height = topRef.current.offsetHeight;
         var width = topRef.current.offsetWidth;
       }
-      console.log(`height: ${height}`);
+      //console.log(`height: ${height}`);
       setDependentHeight(parent_height - height);
       setDependentWidth(width);
-      console.log(`dependentHeight: ${dependentHeight}`);
-      console.log(`dependentWidth: ${dependentWidth}`);
+      //console.log(`dependentHeight: ${dependentHeight}`);
+      //console.log(`dependentWidth: ${dependentWidth}`);
     }
   }, [update_flag, dependent, parent_height, dependentHeight, dependentWidth]);
 
   if (dependent === "top") {
     return (
-      <div>
+      <div style={{ width: "100%" }}>
         <div ref={topRef}>
           <Row
             style={{
@@ -58,7 +58,7 @@ function HorizontalSplitLayout({
     );
   } else {
     return (
-      <div>
+      <div style={{ width: "100%" }}>
         <div ref={topRef}>
           <Row>{top_section}</Row>
         </div>

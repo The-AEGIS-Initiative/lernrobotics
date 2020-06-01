@@ -55,7 +55,6 @@ export const createLevel = /* GraphQL */ `
       id
       level_name
       creator
-      published
       default_code
       task
       tutorial
@@ -73,7 +72,6 @@ export const updateLevel = /* GraphQL */ `
       id
       level_name
       creator
-      published
       default_code
       task
       tutorial
@@ -91,12 +89,104 @@ export const deleteLevel = /* GraphQL */ `
       id
       level_name
       creator
-      published
       default_code
       task
       tutorial
       level_data
       owner
+    }
+  }
+`;
+export const createPublishedLevel = /* GraphQL */ `
+  mutation CreatePublishedLevel(
+    $input: CreatePublishedLevelInput!
+    $condition: ModelPublishedLevelConditionInput
+  ) {
+    createPublishedLevel(input: $input, condition: $condition) {
+      id
+      level_name
+      creator
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const updatePublishedLevel = /* GraphQL */ `
+  mutation UpdatePublishedLevel(
+    $input: UpdatePublishedLevelInput!
+    $condition: ModelPublishedLevelConditionInput
+  ) {
+    updatePublishedLevel(input: $input, condition: $condition) {
+      id
+      level_name
+      creator
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const deletePublishedLevel = /* GraphQL */ `
+  mutation DeletePublishedLevel(
+    $input: DeletePublishedLevelInput!
+    $condition: ModelPublishedLevelConditionInput
+  ) {
+    deletePublishedLevel(input: $input, condition: $condition) {
+      id
+      level_name
+      creator
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const createSubmissions = /* GraphQL */ `
+  mutation CreateSubmissions(
+    $input: CreateSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
+  ) {
+    createSubmissions(input: $input, condition: $condition) {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;
+export const updateSubmissions = /* GraphQL */ `
+  mutation UpdateSubmissions(
+    $input: UpdateSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
+  ) {
+    updateSubmissions(input: $input, condition: $condition) {
+      id
+      username
+      score
+      level_name
+      createdAt
+    }
+  }
+`;
+export const deleteSubmissions = /* GraphQL */ `
+  mutation DeleteSubmissions(
+    $input: DeleteSubmissionsInput!
+    $condition: ModelSubmissionsConditionInput
+  ) {
+    deleteSubmissions(input: $input, condition: $condition) {
+      id
+      username
+      score
+      level_name
+      createdAt
     }
   }
 `;

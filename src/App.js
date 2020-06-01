@@ -9,11 +9,10 @@ import UnauthorizedPage from "./pages/UnauthorizedPage";
 import AdminPage from "./pages/AdminPage";
 import LevelBuilderPage from "./pages/LevelBuilderPage";
 import LoginPage from "./pages/LoginPage";
+import StartPage from "./pages/StartPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
-import connectSocket from "socket.io-client";
-import { registerInitEvent } from "./sockets/events.js";
 import { stopUserCode } from "./sockets/emit";
 
 import { GamePageProvider } from "./contexts/GamePageContext";
@@ -41,17 +40,6 @@ const MATHJAX_OPTIONS = {
   showMathMenuMSIE: false,
 };
 
-// Configure and initialize socket connection to back-end
-if (process.env.REACT_APP_BACKEND_URL == null) {
-  var backEndURL = "http://localhost:8000";
-} else {
-  var backEndURL = process.env.REACT_APP_BACKEND_URL;
-}
-console.log("BACKEND_URL", backEndURL);
-export var socket = connectSocket(backEndURL);
-
-registerInitEvent(); // Get assigned container address
-
 // App component containing the entire application
 function App({ unityContent }) {
   const appContext = useContext(AppContext);
@@ -70,11 +58,12 @@ function App({ unityContent }) {
 
   return (
     <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route
+      <Route exact path="/" component={StartPage} />
+      <Route exact path="/home" component={HomePage} />
+      <ProtectedRoute
         exact
         path="/game/:level"
-        render={(props) => (
+        component={(props) => (
           <GamePageProvider>
             <GamePage
               unityContent={unityContent}
@@ -83,6 +72,7 @@ function App({ unityContent }) {
             />
           </GamePageProvider>
         )}
+        protection_level="user"
       />
       <Route exact path="/unauthorized" component={UnauthorizedPage} />
       <ProtectedRoute
@@ -93,10 +83,14 @@ function App({ unityContent }) {
       />
       <ProtectedRoute
         exact
-        path="/admin/levelBuilder"
+        path="/admin/levelBuilder/:level_name"
         component={(props) => (
           <GamePageProvider>
-            <LevelBuilderPage unityContent={unityContent} {...props} />
+            <LevelBuilderPage
+              unityContent={unityContent}
+              levelName={props.match.params.level_name}
+              {...props}
+            />
           </GamePageProvider>
         )}
         protection_level="admin"

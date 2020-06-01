@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 
 import { Row, Col, Tabs } from "antd";
 
@@ -6,8 +6,8 @@ import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 
 import "./GamePage.css";
+import styles from "../style.module.css";
 
-import GameSection from "../sections/game_section";
 import ConsoleSection from "../sections/console_section";
 
 import { GamePageContext } from "../contexts/GamePageContext";
@@ -22,8 +22,13 @@ import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
 import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
+import LoginRegisterModal from "../components/login_register_modal";
+import LoadingScreen from "../components/loading_screen";
+import GameOverModal from "../components/game_over_modal";
+import Leaderboard from "../components/leaderboard";
 
 import * as graphqlController from "../graphql/graphql-controller";
+
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
@@ -35,6 +40,14 @@ function GamePage({ unityContent, level }) {
   const [task, setTask] = useState("");
   const [tutorial, setTutorial] = useState("");
   const [levelData, setLevelData] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [gameOverMsg, setGameOverMsg] = useState("");
+  const [gameOverVisible, setGameOverVisible] = useState(false);
+  const [timeTaken, setTimeTaken] = useState(0);
+  const [rankings, setRankings] = useState([]);
+
+  const editorRef = useRef(null);
 
   const windowSize = useWindowSize();
 
@@ -47,17 +60,18 @@ function GamePage({ unityContent, level }) {
       const level_name = level;
 
       // Fetch level data
-      const levelData = await graphqlController.getLevel({
+      const data = await graphqlController.getPublishedLevel({
         level_name: level_name,
       });
-      if (levelData.length == 0) {
+      if (data.length == 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
+        console.log("wefodi");
       } else {
         // Set task, tutorial, and leveldata content
-        setTask(levelData[0].task);
-        setTutorial(levelData[0].tutorial);
-        setLevelData(levelData[0].level_data);
+        setTask(data[0].task);
+        setTutorial(data[0].tutorial);
+        setLevelData(data[0].level_data);
 
         // Fetch user progress
         const progressData = await graphqlController.getProgress({
@@ -66,73 +80,199 @@ function GamePage({ unityContent, level }) {
         });
         if (progressData.length == 0) {
           // No user progress
-          gamePageContext.setEditorContent(levelData[0].default_code);
+          gamePageContext.setEditorContent(data[0].default_code);
         } else {
           // Existing user progress
           gamePageContext.setEditorContent(progressData[0].user_code);
         }
+
+        // Fetch leaderboard
+        const rankingData = await graphqlController.getLevelSubmissions({
+          level_name: level_name,
+        });
+        setRankings(rankingData);
       }
     }
+
     if (appContext.isAuth) {
       // Wrapper to call async function inside useEffect()
       fetchData();
+    } else {
+      fetchHelloWorld();
     }
-  }, [gamePageContext.isLoading]);
+    setIsLoading(false);
+    //console.log(`levelData: ${levelData}`);
+  }, []);
 
-  return (
-    <div style={{ flex: 1, height: "100vh", overflow: "hidden" }}>
-      <TopNavBar type="sub" />
-      <div type="flex" className="container">
-        <SplitterLayout
-          onDragEnd={() => {
-            setResizedflag(!resizedFlag);
-          }}
+  const fetchHelloWorld = () => {
+    console.log("fetching default level");
+    fetch("/level_specs/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setTutorial(data);
+      });
+
+    fetch("/prompts/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setTask(data);
+      });
+
+    fetch("/default_code/hello_world.py")
+      .then((r) => r.text())
+      .then((data) => {
+        gamePageContext.setEditorContent(data);
+      });
+
+    fetch("/level_specs/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setLevelData(data);
+      });
+  };
+
+  useEffect(() => {
+    async function updateLeaderboard(gameOverData) {
+      if (gameOverData.isSuccess) {
+        // If passed level
+        const cur_submission = await graphqlController.getUserSubmission({
+          username: appContext.username,
+          level_name: level,
+        });
+
+        if (cur_submission.length > 0) {
+          // If previous submission exists
+          const score = parseFloat(cur_submission[0].score);
+          console.log(score);
+          if (parseFloat(gameOverData.timeTaken) <= score) {
+            // TODO: Handle both maximizing score and minimizing time
+            // Update current highscore
+            console.log("updating previous entry!");
+            await graphqlController.updateUserSubmission({
+              submission_id: cur_submission[0].id,
+              score: gameOverData.timeTaken.toString(),
+            });
+          }
+        } else {
+          // Create new submission
+          await graphqlController.createSubmission({
+            level_name: level,
+            username: appContext.username,
+            score: gameOverData.timeTaken.toString(),
+          });
+        }
+
+        // Update leaderboard
+        const rankingData = await graphqlController.getLevelSubmissions({
+          level_name: level,
+        });
+        setRankings(rankingData);
+      }
+    }
+    unityContent.on("GameOver", (gameOverJson) => {
+      console.log(gameOverJson);
+      const data = JSON.parse(gameOverJson);
+      setIsSuccess(data.isSuccess);
+      setGameOverMsg(data.message);
+      setTimeTaken(data.timeTaken);
+      setGameOverVisible(true);
+      updateLeaderboard(data); // Submit score to leaderboard
+    });
+  }, []);
+
+  const handleGuestLogin = () => {};
+
+  // Necessary check to ensure unity content waits until level data is fetched
+  if (levelData != "") {
+    //console.log(`levelData: ${levelData}`);
+    return (
+      <div style={{ overflow: "hidden", height: "100vh" }}>
+        <div
+          className="game-container"
+          style={{ opacity: gamePageContext.isLoading ? 0 : 1 }}
         >
-          <Tabs tabPosition={"left"} style={{ color: "white", width: "100%" }}>
-            <TabPane tab="Game" key="1" style={{ width: "100%" }}>
-              <HorizontalSplitLayout
-                top_section={
-                  <UnityPlayer
-                    unityContent={unityContent}
-                    level_name={level}
-                    levelData={levelData}
-                  />
-                }
-                bottom_section={
-                  <ConsoleSection style={{ backgroundColor: "black" }} />
-                }
-                dependent="bottom"
-                parent_height={windowSize.height - 6}
-                update_flags={resizedFlag}
-              />
-            </TabPane>
-            <TabPane tab="Task" key="2">
-              <MarkdownViewer markdownText={task}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="Tutorial" key="3">
-              <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="Help" key="4">
-              <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
-            </TabPane>
-            <TabPane tab="API " key="5">
-              <MarkdownViewer
-                markdownSrc={`/game_api_docs.md`}
-              ></MarkdownViewer>
-            </TabPane>
-          </Tabs>
-          <Col>
-            <Row>
-              <CodeEditor mode="python" />
-            </Row>
-            <Row type="flex" style={{ justifyContent: "flex-end" }}>
-              <PlayModeControls level_name={level} />
-            </Row>
-          </Col>
-        </SplitterLayout>
+          <TopNavBar
+            type="sub"
+            className="nav-container"
+            theme="dark"
+            backgroundColor="#222222"
+          />
+          <SplitterLayout
+            className="content-container"
+            onDragEnd={() => {
+              setResizedflag(!resizedFlag);
+            }}
+          >
+            <Tabs
+              tabPosition={"left"}
+              style={{ color: "white", width: "100%" }}
+            >
+              <TabPane tab="Game" key="1">
+                <HorizontalSplitLayout
+                  top_section={
+                    <UnityPlayer
+                      unityContent={unityContent}
+                      level_name={level}
+                      levelData={levelData}
+                    />
+                  }
+                  bottom_section={
+                    <ConsoleSection style={{ backgroundColor: "black" }} />
+                  }
+                  dependent="bottom"
+                  parent_height={windowSize.height - 6}
+                  update_flags={resizedFlag}
+                />
+              </TabPane>
+              <TabPane tab="Task" key="2">
+                <MarkdownViewer markdownText={task}></MarkdownViewer>
+              </TabPane>
+              <TabPane tab="Tutorial" key="3">
+                <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
+              </TabPane>
+              <TabPane tab="Leaderboard" key="4">
+                <Leaderboard rankings={rankings} />
+              </TabPane>
+              <TabPane tab="FAQ" key="5">
+                <MarkdownViewer
+                  markdownSrc={`/instructions.md`}
+                ></MarkdownViewer>
+              </TabPane>
+              <TabPane tab="API " key="6">
+                <MarkdownViewer
+                  markdownSrc={`/game_api_docs.md`}
+                ></MarkdownViewer>
+              </TabPane>
+            </Tabs>
+            <div className="right-section-container">
+              <div className="content-container">
+                <CodeEditor
+                  mode="python"
+                  placeholder={gamePageContext.editorContent}
+                  handleChange={(value) =>
+                    gamePageContext.setEditorContent(value)
+                  }
+                  isLoading={gamePageContext.isLoading}
+                />
+              </div>
+              <div className="footer-container">
+                <PlayModeControls level_name={level} />
+              </div>
+            </div>
+          </SplitterLayout>
+          <LoginRegisterModal onSubmit={handleGuestLogin} />
+        </div>
+        {gamePageContext.isLoading && <LoadingScreen />}
+        <GameOverModal
+          visible={gameOverVisible}
+          message={`${gameOverMsg};Time taken: ${timeTaken} seconds`}
+          isSuccess={isSuccess}
+        />
       </div>
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
 }
 
 export default GamePage;

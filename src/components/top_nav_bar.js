@@ -11,10 +11,13 @@ import { AppContext } from "../contexts/AppContext";
 
 import { Auth } from "aws-amplify";
 
+import styles from "../style.module.css";
+
 /**
  * Main navigation bar
+ * theme: dark or light
  */
-function TopNavBar({ type }) {
+function TopNavBar({ type, theme, backgroundColor }) {
   const [currentTab, setCurrentTab] = useState("");
   const appContext = useContext(AppContext);
 
@@ -30,8 +33,9 @@ function TopNavBar({ type }) {
     console.log("click ", click);
     if (click.key == "login/register") {
       // Clicking login/register button
-      //LoginRegisterModalRef.current.openModal()
-      Auth.federatedSignIn();
+      // LoginRegisterModalRef.current.openModal()
+      //Auth.federatedSignIn();
+      appContext.setAuthModalVisible(true);
     } else if (click.key === "logout") {
       // Clicking logout button
       logout();
@@ -62,38 +66,42 @@ function TopNavBar({ type }) {
           onClick={handleClick}
           selectedKeys={[currentTab]}
           mode="horizontal"
-          theme="dark"
+          theme={theme}
           style={{
             width: "100vw",
             display: "flex",
             flex: 1,
             alignContent: "center",
             justifyContent: "flex-end",
-            backgroundColor: "#222222",
+            backgroundColor: backgroundColor,
             lineHeight: lineHeight,
           }}
         >
           {!(type === "main") && (
             <Menu.Item key="back" style={{ marginRight: "auto" }}>
-              <Link to={"/"}>Home</Link>
+              <Link to={"/"} className={`${styles.ui_font}`}>
+                Home
+              </Link>
             </Menu.Item>
           )}
 
           {!appContext.isAuth && (
-            <Menu.Item key="login/register">
-              <p>Login / Register</p>
+            <Menu.Item key="login/register" data-cy="login-register-link">
+              <p className={`${styles.ui_font}`}>Login / Register</p>
             </Menu.Item>
           )}
 
           {appContext.isAuth && (
-            <Menu.Item key="logout">
-              <p>Logout</p>
+            <Menu.Item key="logout" data-cy="logout-link">
+              <p className={`${styles.ui_font}`}>Logout</p>
             </Menu.Item>
           )}
 
           {appContext.isAuth && appContext.user_group === "admin" && (
-            <Menu.Item key="admin">
-              <Link to={"/admin"}>Admin Console</Link>
+            <Menu.Item key="admin" data-cy="admin-console-link">
+              <Link to={"/admin"} className={`${styles.ui_font}`}>
+                Admin Console
+              </Link>
             </Menu.Item>
           )}
         </Menu>

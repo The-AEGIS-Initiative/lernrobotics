@@ -1,0 +1,84 @@
+html {
+  --default-black-color: #1d2b36;
+}
+
+.start-page-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #bae2f8;
+}
+
+.banner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #3fabfc;
+  padding: 50px;
+  height: 500px;
+}
+
+.text-container {
+  align-self: center;
+  max-width: 800px;
+}
+
+.banner-container .heading {
+  font-size: 48px;
+  color: white;
+  font-family: Bebas Neue, cursive;
+}
+
+.banner-container .description {
+  font-size: 18px;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}
+
+.split-container {
+  display: flex;
+  height: 425px;
+  margin-bottom: 20px;
+}
+
+.split-container p {
+  font-size: 16px;
+  color: var(--default-black-color);
+  font-weight: 300;
+  font-family: "Montserrat", sans-serif;
+}
+
+.split-container div h2 {
+  font-size: 30px;
+  color: var(--default-black-color);
+  font-weight: 400 !important;
+  font-family: "Monserrat", sans-serif !important;
+  margin-bottom: 0px;
+}
+
+.alt-container-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e6ffff;
+}
+
+img {
+  width: 100%;
+}
+
+.left-col img {
+  padding-right: 30px;
+}
+
+.start-page-container .start-button {
+  width: 150px;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  background-color: #3cc732;
+  margin-top: 20px;
+  border: 0;
+  font-family: Open Sans, sans-serif;
+}

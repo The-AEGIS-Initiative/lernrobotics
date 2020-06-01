@@ -13,7 +13,11 @@ export class AppContextProvider extends React.Component {
   constructor(props) {
     super(props);
     this.setAuth = this.setAuth.bind(this);
+    this.setAuthModalVisible = this.setAuthModalVisible.bind(this);
+
     this.state = {
+      loadingAuth: true,
+      setLoadingAuth: this.setLoadingAuth,
       isAuth: false,
       setAuth: this.setAuth,
       checkAuth: this.setAuth,
@@ -21,10 +25,38 @@ export class AppContextProvider extends React.Component {
       backENDURL: "",
       user: null,
       user_group: null,
+      authModalVisible: false,
+      setAuthModalVisible: this.setAuthModalVisible,
     };
   }
 
+  setAuthModalVisible(isVisible) {
+    this.setState({ authModalVisible: isVisible });
+  }
+
+  checkAuthStatusCache() {
+    const userCookie = localStorage.getItem("user");
+    if (userCookie == null || userCookie == false) {
+      this.setState({
+        isAuth: false,
+        username: "",
+        user: null,
+        user_group: null,
+      });
+      return false;
+    } else {
+      this.setState({
+        isAuth: true,
+        username: userCookie.username,
+        user_group: userCookie.user_group,
+      });
+      return true;
+    }
+  }
+
   async setAuth() {
+    //checkAuthStatusCache();
+
     await Auth.currentAuthenticatedUser()
       .then((user) => {
         //console.log(user);
@@ -33,11 +65,19 @@ export class AppContextProvider extends React.Component {
         if (access_token.payload["cognito:groups"] != null) {
           user_group = access_token.payload["cognito:groups"][0];
         }
+        //console.log(access_token.payload["cognito:groups"]);
         //console.log(user_group)
         this.setState({
           isAuth: true,
           username: user.username,
           user: user,
+          user_group: user_group,
+          isLoadingAuth: false,
+          authModalVisible: false,
+        });
+        //this.setAuthModalVisible(false);
+        localStorage.setItem("user", {
+          username: user.username,
           user_group: user_group,
         });
       })
@@ -49,7 +89,10 @@ export class AppContextProvider extends React.Component {
           username: "",
           user: null,
           user_group: null,
+          isLoadingAuth: false,
+          authModalVisible: false,
         });
+        localStorage.setItem("user", null);
       });
   }
 

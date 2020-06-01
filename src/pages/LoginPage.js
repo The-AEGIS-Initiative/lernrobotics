@@ -25,19 +25,19 @@ function LoginPage() {
   return (
     <div>
       <input
-        className="username-input"
+        data-cy="username-input"
         onChange={({ target }) => setUsername(target.value)}
         placeholder="Username"
         value={username}
       />
       <input
         type="password"
-        className="password-input"
+        data-cy="password-input"
         onChange={({ target }) => setPassword(target.value)}
         placeholder="*****"
         value={password}
       />
-      <Button className="sign-in-button" onClick={handleSignIn}>
+      <Button data-cy="sign-in-button" onClick={handleSignIn}>
         Sign in
       </Button>
     </div>

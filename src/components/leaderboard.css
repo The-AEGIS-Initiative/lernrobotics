@@ -1,0 +1,19 @@
+.leaderboard {
+  width: 100%;
+  height: 100%;
+}
+
+.leaderboard .ant-table-content {
+  background-color: #292929;
+}
+
+.leaderboard .ant-table {
+  border: 0;
+}
+
+.leaderboard .ant-table-cell {
+  background-color: #292929 !important;
+  border: 0px;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}

@@ -14,7 +14,6 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 
 - `npm install -g @aws-amplify/cli`
 - `amplify configure`
-
   - Press Enter (No need to sign in)
   - Specify the AWS Region: `us-west-2`
   - Specify the username : Press Enter (username doesn't matter)
@@ -35,7 +34,6 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 - Go to [https://development-robobot.aegisinitiative.io/](https://development-robobot.aegisinitiative.io/)
 
 - Create 2 accounts:
-
   - General purpose developer admin account
     - This is the account you will use when interacting with the app
   - Test account
@@ -48,22 +46,22 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 - Create a `cypress.env.json` file in the root directory
 - Add the following to the `cypress.env.json` file (replace with your test account credentials):
 
-  ```
-  {
-    "username": "<your-test-account-username>",
-    "password": "<your-test-account-password>"
-  }
-  ```
+    ```
+    {
+      "username": "<your-test-account-username>",
+      "password": "<your-test-account-password>"
+    }
+    ```
 
 # Development Workflow
 
 ### Before making changes:
 
 - Run app using:
-  `npm start`
+    `npm start`
 - Run Robobot back-end in a 2nd terminal
 - Start cypress in a 3rd terminal:
-  `npm test`
+    `npm test`
 
 ### While making changes:
 
@@ -79,7 +77,6 @@ This project uses primarily Cypress for running tests. See Writing Tests section
 
 - `git add <your-changed-files>`
 - `git commit -m "<your-commit-message>"`
-
   - Commit message should follow semantic convention such as:
     - major(api): API rewrite, not backwards compatible!
     - feat(log): add new logging feature

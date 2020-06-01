@@ -105,7 +105,7 @@
         "npx lint-staged"
       ],
       "pre-push": [
-        "npm run-script test:local"
+        "if [ git-branch-is master]; then npm run-script test:local; fi"
       ],
       "post-commit": [],
       "post-checkout": [],

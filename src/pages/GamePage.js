@@ -47,10 +47,8 @@ function GamePage({ unityContent, level }) {
   const [timeTaken, setTimeTaken] = useState(0);
   const [rankings, setRankings] = useState([]);
 
-  const editorRef = useRef(null);
-
   const windowSize = useWindowSize();
-
+  console.log(windowSize);
   const { TabPane } = Tabs;
 
   // Fetch level data and user progress from graphql api
@@ -220,7 +218,7 @@ function GamePage({ unityContent, level }) {
                     <ConsoleSection style={{ backgroundColor: "black" }} />
                   }
                   dependent="bottom"
-                  parent_height={windowSize.height - 6}
+                  parent_height={windowSize.height - 45}
                   update_flags={resizedFlag}
                 />
               </TabPane>

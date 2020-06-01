@@ -4,7 +4,7 @@ import { Row, Col } from "antd";
 
 import { useWindowSize } from "../hooks/useWindowSize";
 
-// Dynamically allocates remaining screen-space to the dependent component
+// Dynamically allocates remaining vertical screen-space to the dependent component
 // dependent = "top" or dependent = "bottom"
 function HorizontalSplitLayout({
   top_section,

@@ -23,9 +23,9 @@ function TopNavBar({ type, theme, backgroundColor }) {
 
   var lineHeight = "4vh";
   if (type == "main") {
-    lineHeight = "6vh";
+    lineHeight = "60px";
   } else {
-    lineHeight = "5vh";
+    lineHeight = "45px";
   }
 
   // Handle nav bar clicks

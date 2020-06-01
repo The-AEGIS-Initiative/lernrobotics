@@ -33,6 +33,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
 
   const [resizedFlag, setResizedflag] = useState(false);
   const [tabKey, setTabKey] = useState("1");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   const levelNameRef = useRef(null);
 
@@ -89,6 +90,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
     console.log(taskContent);
     console.log(tutorialContent);
     console.log(levelData);
+    setIsSubmitting(true);
     var jsonObject = await graphqlController.upsertPublishedLevel({
       level_name: levelName,
       default_code: defaultCodeContent,
@@ -97,6 +99,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
       tutorial: tutorialContent,
       level_data: levelData,
     });
+    setIsSubmitting(false);
   };
 
   const pushLevelData = async () => {
@@ -106,6 +109,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
     console.log(taskContent);
     console.log(tutorialContent);
     console.log(levelData);
+    setIsSubmitting(true);
     var jsonObject = await graphqlController.upsertLevel({
       level_name: levelName,
       default_code: defaultCodeContent,
@@ -114,6 +118,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
       tutorial: tutorialContent,
       level_data: levelData,
     });
+    setIsSubmitting(false);
   };
 
   // Necessary check to ensure unity content waits until level data is fetched
@@ -186,15 +191,15 @@ function LevelBuilderPage({ unityContent, levelName }) {
           >
             <Button
               onClick={pushLevelData}
-              loading={gamePageContext.isLoading}
-              className={styles.buttons}
+              loading={gamePageContext.isLoading || isSubmitting}
+              className={`${styles.ui_font} ${styles.dark_buttons}`}
             >
               Save Level
             </Button>
             <Button
               onClick={publishLevelData}
-              loading={gamePageContext.isLoading}
-              className={styles.buttons}
+              loading={gamePageContext.isLoading || isSubmitting}
+              className={`${styles.ui_font} ${styles.dark_buttons}`}
             >
               Publish Level
             </Button>

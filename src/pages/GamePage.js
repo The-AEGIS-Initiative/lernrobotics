@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 
-import { Row, Col, Tabs } from "antd";
+import { Row, Col, Tabs, Button } from "antd";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
@@ -29,6 +29,8 @@ import Leaderboard from "../components/leaderboard";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
+import { submitUserCode, stopUserCode } from "../sockets/emit";
+
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
@@ -48,6 +50,7 @@ function GamePage({ unityContent, level }) {
   const [rankings, setRankings] = useState([]);
   const [gameAPI, setGameAPI] = useState("");
   const [faq, setFaq] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   const windowSize = useWindowSize();
   console.log(windowSize);
@@ -194,9 +197,28 @@ function GamePage({ unityContent, level }) {
       setGameOverVisible(true);
       updateLeaderboard(data); // Submit score to leaderboard
     });
+
+    unityContent.on("Start", () => {
+      console.log("Game started");
+      setIsSubmitting(false);
+    });
   }, []);
 
   const handleGuestLogin = () => {};
+
+  const pushUserCode = async () => {
+    if (appContext.isAuth) {
+      submitUserCode(gamePageContext.editorContent);
+      const res = await graphqlController.upsertProgress({
+        level_name: level,
+        user_code: gamePageContext.editorContent,
+      });
+      console.log(res);
+    } else {
+      // Guest user
+      appContext.setAuthModalVisible(true);
+    }
+  };
 
   // Necessary check to ensure unity content waits until level data is fetched
   if (levelData != "") {
@@ -268,13 +290,45 @@ function GamePage({ unityContent, level }) {
                 />
               </div>
               <div className="footer-container">
-                <PlayModeControls level_name={level} />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignContent: "flex-end",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Button
+                    type="primary"
+                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    loading={gamePageContext.isLoading}
+                    onClick={() => {
+                      setIsSubmitting(false);
+                      stopUserCode();
+                    }}
+                  >
+                    Stop
+                  </Button>
+                  <Button
+                    type="primary"
+                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    loading={gamePageContext.isLoading || isSubmitting}
+                    onClick={() => {
+                      setIsSubmitting(true);
+                      pushUserCode();
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </div>
               </div>
             </div>
           </SplitterLayout>
           <LoginRegisterModal onSubmit={handleGuestLogin} />
         </div>
+
         {gamePageContext.isLoading && <LoadingScreen />}
+
         <GameOverModal
           visible={gameOverVisible}
           message={`${gameOverMsg};Time taken: ${timeTaken} seconds`}

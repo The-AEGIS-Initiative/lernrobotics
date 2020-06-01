@@ -6,6 +6,7 @@ import * as graphqlController from "../graphql/graphql-controller";
 
 export default function DocumentEditorPage({ docName }) {
   const [content, setContent] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   useEffect(() => {
     async function fetchData() {
@@ -29,10 +30,12 @@ export default function DocumentEditorPage({ docName }) {
   }, []);
 
   const publishDocument = async () => {
+    setIsSubmitting(true);
     const res = await graphqlController.upsertDoc({
       doc_name: docName,
       doc_content: content,
     });
+    setIsSubmitting(false);
     console.log(res);
   };
 
@@ -45,7 +48,13 @@ export default function DocumentEditorPage({ docName }) {
           placeholder={content}
           handleChange={(e) => setContent(e)}
         />
-        <Button onClick={publishDocument} className={styles.buttons}>
+        <Button
+          loading={isSubmitting}
+          onClick={() => {
+            publishDocument();
+          }}
+          className={`${styles.ui_font} ${styles.dark_buttons}`}
+        >
           Publish Document
         </Button>
       </div>

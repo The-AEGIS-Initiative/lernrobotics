@@ -8,8 +8,16 @@
   border-color: #575757 !important;
   color: white !important;
   margin: 1px;
-  width: 75px;
+  width: auto;
   height: 32px;
+}
+
+.dark_buttons:hover {
+  background-color: #464646 !important;
+}
+
+.dark_buttons:active {
+  background-color: #191919 !important;
 }
 
 .ui_font {

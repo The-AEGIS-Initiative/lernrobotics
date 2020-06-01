@@ -47,6 +47,7 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 
 - Create a `cypress.env.json` file in the root directory
 - Add the following to the `cypress.env.json` file (replace with your test account credentials):
+
   ```
   {
     "username": "<your-test-account-username>",
@@ -59,10 +60,10 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 ### Before making changes:
 
 - Run app using:
-  - `npm start`
+  `npm start`
 - Run Robobot back-end in a 2nd terminal
 - Start cypress in a 3rd terminal:
-  - `npm test`
+  `npm test`
 
 ### While making changes:
 

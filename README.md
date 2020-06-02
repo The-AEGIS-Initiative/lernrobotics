@@ -10,17 +10,18 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 *  `npm install`
 *  `git checkout -b "<your-branch-name>"`
 
-## Step 2: Setup Amplify CLI and Project
+## Step 2: Install AWS CLI and Configure IAM User
+
+- https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
+- `aws configure` (Restart terminal if aws command not found)
+  - AWS Access Key: \*\*
+  - AWS Secret Access Key: \*\*
+  - Default region name: _us-west-2_
+  - Default output format: _json_
+
+## Step 3: Setup Amplify CLI and Project
 
 *  `npm install -g @aws-amplify/cli`
-*  `amplify configure`
-  *  Press Enter (No need to sign in)
-  *  Specify the AWS Region: `us-west-2`
-  *  Specify the username : Press Enter (username doesn't matter)
-  *  Press Enter (No need to create account)
-  *  accessKeyId: `<YOUR_ACCESS_KEY_ID>`
-  *  secretAccessKey: `<YOUR_SECRET_ACCESS_KEY>`
-
 *  `amplify init`
   *  Do you want to use an existing environment? _Yes_
   *  Choose the environment you would like to use: _dev_
@@ -29,7 +30,7 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
     *  Select your profile from Step 2
 *  `amplify pull`
 
-## Step 3: Create a Robobot Account
+## Step 4: Create a Robobot Account
 
 *  Go to [https://development-robobot.aegisinitiative.io/](https://development-robobot.aegisinitiative.io/)
 
@@ -41,7 +42,7 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
 
 *  Contact an admin to give your developer account admin status
 
-## Step 4: Configure Cypress Environment
+## Step 5: Configure Cypress Environment
 
 *  Create a `cypress.env.json` file in the root directory
 *  Add the following to the `cypress.env.json` file (replace with your test account credentials):

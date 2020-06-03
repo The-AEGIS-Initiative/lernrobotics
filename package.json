@@ -43,6 +43,7 @@
     "react-splitter-layout": "^4.0.0",
     "react-test-renderer": "^16.13.1",
     "react-unity-webgl": "^7.1.10",
+    "react-window": "^1.8.5",
     "socket.io-client": "^2.3.0"
   },
   "scripts": {
@@ -52,7 +53,7 @@
     "build:dev": "REACT_APP_BUILD_ENV=dev REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
     "build:prod": "REACT_APP_BUILD_ENV=prod REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
     "test": "cypress open --env baseUrl=http://localhost:3000",
-    "test:local": "cypress run --env baseUrl=http://localhost:3000",
+    "test:local": "cypress run --spec 'cypress/integration/front-end-only/*.spec.js' --env baseUrl=http://localhost:3000",
     "test:staging": "cypress run --env baseUrl=$CYPRESS_BASE_URL --reporter mochawesome --reporter-options 'reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss'",
     "test:dev": "cypress run --spec 'cypress/integration/front-end-only/*.spec.js' --env baseUrl=$CYPRESS_BASE_URL --reporter mochawesome --reporter-options 'reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss'",
     "cypress:local": "run-p --race start e2e:local",

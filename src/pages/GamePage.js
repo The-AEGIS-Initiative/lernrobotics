@@ -53,7 +53,7 @@ function GamePage({ unityContent, level }) {
   const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   const windowSize = useWindowSize();
-  console.log(windowSize);
+  //console.log(windowSize);
   const { TabPane } = Tabs;
 
   // Fetch level data and user progress from graphql api
@@ -201,6 +201,12 @@ function GamePage({ unityContent, level }) {
     unityContent.on("Start", () => {
       console.log("Game started");
       setIsSubmitting(false);
+    });
+
+    unityContent.on("ConsoleLog", (log) => {
+      log.split("\n").map((val, i) => {
+        gamePageContext.setLogs([...gamePageContext.logs, val]);
+      });
     });
   }, []);
 

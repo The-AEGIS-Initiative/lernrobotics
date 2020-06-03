@@ -1,64 +1,50 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Hook, Console, Decode } from "console-feed";
 import { GamePageContext } from "../contexts/GamePageContext";
+import { FixedSizeList } from "react-window";
 
 import styles from "../style.module.css";
 
 function ConsoleSection({ height, width }) {
   const gamePageContext = useContext(GamePageContext);
 
-  const [logs, setLogs] = useState([]);
-  //console.log("isLoading: ", gamePageContext.isLoading)
+  const parent = useRef(null);
 
-  useEffect(() => {
-    // Grabbing console logs from browser
-    // Hook function to grab browser console logs
-    Hook(
-      window.console,
-      (log) => {
-        try {
-          // Attempt to filter log
-          log.data = [filter(log.data[0])];
-        } catch (err) {
-          // If error occurs for some reason, log
-          // the original
-          setLogs((logs) => [...logs, log]);
-        }
-
-        // If Unity game has finished loading and log is
-        // non empty (due to filtering), add to logs
-        if (log.data[0] != "" && !gamePageContext.isLoading) {
-          setLogs((logs) => [...logs, log]);
-        }
-      },
-      false // Some performance thing option from console-feed library
-    );
-  }, [gamePageContext.isLoading]); // Run when unity finishes loading
+  function Row({ index, style }) {
+    console.log(index);
+    console.log(parent.current.offsetHeight);
+    return <div> gamePageContext.logs[index] </div>;
+  }
 
   return (
-    <div style={{ height: `100%`, width: "100%" }}>
+    <div style={{ height: `100%`, width: "100%" }} ref={parent}>
       <button
         style={{ position: "absolute", margin: 0, right: 0, zIndex: "1" }}
         className={`${styles.ui_font} ${styles.dark_buttons}`}
-        onClick={() => setLogs((logs) => [])}
+        onClick={() => gamePageContext.setLogs({ logs: [] })}
       >
         Clear
       </button>
+
       <div
         className="console"
         style={{
-          overflowY: "scroll",
           height: `100%`,
           width: "100%",
           backgroundColor: "black",
         }}
       >
-        <Console
-          logs={logs}
-          variant="dark"
-          filter={["log", "error"]}
-          style={{ height: "100%", width: `100%` }}
-        />
+        {parent.current != null && (
+          <FixedSizeList
+            className="console-logs"
+            height={parent.current.offsetHeight}
+            itemCount={gamePageContext.logs.length}
+            itemSize={25}
+            width={parent.current.offsetWidth}
+          >
+            {Row}
+          </FixedSizeList>
+        )}
       </div>
     </div>
   );

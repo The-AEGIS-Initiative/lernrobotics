@@ -204,9 +204,8 @@ function GamePage({ unityContent, level }) {
     });
 
     unityContent.on("ConsoleLog", (log) => {
-      log.split("\n").map((val, i) => {
-        gamePageContext.setLogs([...gamePageContext.logs, val]);
-      });
+      // Split multiline logs into multi logs.
+      gamePageContext.setLogs([...gamePageContext.logs, ...log.split("\n")]);
     });
   }, []);
 

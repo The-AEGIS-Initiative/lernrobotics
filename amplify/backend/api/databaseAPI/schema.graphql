@@ -1,5 +1,5 @@
 type Progress @model 
-	@auth(rules: [{ allow: owner }]) # owner full access
+	@auth(rules: [{ allow: owner, operations: [create, read, update, delete] }]) # owner full access
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "progressByLevelName")
 {
   id: ID!
@@ -7,14 +7,14 @@ type Progress @model
   level_name: String!
   user_code: String
   stars: Int!
+  owner: String
 }
 
 type Level @model
 	@auth(rules: [
 		{ allow: owner }, # owner full access
-		{ allow: groups, groups:["admin"] } # admin full access to levels
-		{ allow: private, operations: [read]} # private user read access for levels
-		{ allow: public, provider: iam, operations: [read]} # public guest read access for levels
+		{ allow: groups, groups:["admin"] }, # admin full access to levels
+		{ allow: private, operations: [read]}, # private user read access for levels
 	])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelByName")
 {
@@ -25,14 +25,14 @@ type Level @model
 	task: String!
 	tutorial: String!
 	level_data: String!
+  owner: String
 }
 
 type PublishedLevel @model
 	@auth(rules: [
 		{ allow: owner }, # owner full access
-		{ allow: groups, groups:["admin"] } # admin full access to levels
-		{ allow: private, operations: [read]} # private user read access for levels
-		{ allow: public, provider: iam, operations: [read]} # public guest read access for levels
+		{ allow: groups, groups:["admin"] }, # admin full access to levels
+		{ allow: private, operations: [read]}, # private user read access for levels
 	])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getPublishedLevelByName")
 {
@@ -43,9 +43,11 @@ type PublishedLevel @model
 	task: String!
 	tutorial: String!
 	level_data: String!
+  owner: String
 }
 
 type Submissions @model
+  @auth(rules: [{ allow: owner, operations: [create, read, update, delete] }]) # owner full access
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelSubmissions")
 	@key(name: "byUserAndLevel", fields: ["username", "level_name"], queryField: "getUserSubmission")
 {
@@ -54,11 +56,13 @@ type Submissions @model
 	score: String!
 	level_name: String!
 	createdAt: AWSDateTime
+  owner: String
 }
 
 type MarkdownDocs @model
 	@auth(rules: [
-		{ allow: groups, groups:["admin"] } # admin full access to levels
+		{ allow: groups, groups:["admin"] }, # admin full access to levels
+    { allow: private, operations: [read]} # public guest read access for levels
 	])
 	@key(name: "byDocName", fields: ["doc_name"], queryField: "getDocByName")
 {
@@ -66,4 +70,5 @@ type MarkdownDocs @model
 	doc_name: String!
 	doc_content: String!
 	createdAt: AWSDateTime
+  owner: String
 }

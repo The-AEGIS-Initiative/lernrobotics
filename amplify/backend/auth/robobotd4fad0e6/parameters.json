@@ -52,7 +52,10 @@
         "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "admin",
+        "users"
+    ],
     "parentStack": {
         "Ref": "AWS::StackId"
     },

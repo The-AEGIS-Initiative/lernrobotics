@@ -1,61 +1,82 @@
-import React, { useState , useImperativeHandle } from 'react';
-import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
-import LoginRegisterCard from '../components/login_register_card'
+import React, { useContext, useState } from "react";
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
- 
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-// Modal.setAppElement('#root')
- 
-// Modal holding Login/Registration Card
-class LoginRegisterModal extends React.Component{
-  constructor(props) {
-    super(props)
+import { Modal } from "antd";
 
-    this.state = {
-      modalIsOpen: false
-    }
+import {
+  AmplifyAuthenticator,
+  AmplifySignIn,
+  AmplifySignUp,
+  AmplifyConfirmSignUp,
+} from "@aws-amplify/ui-react";
+import { Auth } from "aws-amplify";
 
-    this.closeModal = this.closeModal.bind(this)
-  }
-  
-  // This function be accessed from parent component
-  // using const modal_ref = useRef() and <LoginRegisterModal ref = modal_ref />
-  // You can then call modal-ref.current.openModal() to close the modal
-  openModal() {
-    this.setState({modalIsOpen: true})
-  }
+import { AppContext } from "../contexts/AppContext";
 
-  // This function be accessed from parent component
-  // using const modal_ref = useRef() and <LoginRegisterModal ref = modal_ref />
-  // You can then call modal-ref.current.closeModal() to close the modal
-  closeModal() {
-    this.setState({modalIsOpen: false})
-  }
+import "./login_register_modal.css";
 
-  render() {
-    return (
-      <div>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onRequestClose={() => this.setState({modalIsOpen: false})}
-          style={customStyles}
-        >
-          <LoginRegisterCard onSuccess={this.closeModal}/>
-        </Modal>
-      </div>
-    );
-  }
+function LoginRegisterModal({ onSubmit }) {
+  const appContext = useContext(AppContext);
+
+  const handleOk = () => {
+    console.log("modal ok");
+  };
+
+  const handleCancel = () => {
+    console.log("modal cancel");
+    appContext.setAuthModalVisible(false);
+  };
+
+  return (
+    <div className="auth-modal">
+      <Modal
+        title="Basic Modal"
+        visible={appContext.authModalVisible}
+        maskClosable={false}
+        onCancel={handleCancel}
+        footer={null}
+        title=""
+        className="auth-modal"
+      >
+        <AmplifyAuthenticator usernameAlias="username">
+          <AmplifySignUp
+            slot="sign-up"
+            usernameAlias="username"
+            formFields={[
+              {
+                type: "username",
+                label: "Username",
+                placerholder: "Enter your username",
+                required: true,
+              },
+              {
+                type: "email",
+                label: "Email",
+                placeholder: "Enter your email",
+                required: true,
+              },
+              {
+                type: "password",
+                label: "Password",
+                placeholder: "Enter your password",
+                required: "true",
+              },
+            ]}
+          />
+
+          <AmplifyConfirmSignUp
+            headerText="Please verify your email"
+            slot="confirm-sign-in"
+          />
+
+          <AmplifySignIn
+            headerText="Login to Get Started!"
+            usernameAlias="username"
+            slot="sign-in"
+          />
+        </AmplifyAuthenticator>
+      </Modal>
+    </div>
+  );
 }
 
-export default LoginRegisterModal
+export default LoginRegisterModal;

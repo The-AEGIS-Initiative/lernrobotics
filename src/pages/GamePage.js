@@ -1,156 +1,355 @@
-import React, { useEffect, useState, useContext , useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef } from "react";
 
-import { Row, Col, Tabs } from 'antd';
+import { Row, Col, Tabs, Button } from "antd";
 
-import Unity from "react-unity-webgl";
+import SplitterLayout from "react-splitter-layout";
+import "react-splitter-layout/lib/index.css";
 
-import SplitterLayout from 'react-splitter-layout'
-import 'react-splitter-layout/lib/index.css';
+import "./GamePage.css";
+import styles from "../style.module.css";
 
-import './GamePage.css';
+import ConsoleSection from "../sections/console_section";
 
-import GameSection from '../sections/game_section';
-import EditorSection from '../sections/editor_section';
-import ConsoleSection from '../sections/console_section';
+import { GamePageContext } from "../contexts/GamePageContext";
+import { AppContext } from "../contexts/AppContext";
 
-import { GamePageContext } from '../contexts/GamePageContext';
-import { AppContext } from '../contexts/AppContext';
+import { useWindowSize } from "../hooks/useWindowSize";
+import { useHistory } from "react-router-dom";
 
-import { useWindowSize } from '../hooks/useWindowSize';
+import TopNavBar from "../components/top_nav_bar";
+import MarkdownViewer from "../components/markdown_viewer";
+import UnityPlayer from "../components/unity_player";
+import HorizontalSplitLayout from "../components/horizontal_split_layout";
+import PlayModeControls from "../components/play_mode_controls";
+import CodeEditor from "../components/code_editor";
+import LoginRegisterModal from "../components/login_register_modal";
+import LoadingScreen from "../components/loading_screen";
+import GameOverModal from "../components/game_over_modal";
+import Leaderboard from "../components/leaderboard";
 
-import TopNavBar from '../components/top_nav_bar';
-import MarkdownViewer from '../components/markdown_viewer'
-import withAuth from '../components/withAuth';
+import * as graphqlController from "../graphql/graphql-controller";
+
+import { submitUserCode, stopUserCode } from "../sockets/emit";
 
 // Contains Unity game, code editor, and console
-function GamePage({unityContent, level}) {
+function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
+  const appContext = useContext(AppContext);
+  const history = useHistory();
 
   // Refs for controlling various DOM element sizes
-  const [consoleHeight, setConsoleHeight] = useState(null)
-  const [editorWidth, setEditorWidth] = useState(null)
-  const [resizedFlag, setResizedflag] = useState(false)
-  const [gameWidth,setGameWidth] = useState(null)
-  const gameRef = useRef(null);
-  const tabsRef = useRef(null);
-  const consoleRef = useRef(null);
-  const navbarRef = useRef(null);
-  const windowSize = useWindowSize();
+  const [resizedFlag, setResizedflag] = useState(false);
+  const [task, setTask] = useState("");
+  const [tutorial, setTutorial] = useState("");
+  const [levelData, setLevelData] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [gameOverMsg, setGameOverMsg] = useState("");
+  const [gameOverVisible, setGameOverVisible] = useState(false);
+  const [timeTaken, setTimeTaken] = useState(0);
+  const [rankings, setRankings] = useState([]);
+  const [gameAPI, setGameAPI] = useState("");
+  const [faq, setFaq] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
+  const windowSize = useWindowSize();
+  //console.log(windowSize);
   const { TabPane } = Tabs;
 
-  var gameHeight;
+  // Fetch level data and user progress from graphql api
+  useEffect(() => {
+    async function fetchData() {
+      const username = appContext.username;
+      const level_name = level;
+
+      // Fetch level data
+      const data = await graphqlController.getPublishedLevel({
+        level_name: level_name,
+      });
+      if (data.length == 0) {
+        // No level data, invalid level!
+        // history.push("/"); // Redirect to home
+        console.log("wefodi");
+      } else {
+        // Set task, tutorial, and leveldata content
+        setTask(data[0].task);
+        setTutorial(data[0].tutorial);
+        setLevelData(data[0].level_data);
+
+        // Fetch user progress
+        const progressData = await graphqlController.getProgress({
+          username: username,
+          level_name: level_name,
+        });
+        if (progressData.length == 0) {
+          // No user progress
+          gamePageContext.setEditorContent(data[0].default_code);
+        } else {
+          // Existing user progress
+          gamePageContext.setEditorContent(progressData[0].user_code);
+        }
+
+        // Fetch leaderboard
+        const rankingData = await graphqlController.getLevelSubmissions({
+          level_name: level_name,
+        });
+        setRankings(rankingData);
+
+        // Fetch GameAPI
+        const gameAPIData = await graphqlController.getDoc({
+          doc_name: "GameAPI",
+        });
+        if (gameAPIData.length > 0) {
+          setGameAPI(gameAPIData[0].doc_content);
+        }
+
+        // Fetch FAQ
+        const faqData = await graphqlController.getDoc({
+          doc_name: "FAQ",
+        });
+        if (faqData.length > 0) {
+          setFaq(faqData[0].doc_content);
+        }
+      }
+    }
+
+    if (appContext.isAuth) {
+      // Wrapper to call async function inside useEffect()
+      fetchData();
+    } else {
+      fetchHelloWorld();
+    }
+    setIsLoading(false);
+    //console.log(`levelData: ${levelData}`);
+  }, []);
+
+  const fetchHelloWorld = () => {
+    console.log("fetching default level");
+    fetch("/level_specs/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setTutorial(data);
+      });
+
+    fetch("/prompts/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setTask(data);
+      });
+
+    fetch("/default_code/hello_world.py")
+      .then((r) => r.text())
+      .then((data) => {
+        gamePageContext.setEditorContent(data);
+      });
+
+    fetch("/level_specs/hello_world.md")
+      .then((r) => r.text())
+      .then((data) => {
+        setLevelData(data);
+      });
+  };
 
   useEffect(() => {
-    // When unity webgl has loaded, send assigned port
-    // to unity so that unity knows which websocket to connect
-    unityContent.on("Loaded", () => {
-      gamePageContext.setLoading(false);
+    async function updateLeaderboard(gameOverData) {
+      if (gameOverData.isSuccess) {
+        // If passed level
+        const cur_submission = await graphqlController.getUserSubmission({
+          username: appContext.username,
+          level_name: level,
+        });
 
-      const game_server_url = sessionStorage.getItem("gameServerUrl");
-      const subdomain = game_server_url.match(/ec2-\d*-\d*-\d*-\d*/g);
-      const port = game_server_url.match(/\d\d\d\d/g);
-      const url = `wss://${subdomain}.aegisinitiative.io:${port}/websocket`
-      console.log(url);
-      const dataPacket = `${url},${level}`
+        if (cur_submission.length > 0) {
+          // If previous submission exists
+          const score = parseFloat(cur_submission[0].score);
+          console.log(score);
+          if (parseFloat(gameOverData.timeTaken) <= score) {
+            // TODO: Handle both maximizing score and minimizing time
+            // Update current highscore
+            console.log("updating previous entry!");
+            await graphqlController.updateUserSubmission({
+              submission_id: cur_submission[0].id,
+              score: gameOverData.timeTaken.toString(),
+            });
+          }
+        } else {
+          // Create new submission
+          await graphqlController.createSubmission({
+            level_name: level,
+            username: appContext.username,
+            score: gameOverData.timeTaken.toString(),
+          });
+        }
 
-      // Send url to unity webgl
-      // See the following for details:
-      // https://github.com/elraccoone/react-unity-webgl/wiki/Communication-Guide
-      unityContent.send(
-        "WebSocket Manager",
-        "ConnectWS",
-        dataPacket
-      );
+        // Update leaderboard
+        const rankingData = await graphqlController.getLevelSubmissions({
+          level_name: level,
+        });
+        setRankings(rankingData);
+      }
+    }
+    unityContent.on("GameOver", (gameOverJson) => {
+      console.log(gameOverJson);
+      const data = JSON.parse(gameOverJson);
+      setIsSuccess(data.isSuccess);
+      setGameOverMsg(data.message);
+      setTimeTaken(data.timeTaken);
+      setGameOverVisible(true);
+      updateLeaderboard(data); // Submit score to leaderboard
+    });
 
-      console.log("Sent port to unity client");
-      console.log("Game loaded")
+    unityContent.on("Start", () => {
+      console.log("Game started");
+      setIsSubmitting(false);
+    });
+
+    unityContent.on("ConsoleLog", (log) => {
+      // Split multiline logs into multi logs.
+      gamePageContext.setLogs([...gamePageContext.logs, ...log.split("\n")]);
     });
   }, []);
 
-  /**
-    * Sets console height and editor width based on
-    * unity game size and browser size
-  */
-  useEffect(()=>{
-    if(gameRef.current && tabsRef.current && consoleRef.current && navbarRef.current){
-      gameHeight = gameRef.current.offsetHeight;
-      setGameWidth(gameRef.current.offsetWidth);
+  const handleGuestLogin = () => {};
 
-      let tabsWidth = tabsRef.current.offsetWidth;
-
-      let navbarHeight = navbarRef.current.offsetHeight;
-
-      setConsoleHeight(windowSize.height - navbarHeight - gameHeight)
-      setEditorWidth(windowSize.width - tabsWidth - 7)
+  const pushUserCode = async () => {
+    if (appContext.isAuth) {
+      submitUserCode(gamePageContext.editorContent);
+      const res = await graphqlController.upsertProgress({
+        level_name: level,
+        user_code: gamePageContext.editorContent,
+      });
+      console.log(res);
+    } else {
+      // Guest user
+      appContext.setAuthModalVisible(true);
     }
+  };
 
-  },[gameRef.current, windowSize.height, windowSize.width, resizedFlag])
-
-
-
-  return (
-    <div style={{flex: 1, height:"100vh", overflow:"hidden"}}>
-      <div ref={navbarRef}>
-        <TopNavBar type="sub"/>
-      </div>
-      <Row type="flex" className="container" >
-        <SplitterLayout onDragEnd={()=>{setResizedflag(! resizedFlag)}}>
-
-          <Col span={24}>
-            <div ref={tabsRef}>
-              <Tabs tabPosition={"left"} style={{color:"white"}}>
-                <TabPane tab="Game" key="1">
-                  <div ref={gameRef}>
-                    <Row type="flex" className="gameSection" id="game-section" >
-
-                        <Unity unityContent={unityContent}  className="gameSection_inner_wrapper"/>
-
-                    </Row>
-                  </div>
-                  <Row type="flex"
-                        className="consoleSection"
-                        id="console-section"
-                        ref={consoleRef}
-                        style={{
-                          height: `${consoleHeight}px`
-                        }}>
-                    <ConsoleSection height={consoleHeight} width={gameWidth}/>
-                  </Row>
-                </TabPane>
-                <TabPane tab="Prompt" key="2">
-                <MarkdownViewer markdownSrc={`/prompts/${level}.md`}></MarkdownViewer>
-                </TabPane>
-                <TabPane tab="Learn" key="3">
-                <MarkdownViewer markdownSrc={`/level_specs/${level}.md`}></MarkdownViewer>
-                </TabPane>
-                <TabPane tab="Help" key="4">
-                <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
-                </TabPane>
-                <TabPane tab="API " key="5">
-                <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
-                </TabPane>
-
-              </Tabs>
+  // Necessary check to ensure unity content waits until level data is fetched
+  if (levelData != "") {
+    //console.log(`levelData: ${levelData}`);
+    return (
+      <div style={{ overflow: "hidden", height: "100vh" }}>
+        <div
+          className="game-container"
+          style={{ opacity: gamePageContext.isLoading ? 0 : 1 }}
+        >
+          <TopNavBar
+            type="sub"
+            className="nav-container"
+            theme="dark"
+            backgroundColor="#222222"
+          />
+          <SplitterLayout
+            className="content-container"
+            onDragEnd={() => {
+              setResizedflag(!resizedFlag);
+            }}
+          >
+            <Tabs
+              tabPosition={"left"}
+              style={{ color: "white", width: "100%" }}
+            >
+              <TabPane tab="Game" key="1">
+                <HorizontalSplitLayout
+                  top_section={
+                    <UnityPlayer
+                      unityContent={unityContent}
+                      level_name={level}
+                      levelData={levelData}
+                    />
+                  }
+                  bottom_section={
+                    <ConsoleSection style={{ backgroundColor: "black" }} />
+                  }
+                  dependent="bottom"
+                  parent_height={windowSize.height - 45}
+                  update_flags={resizedFlag}
+                />
+              </TabPane>
+              <TabPane tab="Task" key="2">
+                <MarkdownViewer markdownText={task} />
+              </TabPane>
+              <TabPane tab="Tutorial" key="3">
+                <MarkdownViewer markdownText={tutorial} />
+              </TabPane>
+              <TabPane tab="Leaderboard" key="4">
+                <Leaderboard rankings={rankings} />
+              </TabPane>
+              <TabPane tab="FAQ" key="5">
+                <MarkdownViewer markdownText={faq} />
+              </TabPane>
+              <TabPane tab="API " key="6">
+                <MarkdownViewer markdownText={gameAPI} />
+              </TabPane>
+            </Tabs>
+            <div className="right-section-container">
+              <div className="content-container">
+                <CodeEditor
+                  mode="python"
+                  placeholder={gamePageContext.editorContent}
+                  handleChange={(value) =>
+                    gamePageContext.setEditorContent(value)
+                  }
+                  isLoading={gamePageContext.isLoading}
+                />
+              </div>
+              <div className="footer-container">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignContent: "flex-end",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Button
+                    type="primary"
+                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    loading={gamePageContext.isLoading}
+                    onClick={() => {
+                      setIsSubmitting(false);
+                      stopUserCode();
+                    }}
+                  >
+                    Stop
+                  </Button>
+                  <Button
+                    type="primary"
+                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    loading={gamePageContext.isLoading || isSubmitting}
+                    onClick={() => {
+                      setIsSubmitting(true);
+                      pushUserCode();
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </div>
             </div>
+          </SplitterLayout>
+          <LoginRegisterModal onSubmit={handleGuestLogin} />
+        </div>
 
-          </Col>
+        {gamePageContext.isLoading && <LoadingScreen />}
 
-          <Col span={24}>
-
-            <Row type="flex"
-                  className="editorSection"
-                  id="editor-section">
-              <EditorSection level={level} width={`${editorWidth}px`}/>
-            </Row>
-
-          </Col>
-
-
-        </SplitterLayout>
-      </Row>
-    </div>
-  );
+        <GameOverModal
+          visible={gameOverVisible}
+          message={`${gameOverMsg};Time taken: ${timeTaken} seconds`}
+          isSuccess={isSuccess}
+          handleOk={() => {
+            setGameOverVisible(false);
+          }}
+          handleCancel={() => {
+            setGameOverVisible(false);
+          }}
+        />
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default GamePage;

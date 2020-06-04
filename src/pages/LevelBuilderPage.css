@@ -1,0 +1,70 @@
+html,
+body,
+#root {
+  height: 100vh;
+  margin: 0;
+}
+
+.level-builder-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  background-color: #333333;
+}
+
+.nav-container {
+  flex: 0 1 auto;
+}
+
+.content-container {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.footer-container {
+  flex: 0 1 auto;
+}
+
+.splitter-layout {
+  position: relative;
+  height: 100%;
+}
+
+.splitter-layout .layout-pane {
+  display: flex;
+}
+
+.splitter-layout > .layout-splitter {
+  width: 7px;
+  background-color: #363636;
+  height: 100%;
+}
+
+.splitter-layout .layout-splitter:hover {
+  background-color: #494949;
+}
+
+.splitter-layout.layout-changing > .layout-splitter {
+  background-color: #494949;
+}
+
+.ant-tabs-bar {
+  height: 100%;
+  color: white;
+}
+
+.ant-tabs {
+  height: 100%;
+  display: flex;
+}
+
+.ant-tabs-left-content {
+  height: 100%;
+  width: 100% !important;
+}
+
+.ant-tabs-tabpane {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}

@@ -8,6 +8,7 @@
 
 # testing
 /coverage
+test-report.xml
 
 # production
 /build
@@ -47,3 +48,12 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifyxc.config
+
+cypress/screenshots
+cypress/videos
+cypress.env.json
+*.env.*
+*.env
+
+.vs/
+

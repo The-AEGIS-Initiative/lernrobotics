@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext } from "react";
 
 export const GamePageContext = createContext();
 
@@ -7,17 +7,30 @@ export const GamePageContext = createContext();
 // isLoading: loading status of unity webgl client
 // setLoading: set loading status of unity webgl client
 export class GamePageProvider extends React.Component {
-  setPort = port => {
-    this.setState({ port : port });
+  setLogs = (logs) => {
+    console.log(logs);
+    this.setState({ logs: logs });
+  };
+
+  setPort = (port) => {
+    this.setState({ port: port });
   };
 
   setLoading = (isLoading) => {
-    this.setState({isLoading: isLoading})
-  }
+    this.setState({ isLoading: isLoading });
+  };
+
+  setEditorContent = (content) => {
+    this.setState({ editorContent: content });
+  };
 
   state = {
-    isLoading : true,
-    setLoading: this.setLoading
+    isLoading: true,
+    setLoading: this.setLoading,
+    editorContent: "",
+    setEditorContent: this.setEditorContent,
+    logs: [],
+    setLogs: this.setLogs,
   };
 
   render() {

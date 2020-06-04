@@ -1,0 +1,69 @@
+type Progress @model 
+	@auth(rules: [{ allow: owner }]) # owner full access
+	@key(name: "byLevelName", fields: ["level_name"], queryField: "progressByLevelName")
+{
+  id: ID!
+  createdAt: AWSDateTime
+  level_name: String!
+  user_code: String
+  stars: Int!
+}
+
+type Level @model
+	@auth(rules: [
+		{ allow: owner }, # owner full access
+		{ allow: groups, groups:["admin"] } # admin full access to levels
+		{ allow: private, operations: [read]} # private user read access for levels
+		{ allow: public, provider: iam, operations: [read]} # public guest read access for levels
+	])
+	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelByName")
+{
+	id: ID!
+	level_name: String!
+	creator: String!
+	default_code: String!
+	task: String!
+	tutorial: String!
+	level_data: String!
+}
+
+type PublishedLevel @model
+	@auth(rules: [
+		{ allow: owner }, # owner full access
+		{ allow: groups, groups:["admin"] } # admin full access to levels
+		{ allow: private, operations: [read]} # private user read access for levels
+		{ allow: public, provider: iam, operations: [read]} # public guest read access for levels
+	])
+	@key(name: "byLevelName", fields: ["level_name"], queryField: "getPublishedLevelByName")
+{
+	id: ID!
+	level_name: String!
+	creator: String!
+	default_code: String!
+	task: String!
+	tutorial: String!
+	level_data: String!
+}
+
+type Submissions @model
+	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelSubmissions")
+	@key(name: "byUserAndLevel", fields: ["username", "level_name"], queryField: "getUserSubmission")
+{
+	id: ID!
+	username: String!
+	score: String!
+	level_name: String!
+	createdAt: AWSDateTime
+}
+
+type MarkdownDocs @model
+	@auth(rules: [
+		{ allow: groups, groups:["admin"] } # admin full access to levels
+	])
+	@key(name: "byDocName", fields: ["doc_name"], queryField: "getDocByName")
+{
+	id: ID!
+	doc_name: String!
+	doc_content: String!
+	createdAt: AWSDateTime
+}

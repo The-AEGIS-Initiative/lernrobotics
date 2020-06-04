@@ -1,88 +1,108 @@
-Repository: [https://github.com/TeachRobo/front-end](https://github.com/TeachRobo/front-end)
+Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbucket.org/theaegisinitiative/front-end/)
 
-Documentation: [https://teachrobo.github.io/front-end/](https://teachrobo.github.io/front-end/)
+# Development Setup
 
-# Usage
-## Using npm
-Update node_modules with
-#### `npm ci`
-\
-Obtain .env.development file from admin and place in project root
-\
-Start nodejs server using
-#### `npm start`
+## Step 1: Basic Git Stuff
 
-## Using Docker
-#### `docker run -p 5000:5000 kevinkqi/robobot-frontend:latest`
+*  `git init`
+*  `git remote add origin \<repo-url>`
+*  `git pull origin master`
+*  `npm install`
+*  `git checkout -b "<your-branch-name>"`
 
+## Step 2: Install AWS CLI and Configure IAM User
 
-# Development Guidelines
-Please read this section before making any changes!
-## Contributing
-#### Branch before making changes!
-#### `git checkout -b <your-branch-name>`
-\
-Push the new branch to github and set it as the upstream branch using the `-u` option
-#### `git push -u origin <your-branch-name>`
-\
-Make frequent commits (On your branch)
+- https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
+- `aws configure` (Restart terminal if aws command not found)
+  - AWS Access Key: \*\*
+  - AWS Secret Access Key: \*\*
+  - Default region name: _us-west-2_
+  - Default output format: _json_
 
-Each commit should be described easily in 1 line. Commits that require multiple lines should be split into smaller commits.
-#### `git commit -m "<commit description>"`
-\
-Push commits to your upstream branch using
-#### `git push`
-\
-Once your changes are complete and fully functional, create a merge request on github and ask someone to confirm it.
-\
-\
-When your branch is no longer needed, you should delete it
-#### `git branch -d <your-branch-name>`
-Delete the upstream branch (<b>Do not delete branches that are not yours!</b>)
-#### `git push origin --delete <your-branch-name>`
-## Installing npm modules
-Use --save when installing npm modules to ensure dependencies are installed locally.
-#### `npm install --save <package-name>`
+## Step 3: Setup Amplify CLI and Project
 
-## Documenting Your Code
-#### Document your code <b>BEFORE</b> pushing changes!
+*  `npm install -g @aws-amplify/cli`
+*  `amplify init`
+  *  Do you want to use an existing environment? _Yes_
+  *  Choose the environment you would like to use: _dev_
+  *  Choose your default editor: _Your preferred editor_
+  *  Do you want to use an AWS Profile: _Y_
+    *  Select your profile from Step 2
+*  `amplify pull`
 
- This project uses `jsdoc` (for javascript) and `better-docs` (for react components)
+## Step 4: Create a Robobot Account
 
-See [https://devhints.io/jsdoc](https://devhints.io/jsdoc) for jsdoc syntax
-\
-\
-See [https://www.inkoop.io/blog/a-guide-to-js-docs-for-react-js/](https://www.inkoop.io/blog/a-guide-to-js-docs-for-react-js/) for react specific documentation
-\
-\
-\
-<b>BEFORE</b> pushing changes, generate html documentation files using
-#### `npm run docs`
-\
-View current local documentation at
-#### `docs/index.html`
-\
-View master branch documentation at
-#### [https://teachrobo.github.io/front-end/](https://teachrobo.github.io/front-end/)
+*  Go to [https://development-robobot.aegisinitiative.io/](https://development-robobot.aegisinitiative.io/)
 
+*  Create 2 accounts:
+  *  General purpose developer admin account
+    *  This is the account you will use when interacting with the app
+  *  Test account
+    *  This will be the test account Cypress uses to run tests. Do not use this account manually.
 
+*  Contact an admin to give your developer account admin status
 
-# Project File Structure
-### React App
+## Step 5: Configure Cypress Environment
 
-##### `src/sections/`
-Components composing the main pieces of the gamePage
-##### `src/pages/`
-Components referenced by react-router-dom
-##### `src/components/`
-Custom modular React components
-##### `public/`
-Assets available publicly. Includes Index.html which is served to the browser on load.
-##### `App.js / index.js`
-Wrappers around entire React app for browser consumption
-##### `package.json`
-Config file for app-wide settings
-##### `package-lock.json`
-Contains all dependencies information
-##### `node_modules/`
-Includes installed dependencies. Use npm ci to install correct dependency versions according to package-lock.json.
+*  Create a `cypress.env.json` file in the root directory
+*  Add the following to the `cypress.env.json` file (replace with your test account credentials):
+
+    ```
+    {
+      "username": "<your-test-account-username>",
+      "password": "<your-test-account-password>"
+    }
+    ```
+
+# Development Workflow
+
+### Before making changes:
+
+*  Run app using:
+    `npm start`
+*  Run Robobot back-end in a 2nd terminal
+*  Start cypress in a 3rd terminal:
+    `npm test`
+
+### While making changes:
+
+Test, test, test!
+
+Anything you build that is not covered by the test suite will probably end up broken.
+
+This project uses primarily Cypress for running tests. See Writing Tests section below for details.
+
+### After making changes:
+
+*  Make your changes and ensure cypress tests pass
+
+*  `git add <your-changed-files>`
+*  `git commit -m "<your-commit-message>"`
+  *  Commit message should follow semantic convention such as:
+    *  major(api): API rewrite, not backwards compatible!
+    *  feat(log): add new logging feature
+    *  fix(config): always load config first
+    *  chore(ci): semantic commit without triggering new version
+
+*  `git push -U origin <your-branch-name>`
+  *  A pre-push git hook will run your changes against the cypress testing suite to ensure passes
+
+### Pull Requests and Merging
+
+When your changes are complete, make a pull request into the `master` branch.
+
+*  Once your PR is approved, you may merge your branch into the master branch. This will trigger a rebuild of the development-robobot app.
+
+*  Log-in to the AWS Amplify console and confirm that the development branch is green.
+  *  If there are errors, fix them ASAP.
+
+# Writing Tests
+
+Cypress tests are stored in the `cypress/integration/` folder. This project breaks up the tests into 2 folders:
+
+*  `cypress/integration/front-end-only`
+  *  These tests only require the front-end (this app) running.
+*  `cypress/integratoin/front-and-back-end`
+  *  These tests require the back-end to be running. These are usually end-2-end (E2E) tests.
+
+Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html)

@@ -1,14 +1,47 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import TopNavBar from '../components/top_nav_bar';
+import { Button } from "antd";
+import { useHistory } from "react-router-dom";
 
-import LoginRegisterCard from '../components/login_register_card'
+import { Auth } from "aws-amplify";
 
-// Currently not being used
-function LoginPage () {
+/**
+ * NOT SECURE
+ * For use in testing only! Do not use in production.
+ */
+function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const history = useHistory();
+
+  async function handleSignIn() {
+    await Auth.signIn(username, password);
+    setUsername("");
+    setPassword("");
+    history.push("/");
+  }
+
   return (
-    <LoginRegisterCard />
+    <div>
+      <input
+        data-cy="username-input"
+        onChange={({ target }) => setUsername(target.value)}
+        placeholder="Username"
+        value={username}
+      />
+      <input
+        type="password"
+        data-cy="password-input"
+        onChange={({ target }) => setPassword(target.value)}
+        placeholder="*****"
+        value={password}
+      />
+      <Button data-cy="sign-in-button" onClick={handleSignIn}>
+        Sign in
+      </Button>
+    </div>
   );
 }
 
-export default LoginPage
+export default LoginPage;

@@ -1,7 +1,7 @@
 {
-"companyName": "DefaultCompany",
+"companyName": "AEGIS Initiative",
 "productName": "RoboBot",
-"productVersion": "0.1",
+"productVersion": "1.0",
 "dataUrl": "robobot.data.unityweb",
 "wasmCodeUrl": "robobot.wasm.code.unityweb",
 "wasmFrameworkUrl": "robobot.wasm.framework.unityweb",
@@ -12,5 +12,5 @@
 "cacheControl": {"default": "must-revalidate"},
 "developmentBuild": false,
 "multithreading": false,
-"unityVersion": "2019.2.20f1"
+"unityVersion": "2019.3.10f1"
 }

@@ -13,7 +13,7 @@ function ConsoleSection({ height, width }) {
   function Row({ index, style }) {
     console.log(index);
     console.log(parent.current.offsetHeight);
-    return <div> gamePageContext.logs[index] </div>;
+    return <div> {gamePageContext.logs[index]} </div>;
   }
 
   return (

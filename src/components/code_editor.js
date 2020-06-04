@@ -5,6 +5,9 @@ import styles from "../style.module.css";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-markdown";
+import "ace-builds/src-noconflict/mode-json";
+
 import "ace-builds/src-noconflict/theme-monokai";
 import "./code_editor.css";
 

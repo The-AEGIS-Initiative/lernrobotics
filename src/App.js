@@ -98,7 +98,7 @@ function App({ unityContent }) {
       />
       <ProtectedRoute
         exact
-        path="/admin/markdowneditor/:doc_name"
+        path="/admin/editor/:doc_name"
         component={(props) => (
           <DocumentEditorPage
             docName={props.match.params.doc_name}

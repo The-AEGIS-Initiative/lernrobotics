@@ -32,168 +32,6 @@ export const listProgresss = /* GraphQL */ `
     }
   }
 `;
-export const getSubmissions = /* GraphQL */ `
-  query GetSubmissions($id: ID!) {
-    getSubmissions(id: $id) {
-      id
-      username
-      score
-      level_name
-      createdAt
-    }
-  }
-`;
-export const listSubmissionss = /* GraphQL */ `
-  query ListSubmissionss(
-    $filter: ModelSubmissionsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listSubmissionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        username
-        score
-        level_name
-        createdAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getMarkdownDocs = /* GraphQL */ `
-  query GetMarkdownDocs($id: ID!) {
-    getMarkdownDocs(id: $id) {
-      id
-      doc_name
-      doc_content
-      createdAt
-    }
-  }
-`;
-export const listMarkdownDocss = /* GraphQL */ `
-  query ListMarkdownDocss(
-    $filter: ModelMarkdownDocsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listMarkdownDocss(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        doc_name
-        doc_content
-        createdAt
-      }
-      nextToken
-    }
-  }
-`;
-export const progressByLevelName = /* GraphQL */ `
-  query ProgressByLevelName(
-    $level_name: String
-    $sortDirection: ModelSortDirection
-    $filter: ModelProgressFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    progressByLevelName(
-      level_name: $level_name
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        createdAt
-        level_name
-        user_code
-        stars
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getLevelSubmissions = /* GraphQL */ `
-  query GetLevelSubmissions(
-    $level_name: String
-    $sortDirection: ModelSortDirection
-    $filter: ModelSubmissionsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    getLevelSubmissions(
-      level_name: $level_name
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        username
-        score
-        level_name
-        createdAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserSubmission = /* GraphQL */ `
-  query GetUserSubmission(
-    $username: String
-    $level_name: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelSubmissionsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    getUserSubmission(
-      username: $username
-      level_name: $level_name
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        username
-        score
-        level_name
-        createdAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getDocByName = /* GraphQL */ `
-  query GetDocByName(
-    $doc_name: String
-    $sortDirection: ModelSortDirection
-    $filter: ModelMarkdownDocsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    getDocByName(
-      doc_name: $doc_name
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        doc_name
-        doc_content
-        createdAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getLevel = /* GraphQL */ `
   query GetLevel($id: ID!) {
     getLevel(id: $id) {
@@ -215,35 +53,6 @@ export const listLevels = /* GraphQL */ `
     $nextToken: String
   ) {
     listLevels(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        level_name
-        creator
-        default_code
-        task
-        tutorial
-        level_data
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getLevelByName = /* GraphQL */ `
-  query GetLevelByName(
-    $level_name: String
-    $sortDirection: ModelSortDirection
-    $filter: ModelLevelFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    getLevelByName(
-      level_name: $level_name
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
       items {
         id
         level_name
@@ -293,6 +102,122 @@ export const listPublishedLevels = /* GraphQL */ `
     }
   }
 `;
+export const getSubmissions = /* GraphQL */ `
+  query GetSubmissions($id: ID!) {
+    getSubmissions(id: $id) {
+      id
+      username
+      score
+      level_name
+      createdAt
+      owner
+    }
+  }
+`;
+export const listSubmissionss = /* GraphQL */ `
+  query ListSubmissionss(
+    $filter: ModelSubmissionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSubmissionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        username
+        score
+        level_name
+        createdAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getMarkdownDocs = /* GraphQL */ `
+  query GetMarkdownDocs($id: ID!) {
+    getMarkdownDocs(id: $id) {
+      id
+      doc_name
+      doc_content
+      createdAt
+      owner
+    }
+  }
+`;
+export const listMarkdownDocss = /* GraphQL */ `
+  query ListMarkdownDocss(
+    $filter: ModelMarkdownDocsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMarkdownDocss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        doc_name
+        doc_content
+        createdAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const progressByLevelName = /* GraphQL */ `
+  query ProgressByLevelName(
+    $level_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelProgressFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    progressByLevelName(
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        level_name
+        user_code
+        stars
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getLevelByName = /* GraphQL */ `
+  query GetLevelByName(
+    $level_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelLevelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getLevelByName(
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        level_name
+        creator
+        default_code
+        task
+        tutorial
+        level_data
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const getPublishedLevelByName = /* GraphQL */ `
   query GetPublishedLevelByName(
     $level_name: String
@@ -316,6 +241,88 @@ export const getPublishedLevelByName = /* GraphQL */ `
         task
         tutorial
         level_data
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getLevelSubmissions = /* GraphQL */ `
+  query GetLevelSubmissions(
+    $level_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelSubmissionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getLevelSubmissions(
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        score
+        level_name
+        createdAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserSubmission = /* GraphQL */ `
+  query GetUserSubmission(
+    $username: String
+    $level_name: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelSubmissionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getUserSubmission(
+      username: $username
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        score
+        level_name
+        createdAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getDocByName = /* GraphQL */ `
+  query GetDocByName(
+    $doc_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelMarkdownDocsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getDocByName(
+      doc_name: $doc_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        doc_name
+        doc_content
+        createdAt
         owner
       }
       nextToken

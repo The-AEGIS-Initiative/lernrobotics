@@ -67,7 +67,7 @@
 				"Runtime": "nodejs10.x",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "amplify-robobot-production-191254-deployment",
+					"S3Bucket": "amplify-robobot-dev-191612-deployment",
 					"S3Key": "amplify-builds/AdminQueries68290a65-48616a6464313843664a-build.zip"
 				}
 			}

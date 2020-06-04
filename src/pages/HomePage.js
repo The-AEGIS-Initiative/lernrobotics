@@ -61,7 +61,10 @@ function HomePage() {
               console.log(contentSchema);
               return (
                 <div className="module">
-                  <h1 key={module.name}> {module.name} </h1>
+                  <h1 className="module-title" key={module.name}>
+                    {" "}
+                    {module.name}{" "}
+                  </h1>
                   {module.levels.map((level) => {
                     return (
                       <LevelCard

@@ -14,7 +14,7 @@
         "categories": {
             "auth": {
                 "robobotd4fad0e6": {
-                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"464861079861-m9v3ls890ct6js8gtd33c6sa8530bam8.apps.googleusercontent.com\",\"client_secret\":\"zmON6fKLlMDZVQEgrYywqKVw\"}]"
+                    "hostedUIProviderCreds": "[]"
                 },
                 "userPoolGroups": {}
             },

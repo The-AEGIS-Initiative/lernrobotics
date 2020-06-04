@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import AdminPage from "./pages/AdminPage";
 import LevelBuilderPage from "./pages/LevelBuilderPage";
+import DocumentEditorPage from "./pages/DocumentEditorPage";
 import LoginPage from "./pages/LoginPage";
 import StartPage from "./pages/StartPage";
 
@@ -92,6 +93,17 @@ function App({ unityContent }) {
               {...props}
             />
           </GamePageProvider>
+        )}
+        protection_level="admin"
+      />
+      <ProtectedRoute
+        exact
+        path="/admin/markdowneditor/:doc_name"
+        component={(props) => (
+          <DocumentEditorPage
+            docName={props.match.params.doc_name}
+            {...props}
+          />
         )}
         protection_level="admin"
       />

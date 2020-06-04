@@ -55,3 +55,15 @@ type Submissions @model
 	level_name: String!
 	createdAt: AWSDateTime
 }
+
+type MarkdownDocs @model
+	@auth(rules: [
+		{ allow: groups, groups:["admin"] } # admin full access to levels
+	])
+	@key(name: "byDocName", fields: ["doc_name"], queryField: "getDocByName")
+{
+	id: ID!
+	doc_name: String!
+	doc_content: String!
+	createdAt: AWSDateTime
+}

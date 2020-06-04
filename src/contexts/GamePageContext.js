@@ -7,6 +7,11 @@ export const GamePageContext = createContext();
 // isLoading: loading status of unity webgl client
 // setLoading: set loading status of unity webgl client
 export class GamePageProvider extends React.Component {
+  setLogs = (logs) => {
+    console.log(logs);
+    this.setState({ logs: logs });
+  };
+
   setPort = (port) => {
     this.setState({ port: port });
   };
@@ -24,6 +29,8 @@ export class GamePageProvider extends React.Component {
     setLoading: this.setLoading,
     editorContent: "",
     setEditorContent: this.setEditorContent,
+    logs: [],
+    setLogs: this.setLogs,
   };
 
   render() {

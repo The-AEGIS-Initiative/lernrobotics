@@ -31,55 +31,77 @@ function HomePage() {
 
   return (
     <div className="home-page">
-      <div style={{ backgroundColor: "#ffffff", height: "100vh" }}>
-        <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
-        <nav>
-          <ul
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              paddingTop: "40px",
-            }}
-          >
-            <h1 className="module-title">
-              <b> Tutorial Module #1 - PID Controllers </b>
-            </h1>
-            <LevelCard
-              title="Hello World"
-              description="Get started with our Control Theory tutorial series!"
-              link="/game/hello_world"
-            />
+      <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
+      <nav>
+        <ul
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            paddingTop: "40px",
+          }}
+        >
+          <h1 className="module-title">
+            <b> Getting Started </b>
+          </h1>
+          <LevelCard
+            title="Hello World"
+            description="Get started with Robobot!"
+            link="/game/hello_world"
+          />
 
-            <LevelCard
-              title="Data Abstraction"
-              description="Learn about abstraction, a powerful engineering principle!"
-              link="/game/data_abstraction"
-            />
+          <LevelCard
+            title="Movement"
+            description="Learn how to control your robot's movement"
+            link="/game/basic_movement"
+          />
 
-            <LevelCard
-              title="Velocity Control"
-              description="Learn how to implement a proportional feedback controller!"
-              link="/game/velocity_control"
-            />
-          </ul>
-        </nav>
-        <LoginRegisterModal />
-        {/**
-          <Button
-            onClick={async () => {
-              var jsonObject = await graphqlController.updateUserSubmission({
-                level_name: "t2",
-                username: "kev"
-              });
-              console.log(jsonObject);
-            }}
-          >
-            {" "}
-            User{" "}
-          </Button>
-        */}
-      </div>
+          <LevelCard
+            title="Robot Data (Part I: Basics)"
+            description="Learn how to access and utilize robot data"
+            link="/game/robot_data"
+          />
+
+          <LevelCard
+            title="Robot Data (Part II: Sensors)"
+            description="Learn how to use robot sensors"
+            link="/game/robot_sensors"
+          />
+
+          <h1 className="module-title" style={{ marginTop: "40px" }}>
+            <b> Introduction to PID Controllers </b>
+          </h1>
+          <LevelCard
+            title="Velocity Control"
+            description="Learn how to implement a proportional (P) feedback controller!"
+            link="/game/velocity_control"
+          />
+          <LevelCard
+            title="Position Control"
+            description="Learn how to implement a proportional-derivative (PD) feedback controller!"
+            link="/game/position_control"
+          />
+          <LevelCard
+            title="Advanced Position Control"
+            description="Learn how to implement a proportional-integration-derivative (PID) controller!"
+            link="/game/advanced_position_control"
+          />
+        </ul>
+      </nav>
+      <LoginRegisterModal />
+      {
+        <Button
+          onClick={async () => {
+            var jsonObject = await graphqlController.getDoc({
+              doc_name: "test2",
+            });
+            console.log(jsonObject);
+          }}
+        >
+          {" "}
+          User{" "}
+        </Button>
+      }
     </div>
   );
 }

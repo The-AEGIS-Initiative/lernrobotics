@@ -154,3 +154,33 @@ export const onDeleteSubmissions = /* GraphQL */ `
     }
   }
 `;
+export const onCreateMarkdownDocs = /* GraphQL */ `
+  subscription OnCreateMarkdownDocs {
+    onCreateMarkdownDocs {
+      id
+      doc_name
+      doc_content
+      createdAt
+    }
+  }
+`;
+export const onUpdateMarkdownDocs = /* GraphQL */ `
+  subscription OnUpdateMarkdownDocs {
+    onUpdateMarkdownDocs {
+      id
+      doc_name
+      doc_content
+      createdAt
+    }
+  }
+`;
+export const onDeleteMarkdownDocs = /* GraphQL */ `
+  subscription OnDeleteMarkdownDocs {
+    onDeleteMarkdownDocs {
+      id
+      doc_name
+      doc_content
+      createdAt
+    }
+  }
+`;

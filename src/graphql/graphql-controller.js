@@ -111,7 +111,6 @@ export const listLevels = async () => {
   const data = await API.graphql(graphqlOperation(queries.listLevels));
 
   const levelData = data.data.listLevels.items;
-  console.log(levelData);
   return levelData;
 };
 
@@ -309,4 +308,69 @@ export const updateUserSubmission = async ({ submission_id, score }) => {
     })
   );
   return response;
+};
+
+export const getDoc = async ({ doc_name }) => {
+  const response = await API.graphql(
+    graphqlOperation(queries.getDocByName, {
+      doc_name: doc_name,
+    })
+  );
+
+  return response.data.getDocByName.items;
+};
+
+export const updateDoc = async ({ doc_id, doc_name, doc_content }) => {
+  const response = await API.graphql(
+    graphqlOperation(mutations.updateMarkdownDocs, {
+      input: {
+        id: doc_id,
+        doc_name: doc_name,
+        doc_content: doc_content,
+      },
+    })
+  );
+
+  return response;
+};
+
+export const createDoc = async ({ doc_name, doc_content }) => {
+  const response = await API.graphql(
+    graphqlOperation(mutations.createMarkdownDocs, {
+      input: {
+        doc_name: doc_name,
+        doc_content: doc_content,
+      },
+    })
+  );
+
+  return response;
+};
+
+export const upsertDoc = async ({ doc_name, doc_content }) => {
+  const cur_docs = await getDoc({
+    doc_name: doc_name,
+  });
+
+  if (cur_docs.length == 0) {
+    // Create new document
+    return await createDoc({
+      doc_name: doc_name,
+      doc_content: doc_content,
+    });
+  } else {
+    return await updateDoc({
+      doc_id: cur_docs[0].id,
+      doc_name: doc_name,
+      doc_content: doc_content,
+    });
+  }
+};
+
+export const listDocs = async () => {
+  const response = await API.graphql(
+    graphqlOperation(queries.listMarkdownDocss)
+  );
+
+  return response.data.listMarkdownDocss.items;
 };

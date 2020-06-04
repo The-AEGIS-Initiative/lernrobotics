@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 
-import { Row, Col, Tabs } from "antd";
+import { Row, Col, Tabs, Button } from "antd";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
@@ -29,6 +29,8 @@ import Leaderboard from "../components/leaderboard";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
+import { submitUserCode, stopUserCode } from "../sockets/emit";
+
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
   const gamePageContext = useContext(GamePageContext);
@@ -46,11 +48,12 @@ function GamePage({ unityContent, level }) {
   const [gameOverVisible, setGameOverVisible] = useState(false);
   const [timeTaken, setTimeTaken] = useState(0);
   const [rankings, setRankings] = useState([]);
-
-  const editorRef = useRef(null);
+  const [gameAPI, setGameAPI] = useState("");
+  const [faq, setFaq] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   const windowSize = useWindowSize();
-
+  //console.log(windowSize);
   const { TabPane } = Tabs;
 
   // Fetch level data and user progress from graphql api
@@ -91,6 +94,22 @@ function GamePage({ unityContent, level }) {
           level_name: level_name,
         });
         setRankings(rankingData);
+
+        // Fetch GameAPI
+        const gameAPIData = await graphqlController.getDoc({
+          doc_name: "GameAPI",
+        });
+        if (gameAPIData.length > 0) {
+          setGameAPI(gameAPIData[0].doc_content);
+        }
+
+        // Fetch FAQ
+        const faqData = await graphqlController.getDoc({
+          doc_name: "FAQ",
+        });
+        if (faqData.length > 0) {
+          setFaq(faqData[0].doc_content);
+        }
       }
     }
 
@@ -178,9 +197,33 @@ function GamePage({ unityContent, level }) {
       setGameOverVisible(true);
       updateLeaderboard(data); // Submit score to leaderboard
     });
+
+    unityContent.on("Start", () => {
+      console.log("Game started");
+      setIsSubmitting(false);
+    });
+
+    unityContent.on("ConsoleLog", (log) => {
+      // Split multiline logs into multi logs.
+      gamePageContext.setLogs([...gamePageContext.logs, ...log.split("\n")]);
+    });
   }, []);
 
   const handleGuestLogin = () => {};
+
+  const pushUserCode = async () => {
+    if (appContext.isAuth) {
+      submitUserCode(gamePageContext.editorContent);
+      const res = await graphqlController.upsertProgress({
+        level_name: level,
+        user_code: gamePageContext.editorContent,
+      });
+      console.log(res);
+    } else {
+      // Guest user
+      appContext.setAuthModalVisible(true);
+    }
+  };
 
   // Necessary check to ensure unity content waits until level data is fetched
   if (levelData != "") {
@@ -220,28 +263,24 @@ function GamePage({ unityContent, level }) {
                     <ConsoleSection style={{ backgroundColor: "black" }} />
                   }
                   dependent="bottom"
-                  parent_height={windowSize.height - 6}
+                  parent_height={windowSize.height - 45}
                   update_flags={resizedFlag}
                 />
               </TabPane>
               <TabPane tab="Task" key="2">
-                <MarkdownViewer markdownText={task}></MarkdownViewer>
+                <MarkdownViewer markdownText={task} />
               </TabPane>
               <TabPane tab="Tutorial" key="3">
-                <MarkdownViewer markdownText={tutorial}></MarkdownViewer>
+                <MarkdownViewer markdownText={tutorial} />
               </TabPane>
               <TabPane tab="Leaderboard" key="4">
                 <Leaderboard rankings={rankings} />
               </TabPane>
               <TabPane tab="FAQ" key="5">
-                <MarkdownViewer
-                  markdownSrc={`/instructions.md`}
-                ></MarkdownViewer>
+                <MarkdownViewer markdownText={faq} />
               </TabPane>
               <TabPane tab="API " key="6">
-                <MarkdownViewer
-                  markdownSrc={`/game_api_docs.md`}
-                ></MarkdownViewer>
+                <MarkdownViewer markdownText={gameAPI} />
               </TabPane>
             </Tabs>
             <div className="right-section-container">
@@ -256,17 +295,55 @@ function GamePage({ unityContent, level }) {
                 />
               </div>
               <div className="footer-container">
-                <PlayModeControls level_name={level} />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignContent: "flex-end",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Button
+                    type="primary"
+                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    loading={gamePageContext.isLoading}
+                    onClick={() => {
+                      setIsSubmitting(false);
+                      stopUserCode();
+                    }}
+                  >
+                    Stop
+                  </Button>
+                  <Button
+                    type="primary"
+                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    loading={gamePageContext.isLoading || isSubmitting}
+                    onClick={() => {
+                      setIsSubmitting(true);
+                      pushUserCode();
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </div>
               </div>
             </div>
           </SplitterLayout>
           <LoginRegisterModal onSubmit={handleGuestLogin} />
         </div>
+
         {gamePageContext.isLoading && <LoadingScreen />}
+
         <GameOverModal
           visible={gameOverVisible}
           message={`${gameOverMsg};Time taken: ${timeTaken} seconds`}
           isSuccess={isSuccess}
+          handleOk={() => {
+            setGameOverVisible(false);
+          }}
+          handleCancel={() => {
+            setGameOverVisible(false);
+          }}
         />
       </div>
     );

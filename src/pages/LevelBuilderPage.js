@@ -33,6 +33,9 @@ function LevelBuilderPage({ unityContent, levelName }) {
 
   const [resizedFlag, setResizedflag] = useState(false);
   const [tabKey, setTabKey] = useState("1");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
+  const [gameAPI, setGameAPI] = useState("");
+  const [faq, setFaq] = useState("");
 
   const levelNameRef = useRef(null);
 
@@ -64,6 +67,22 @@ function LevelBuilderPage({ unityContent, levelName }) {
         setDefaultCodeContent(data[0].default_code);
         setLevelData(data[0].level_data);
       }
+
+      // Fetch GameAPI
+      const gameAPIData = await graphqlController.getDoc({
+        doc_name: "GameAPI",
+      });
+      if (gameAPIData.length > 0) {
+        setGameAPI(gameAPIData[0].doc_content);
+      }
+
+      // Fetch FAQ
+      const faqData = await graphqlController.getDoc({
+        doc_name: "FAQ",
+      });
+      if (faqData.length > 0) {
+        setFaq(faqData[0].doc_content);
+      }
     }
 
     fetchData();
@@ -89,6 +108,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
     console.log(taskContent);
     console.log(tutorialContent);
     console.log(levelData);
+    setIsSubmitting(true);
     var jsonObject = await graphqlController.upsertPublishedLevel({
       level_name: levelName,
       default_code: defaultCodeContent,
@@ -97,6 +117,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
       tutorial: tutorialContent,
       level_data: levelData,
     });
+    setIsSubmitting(false);
   };
 
   const pushLevelData = async () => {
@@ -106,6 +127,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
     console.log(taskContent);
     console.log(tutorialContent);
     console.log(levelData);
+    setIsSubmitting(true);
     var jsonObject = await graphqlController.upsertLevel({
       level_name: levelName,
       default_code: defaultCodeContent,
@@ -114,6 +136,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
       tutorial: tutorialContent,
       level_data: levelData,
     });
+    setIsSubmitting(false);
   };
 
   // Necessary check to ensure unity content waits until level data is fetched
@@ -168,11 +191,11 @@ function LevelBuilderPage({ unityContent, levelName }) {
             />
           </TabPane>
           <TabPane tab="Help" key="5">
-            <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
+            <MarkdownViewer markdownText={faq} />
           </TabPane>
 
           <TabPane tab="API " key="6">
-            <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
+            <MarkdownViewer markdownText={gameAPI} />
           </TabPane>
         </Tabs>
 
@@ -186,15 +209,15 @@ function LevelBuilderPage({ unityContent, levelName }) {
           >
             <Button
               onClick={pushLevelData}
-              loading={gamePageContext.isLoading}
-              className={styles.buttons}
+              loading={gamePageContext.isLoading || isSubmitting}
+              className={`${styles.ui_font} ${styles.dark_buttons}`}
             >
               Save Level
             </Button>
             <Button
               onClick={publishLevelData}
-              loading={gamePageContext.isLoading}
-              className={styles.buttons}
+              loading={gamePageContext.isLoading || isSubmitting}
+              className={`${styles.ui_font} ${styles.dark_buttons}`}
             >
               Publish Level
             </Button>

@@ -2,12 +2,20 @@ import React, { useEffect, useContext, useState } from "react";
 import Unity from "react-unity-webgl";
 import { GamePageContext } from "../contexts/GamePageContext";
 import { UnityContent } from "react-unity-webgl";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 import "./unity_player.css";
 
 function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   const gamePageContext = useContext(GamePageContext);
 
+  // The maximum width of unity without vertical overflow at 16:9 resolution
+  // navbar is 45px tall
+  // footer is 35px tall
+  const maxWidth = Math.round(
+    (useWindowSize().height - 45 - 35) * 1.77777777778
+  );
+  //console.log(maxWidth);
   useEffect(() => {
     // When unity webgl has loaded, send assigned port
     // to unity so that unity knows which websocket to connect
@@ -45,10 +53,6 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
       }
       console.log("Game loaded"); // This log is used by cypress testing, update test if changed
     });
-
-    unityContent.on("Start", () => {
-      console.log("Game started");
-    });
   }, []);
 
   useEffect(() => {
@@ -68,13 +72,12 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   };
   //console.log(`levelData: ${levelData}`);
   return (
-    <div className="unity-player">
+    <div className="unity-player" style={{ maxWidth: `${maxWidth}px` }}>
       <Unity
         unityContent={unityContent}
         style={{
           width: "100%",
           height: "100%",
-          aspectRatio: 16 / 9,
         }}
       />
     </div>

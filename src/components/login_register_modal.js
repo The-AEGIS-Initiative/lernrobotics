@@ -35,6 +35,7 @@ function LoginRegisterModal({ onSubmit }) {
         onCancel={handleCancel}
         footer={null}
         title=""
+        className="auth-modal"
       >
         <AmplifyAuthenticator usernameAlias="username">
           <AmplifySignUp

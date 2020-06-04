@@ -2,8 +2,8 @@ import React from "react";
 import { List, Card } from "antd";
 
 // TODO : onclick
-
-function LevelList({ onClick, level_list }) {
+// renderItem takes in item and returns {title: "", description: ""}
+function LevelList({ onClick, level_list, renderItem }) {
   console.log(level_list);
   //var level_list = await graphqlController.listLevels();
   console.log("started level list");
@@ -14,10 +14,7 @@ function LevelList({ onClick, level_list }) {
         dataSource={level_list}
         renderItem={(item) => (
           <List.Item>
-            <List.Item.Meta
-              title={item.id}
-              description={<a href="https://ant.design">{item.level_name}</a>}
-            />
+            <List.Item.Meta {...renderItem(item)} />
           </List.Item>
         )}
       ></List>

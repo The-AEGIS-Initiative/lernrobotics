@@ -32,6 +32,7 @@ if (amplify_build_env === "dev") {
 }
 
 if (amplify_build_env === "prod") {
+  console.log = function no_console() {};
   configUpdate.oauth.redirectSignIn = "https://robobot.aegisinitiative.io/";
   configUpdate.oauth.redirectSignOut = "https://robobot.aegisinitiative.io/";
 }

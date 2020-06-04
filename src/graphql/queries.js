@@ -61,6 +61,33 @@ export const listSubmissionss = /* GraphQL */ `
     }
   }
 `;
+export const getMarkdownDocs = /* GraphQL */ `
+  query GetMarkdownDocs($id: ID!) {
+    getMarkdownDocs(id: $id) {
+      id
+      doc_name
+      doc_content
+      createdAt
+    }
+  }
+`;
+export const listMarkdownDocss = /* GraphQL */ `
+  query ListMarkdownDocss(
+    $filter: ModelMarkdownDocsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMarkdownDocss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        doc_name
+        doc_content
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
 export const progressByLevelName = /* GraphQL */ `
   query ProgressByLevelName(
     $level_name: String
@@ -136,6 +163,31 @@ export const getUserSubmission = /* GraphQL */ `
         username
         score
         level_name
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getDocByName = /* GraphQL */ `
+  query GetDocByName(
+    $doc_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelMarkdownDocsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getDocByName(
+      doc_name: $doc_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        doc_name
+        doc_content
         createdAt
       }
       nextToken

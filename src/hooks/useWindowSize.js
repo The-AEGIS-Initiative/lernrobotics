@@ -19,7 +19,12 @@ export function useWindowSize() {
     }
 
     function handleResize() {
-      setWindowSize(getSize());
+      if (
+        window.innerWidth != windowSize.width ||
+        window.innerHeight != windowSize.Height
+      ) {
+        setWindowSize(getSize());
+      }
     }
 
     window.addEventListener("resize", handleResize);

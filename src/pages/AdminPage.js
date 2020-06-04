@@ -53,9 +53,7 @@ function AdminPage() {
           <div style={{ marginBottom: "20px" }}>
             <Search
               placeholder={"Enter name for new document"}
-              onSearch={(value) =>
-                history.push(`/admin/markdowneditor/${value}`)
-              }
+              onSearch={(value) => history.push(`/admin/editor/${value}`)}
               enterButton="Create Document"
             />
           </div>
@@ -66,7 +64,7 @@ function AdminPage() {
             renderItem={(item) => ({
               title: item.id,
               description: (
-                <Link to={`/admin/markdowneditor/${item.doc_name}`}>
+                <Link to={`/admin/editor/${item.doc_name}`}>
                   {" "}
                   {item.doc_name}{" "}
                 </Link>

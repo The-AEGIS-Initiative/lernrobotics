@@ -130,8 +130,7 @@ export const getLevelByID = async ({ id }) => {
   const data = await API.graphql(
     graphqlOperation(queries.getLevel, { id: id })
   );
-  console.log(data);
-  const levelData = data.data.getLevel.items;
+  const levelData = data.data.getLevel;
 
   return levelData;
 };

@@ -176,6 +176,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
           </TabPane>
           <TabPane tab="Prompt" key="3">
             <MarkdownEditor
+              mode={"markdown"}
               placeholder={taskContent}
               handleChange={(e) => {
                 setTaskContent(e);
@@ -184,6 +185,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
           </TabPane>
           <TabPane tab="Learn" key="4">
             <MarkdownEditor
+              mode={"markdown"}
               placeholder={tutorialContent}
               handleChange={(e) => {
                 setTutorialContent(e);

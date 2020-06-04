@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { Card, Button } from "antd";
@@ -19,12 +19,27 @@ const { Meta } = Card;
 
 function HomePage() {
   const appContext = useContext(AppContext);
+  const [contentSchema, setContentSchema] = useState({});
   const history = useHistory();
 
   useEffect(() => {
     if (!appContext.isAuth) {
       history.push("/");
     }
+
+    // Content schema defines the organization of levels
+    const fetchData = async () => {
+      const contentData = await graphqlController.getDoc({
+        doc_name: "ContentSchema",
+      });
+
+      if (contentData.length > 0) {
+        setContentSchema(JSON.parse(contentData[0].doc_content));
+      }
+    };
+
+    // Fetch Content Data
+    fetchData();
   }, [appContext.isAuth]);
 
   const navBarColor = "#3a608d";
@@ -41,55 +56,29 @@ function HomePage() {
             paddingTop: "40px",
           }}
         >
-          <h1 className="module-title">
-            <b> Getting Started </b>
-          </h1>
-          <LevelCard
-            title="Hello World"
-            description="Get started with Robobot!"
-            link="/game/hello_world"
-          />
-
-          <LevelCard
-            title="Movement"
-            description="Learn how to control your robot's movement"
-            link="/game/basic_movement"
-          />
-
-          <LevelCard
-            title="Robot Data (Part I: Basics)"
-            description="Learn how to access and utilize robot data"
-            link="/game/robot_data"
-          />
-
-          <LevelCard
-            title="Robot Data (Part II: Sensors)"
-            description="Learn how to use robot sensors"
-            link="/game/robot_sensors"
-          />
-
-          <h1 className="module-title" style={{ marginTop: "40px" }}>
-            <b> Introduction to PID Controllers </b>
-          </h1>
-          <LevelCard
-            title="Velocity Control"
-            description="Learn how to implement a proportional (P) feedback controller!"
-            link="/game/velocity_control"
-          />
-          <LevelCard
-            title="Position Control"
-            description="Learn how to implement a proportional-derivative (PD) feedback controller!"
-            link="/game/position_control"
-          />
-          <LevelCard
-            title="Advanced Position Control"
-            description="Learn how to implement a proportional-integration-derivative (PID) controller!"
-            link="/game/advanced_position_control"
-          />
+          {contentSchema.modules &&
+            contentSchema.modules.map((module) => {
+              console.log(contentSchema);
+              return (
+                <div className="module">
+                  <h1 key={module.name}> {module.name} </h1>
+                  {module.levels.map((level) => {
+                    return (
+                      <LevelCard
+                        key={level.level_name}
+                        title={level.title}
+                        description={level.description}
+                        link={`/game/${level.level_name}`}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
         </ul>
       </nav>
       <LoginRegisterModal />
-      {
+      {process.env.NODE_ENV == "development" && (
         <Button
           onClick={async () => {
             var jsonObject = await graphqlController.getDoc({
@@ -101,7 +90,7 @@ function HomePage() {
           {" "}
           User{" "}
         </Button>
-      }
+      )}
     </div>
   );
 }

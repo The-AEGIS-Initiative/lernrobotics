@@ -7,6 +7,7 @@ import * as graphqlController from "../graphql/graphql-controller";
 export default function DocumentEditorPage({ docName }) {
   const [content, setContent] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
+  const [mode, setMode] = useState("markdown");
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +31,16 @@ export default function DocumentEditorPage({ docName }) {
   }, []);
 
   const publishDocument = async () => {
+    // Syntax check JSON files
+    // ContentSchema errors will instantly break website. Hardcode a syntax check.
+    if (mode == "json" || docName == "ContentSchema") {
+      try {
+        JSON.parse(content);
+      } catch (e) {
+        console.log(e);
+        return;
+      }
+    }
     setIsSubmitting(true);
     const res = await graphqlController.upsertDoc({
       doc_name: docName,
@@ -44,7 +55,24 @@ export default function DocumentEditorPage({ docName }) {
   } else {
     return (
       <div style={{ backgroundColor: "#333333" }}>
+        <Button
+          onClick={() => {
+            setMode("markdown");
+          }}
+          className={`${styles.ui_font} ${styles.dark_buttons}`}
+        >
+          Markdown mode
+        </Button>
+        <Button
+          onClick={() => {
+            setMode("json");
+          }}
+          className={`${styles.ui_font} ${styles.dark_buttons}`}
+        >
+          JSON mode
+        </Button>
         <MarkdownEditor
+          mode={mode}
           placeholder={content}
           handleChange={(e) => setContent(e)}
         />

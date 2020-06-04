@@ -22,5 +22,30 @@
                 "AdminQueries68290a65": {}
             }
         }
+    },
+    "production": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-robobot-production-191254-authRole",
+            "UnauthRoleArn": "arn:aws:iam::491381585205:role/amplify-robobot-production-191254-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::491381585205:role/amplify-robobot-production-191254-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-robobot-production-191254-deployment",
+            "UnauthRoleName": "amplify-robobot-production-191254-unauthRole",
+            "StackName": "amplify-robobot-production-191254",
+            "StackId": "arn:aws:cloudformation:us-west-2:491381585205:stack/amplify-robobot-production-191254/e68b00c0-a608-11ea-903f-02ccdf8c0a60",
+            "AmplifyAppId": "dl6j8zvdddhck"
+        },
+        "categories": {
+            "auth": {
+                "robobotd4fad0e6": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"464861079861-m9v3ls890ct6js8gtd33c6sa8530bam8.apps.googleusercontent.com\",\"client_secret\":\"zmON6fKLlMDZVQEgrYywqKVw\"}]"
+                },
+                "userPoolGroups": {}
+            },
+            "function": {
+                "AdminQueries68290a65": {},
+                "robobotd4fad0e6": {}
+            }
+        }
     }
 }

@@ -10,18 +10,8 @@ describe("Gameplay", () => {
         cy.contains("Start").click();
       });
 
-    cy.get(".console").within(() => {
-      cy.contains("Game loaded", {
-        timeout: 30000,
-      });
-    });
-
     cy.wait(1000);
 
     cy.contains("Submit").click();
-
-    cy.get(".console").within(() => {
-      cy.contains("Robot Initialized", { timeout: 30000 });
-    });
   });
 });

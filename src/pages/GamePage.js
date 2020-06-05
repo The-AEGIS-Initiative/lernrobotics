@@ -299,19 +299,19 @@ function GamePage({ unityContent, level }) {
                   update_flags={resizedFlag}
                 />
               </TabPane>
-              <TabPane tab="Task" key="2">
+              <TabPane tab="Task" key="2" data-cy="tab">
                 <MarkdownViewer markdownText={task} />
               </TabPane>
-              <TabPane tab="Tutorial" key="3">
+              <TabPane tab="Tutorial" key="3" data-cy="tab">
                 <MarkdownViewer markdownText={tutorial} />
               </TabPane>
-              <TabPane tab="Leaderboard" key="4">
+              <TabPane tab="Leaderboard" key="4" data-cy="tab">
                 <Leaderboard rankings={rankings} />
               </TabPane>
-              <TabPane tab="FAQ" key="5">
+              <TabPane tab="FAQ" key="5" data-cy="tab">
                 <MarkdownViewer markdownText={faq} />
               </TabPane>
-              <TabPane tab="API " key="6">
+              <TabPane tab="API " key="6" data-cy="tab">
                 <MarkdownViewer markdownText={gameAPI} />
               </TabPane>
             </Tabs>

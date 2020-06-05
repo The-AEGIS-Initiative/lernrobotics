@@ -9,7 +9,7 @@ const { Meta } = Card;
 
 function LevelCard({ title, description, link }) {
   return (
-    <div className="level-card">
+    <div className="level-card" data-cy="level-card">
       <Card
         style={{
           width: "600px",
@@ -20,7 +20,10 @@ function LevelCard({ title, description, link }) {
       >
         <Meta title={title} description={description} />
 
-        <Button className={`${styles.ui_font} button`}>
+        <Button
+          className={`${styles.ui_font} button`}
+          data-cy="level-start-button"
+        >
           <Link to={link}>Start</Link>
         </Button>
       </Card>

@@ -24,7 +24,7 @@ function StartPage() {
   const navBarColor = "#e6ffff";
 
   return (
-    <div className="start-page-container">
+    <div className="start-page-container" data-cy="start-page">
       <TopNavBar type="main" backgroundColor={navBarColor} theme="light" />
       <div className="banner-container">
         <div className="text-container">

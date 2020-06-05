@@ -45,7 +45,7 @@ function HomePage() {
   const navBarColor = "#3a608d";
 
   return (
-    <div className="home-page">
+    <div className="home-page" data-cy="home-page">
       <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
       <nav>
         <ul

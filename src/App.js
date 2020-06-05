@@ -14,12 +14,12 @@ import StartPage from "./pages/StartPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
-import { stopUserCode } from "./sockets/emit";
-
 import { GamePageProvider } from "./contexts/GamePageContext";
 import { AppContext } from "./contexts/AppContext";
 import { LevelBuilderProvider } from "./contexts/LevelBuilderContext";
 import { ProtectedRoute } from "./hooks/auth";
+import { useHistory } from "react-router-dom";
+import { stopUserCode } from "./sockets/emit";
 
 import loadScript from "load-script";
 
@@ -45,11 +45,18 @@ const MATHJAX_OPTIONS = {
 function App({ unityContent }) {
   const appContext = useContext(AppContext);
   console.log(appContext.user);
+  const history = useHistory();
+
   //const location = useLocation();
 
   useEffect(() => {
     loadScript(MATHJAX_SCRIPT, () => {
       window.MathJax.Hub.Config(MATHJAX_OPTIONS);
+    });
+
+    // Stop any running code when changing pages
+    history.listen((location) => {
+      stopUserCode();
     });
   }, []);
 

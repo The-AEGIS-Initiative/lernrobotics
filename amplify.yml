@@ -38,10 +38,13 @@ test:
       commands:
         - npm ci
         - echo ${TEST_SCOPE}
+        - echo ${CYPRESS_BASE_URL}
+        - echo ${TEST_USERNAME}
+        - echo ${TEST_PASSWORD}
         - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
     test:
       commands:
-        - npx start-test 'npm start' 3000 'npx cypress run --spec cypress/integration/${TEST_SCOPE}/*.spec.js --env baseUrl=${CYPRESS_BASE_URL} --env username=${TEST_USERNAME} --env password=${TEST_PASSWORD} --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
+        - npx start-test 'npm start' 3000 'npx cypress run --spec cypress/integration/${TEST_SCOPE}/*.spec.js --env baseUrl=${CYPRESS_BASE_URL},username=${TEST_USERNAME},password=${TEST_PASSWORD} --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
     postTest:
       commands:
         - npx mochawesome-merge cypress/report/mochawesome-report/mochawesome*.json > cypress/report/mochawesome.json

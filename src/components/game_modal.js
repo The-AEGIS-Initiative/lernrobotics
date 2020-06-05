@@ -1,20 +1,14 @@
 import React, { Text, useState, useEffect } from "react";
 import { Modal } from "antd";
 
-import "./game_over_modal.css";
+import "./game_modal.css";
 
-function GameOverModal({
-  visible,
-  isSuccess,
-  message,
-  handleOk,
-  handleCancel,
-}) {
+function GameModal({ visible, title, message, handleOk, handleCancel }) {
   return (
     <div className="game-over-modal">
       <Modal
         className="game-over-modal"
-        title={isSuccess ? "Success!" : "Try Again!"}
+        title={title}
         visible={visible}
         footer={null}
         onOk={() => {
@@ -32,4 +26,4 @@ function GameOverModal({
   );
 }
 
-export default GameOverModal;
+export default GameModal;

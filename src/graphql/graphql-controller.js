@@ -125,6 +125,7 @@ export const getLevel = async ({ level_name }) => {
   return levelData;
 };
 
+// Get Level data using API_KEY auth
 export const getLevelAsGuest = async ({ level_name }) => {
   const data = await API.graphql({
     query: queries.getPublishedLevelByName,
@@ -133,6 +134,16 @@ export const getLevelAsGuest = async ({ level_name }) => {
   });
 
   return data.data.getPublishedLevelByName.items;
+};
+
+// Get level data
+export const getLevelByID = async ({ id }) => {
+  const data = await API.graphql(
+    graphqlOperation(queries.getLevel, { id: id })
+  );
+  const levelData = data.data.getLevel;
+
+  return levelData;
 };
 
 // Get published level data

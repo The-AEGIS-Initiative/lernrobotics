@@ -11,6 +11,7 @@ import LevelBuilderPage from "./pages/LevelBuilderPage";
 import DocumentEditorPage from "./pages/DocumentEditorPage";
 import LoginPage from "./pages/LoginPage";
 import StartPage from "./pages/StartPage";
+import AdminLevelPage from "./pages/AdminLevelPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
@@ -68,19 +69,6 @@ function App({ unityContent }) {
     <Switch>
       <Route exact path="/" component={StartPage} />
       <Route exact path="/home" component={HomePage} />
-      <Route
-        exact
-        path="/onboarding"
-        component={(props) => (
-          <GamePageProvider>
-            <GamePage
-              unityContent={unityContent}
-              level={"hello_world"}
-              {...props}
-            />
-          </GamePageProvider>
-        )}
-      />
       <ProtectedRoute
         exact
         path="/game/:level"
@@ -124,6 +112,14 @@ function App({ unityContent }) {
             docName={props.match.params.doc_name}
             {...props}
           />
+        )}
+        protection_level="admin"
+      />
+      <ProtectedRoute
+        exact
+        path="/admin/level/:level_id"
+        component={(props) => (
+          <AdminLevelPage levelID={props.match.params.level_id} {...props} />
         )}
         protection_level="admin"
       />

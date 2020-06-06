@@ -22,7 +22,6 @@ import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
 import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
-import LoginRegisterModal from "../components/login_register_modal";
 import LoadingScreen from "../components/loading_screen";
 import GameModal from "../components/game_modal";
 import Leaderboard from "../components/leaderboard";
@@ -156,43 +155,11 @@ function GamePage({ unityContent, level }) {
       }
     }
 
-    if (true) {
-      // Wrapper to call async function inside useEffect()
-      fetchData();
-    } else {
-      fetchHelloWorld();
-    }
+    fetchData();
     setIsLoading(false);
 
     //console.log(`levelData: ${levelData}`);
   }, []);
-
-  const fetchHelloWorld = () => {
-    console.log("fetching default level");
-    fetch("/level_specs/hello_world.md")
-      .then((r) => r.text())
-      .then((data) => {
-        setTutorial(data);
-      });
-
-    fetch("/prompts/hello_world.md")
-      .then((r) => r.text())
-      .then((data) => {
-        setTask(data);
-      });
-
-    fetch("/default_code/hello_world.py")
-      .then((r) => r.text())
-      .then((data) => {
-        gamePageContext.setEditorContent(data);
-      });
-
-    fetch("/level_specs/hello_world.md")
-      .then((r) => r.text())
-      .then((data) => {
-        setLevelData(data);
-      });
-  };
 
   useEffect(() => {
     async function updateLeaderboard(gameOverData) {
@@ -266,8 +233,6 @@ function GamePage({ unityContent, level }) {
     }
   }, [gamePageContext.isLoading]);
 
-  const handleGuestLogin = () => {};
-
   const pushUserCode = async () => {
     if (appContext.isAuth) {
       submitUserCode(gamePageContext.editorContent);
@@ -276,9 +241,6 @@ function GamePage({ unityContent, level }) {
         user_code: gamePageContext.editorContent,
       });
       console.log(res);
-    } else {
-      // Guest user
-      appContext.setAuthModalVisible(true);
     }
   };
 
@@ -386,7 +348,6 @@ function GamePage({ unityContent, level }) {
               </div>
             </div>
           </SplitterLayout>
-          <LoginRegisterModal onSubmit={handleGuestLogin} />
         </div>
 
         {gamePageContext.isLoading && <LoadingScreen />}

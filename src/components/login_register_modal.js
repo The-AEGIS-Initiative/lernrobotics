@@ -14,24 +14,19 @@ import { AppContext } from "../contexts/AppContext";
 
 import "./login_register_modal.css";
 
-function LoginRegisterModal({ onSubmit }) {
+function LoginRegisterModal({ onSubmit, visible, handleCancel }) {
   const appContext = useContext(AppContext);
 
   const handleOk = () => {
     console.log("modal ok");
   };
 
-  const handleCancel = () => {
-    console.log("modal cancel");
-    appContext.setAuthModalVisible(false);
-  };
-
   return (
     <div className="auth-modal">
       <Modal
         title="Basic Modal"
-        visible={appContext.authModalVisible}
-        maskClosable={false}
+        visible={visible}
+        maskClosable={true}
         onCancel={handleCancel}
         footer={null}
         title=""

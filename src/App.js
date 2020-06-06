@@ -62,8 +62,8 @@ function App({ unityContent }) {
   }, []);
 
   useEffect(() => {
-    if (!appContext.isAuth) {
-      history.push("/");
+    if (!appContext.isAuth && history.location.pathname != "/login_endpoint") {
+      //history.push("/");
     }
   }, [appContext.isAuth]);
 

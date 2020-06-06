@@ -65,12 +65,13 @@ function GamePage({ unityContent, level }) {
       const level_name = level;
 
       // Fetch level data
-      const data = await graphqlController.getPublishedLevel({
+      const data = await graphqlController.getLevelAsGuest({
         level_name: level_name,
       });
       if (data.length == 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
+        console.log(level);
         console.log("wefodi");
       } else {
         // Set task, tutorial, and leveldata content
@@ -95,43 +96,67 @@ function GamePage({ unityContent, level }) {
         });
 
         // Fetch user progress
-        const progressData = await graphqlController.getProgress({
-          username: username,
-          level_name: level_name,
-        });
-        if (progressData.length == 0) {
-          // No user progress
-          gamePageContext.setEditorContent(data[0].default_code);
+        if (appContext.isAuth) {
+          const progressData = await graphqlController.getProgress({
+            username: username,
+            level_name: level_name,
+          });
+          if (progressData.length == 0) {
+            // No user progress
+            gamePageContext.setEditorContent(data[0].default_code);
+          } else {
+            // Existing user progress
+            gamePageContext.setEditorContent(progressData[0].user_code);
+          }
+
+          // Fetch leaderboard
+          const rankingData = await graphqlController.getLevelSubmissions({
+            level_name: level_name,
+          });
+          setRankings(rankingData);
+
+          // Fetch GameAPI
+          const gameAPIData = await graphqlController.getDoc({
+            doc_name: "GameAPI",
+          });
+
+          // Fetch FAQ
+          const faqData = await graphqlController.getDoc({
+            doc_name: "FAQ",
+          });
+
+          if (gameAPIData.length > 0) {
+            setGameAPI(gameAPIData[0].doc_content);
+          }
+
+          if (faqData.length > 0) {
+            setFaq(faqData[0].doc_content);
+          }
         } else {
-          // Existing user progress
-          gamePageContext.setEditorContent(progressData[0].user_code);
-        }
+          gamePageContext.setEditorContent(data[0].default_code);
 
-        // Fetch leaderboard
-        const rankingData = await graphqlController.getLevelSubmissions({
-          level_name: level_name,
-        });
-        setRankings(rankingData);
+          // Fetch GameAPI
+          const gameAPIData = await graphqlController.getDocAsGuest({
+            doc_name: "GameAPI",
+          });
 
-        // Fetch GameAPI
-        const gameAPIData = await graphqlController.getDoc({
-          doc_name: "GameAPI",
-        });
-        if (gameAPIData.length > 0) {
-          setGameAPI(gameAPIData[0].doc_content);
-        }
+          // Fetch FAQ
+          const faqData = await graphqlController.getDocAsGuest({
+            doc_name: "FAQ",
+          });
 
-        // Fetch FAQ
-        const faqData = await graphqlController.getDoc({
-          doc_name: "FAQ",
-        });
-        if (faqData.length > 0) {
-          setFaq(faqData[0].doc_content);
+          if (gameAPIData.length > 0) {
+            setGameAPI(gameAPIData[0].doc_content);
+          }
+
+          if (faqData.length > 0) {
+            setFaq(faqData[0].doc_content);
+          }
         }
       }
     }
 
-    if (appContext.isAuth) {
+    if (true) {
       // Wrapper to call async function inside useEffect()
       fetchData();
     } else {

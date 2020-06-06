@@ -125,6 +125,16 @@ export const getLevel = async ({ level_name }) => {
   return levelData;
 };
 
+export const getLevelAsGuest = async ({ level_name }) => {
+  const data = await API.graphql({
+    query: queries.getPublishedLevelByName,
+    variables: { level_name: level_name },
+    authMode: "API_KEY",
+  });
+
+  return data.data.getPublishedLevelByName.items;
+};
+
 // Get published level data
 export const getPublishedLevel = async ({ level_name }) => {
   const data = await API.graphql(
@@ -318,6 +328,16 @@ export const getDoc = async ({ doc_name }) => {
   );
 
   return response.data.getDocByName.items;
+};
+
+export const getDocAsGuest = async ({ doc_name }) => {
+  const data = await API.graphql({
+    query: queries.getDocByName,
+    variables: { doc_name: doc_name },
+    authMode: "API_KEY",
+  });
+
+  return data.data.getDocByName.items;
 };
 
 export const updateDoc = async ({ doc_id, doc_name, doc_content }) => {

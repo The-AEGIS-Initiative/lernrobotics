@@ -67,41 +67,6 @@ export const listLevels = /* GraphQL */ `
     }
   }
 `;
-export const getPublishedLevel = /* GraphQL */ `
-  query GetPublishedLevel($id: ID!) {
-    getPublishedLevel(id: $id) {
-      id
-      level_name
-      creator
-      default_code
-      task
-      tutorial
-      level_data
-      owner
-    }
-  }
-`;
-export const listPublishedLevels = /* GraphQL */ `
-  query ListPublishedLevels(
-    $filter: ModelPublishedLevelFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPublishedLevels(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        level_name
-        creator
-        default_code
-        task
-        tutorial
-        level_data
-        owner
-      }
-      nextToken
-    }
-  }
-`;
 export const getSubmissions = /* GraphQL */ `
   query GetSubmissions($id: ID!) {
     getSubmissions(id: $id) {
@@ -126,35 +91,6 @@ export const listSubmissionss = /* GraphQL */ `
         username
         score
         level_name
-        createdAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getMarkdownDocs = /* GraphQL */ `
-  query GetMarkdownDocs($id: ID!) {
-    getMarkdownDocs(id: $id) {
-      id
-      doc_name
-      doc_content
-      createdAt
-      owner
-    }
-  }
-`;
-export const listMarkdownDocss = /* GraphQL */ `
-  query ListMarkdownDocss(
-    $filter: ModelMarkdownDocsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listMarkdownDocss(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        doc_name
-        doc_content
         createdAt
         owner
       }
@@ -198,35 +134,6 @@ export const getLevelByName = /* GraphQL */ `
     $nextToken: String
   ) {
     getLevelByName(
-      level_name: $level_name
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        level_name
-        creator
-        default_code
-        task
-        tutorial
-        level_data
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getPublishedLevelByName = /* GraphQL */ `
-  query GetPublishedLevelByName(
-    $level_name: String
-    $sortDirection: ModelSortDirection
-    $filter: ModelPublishedLevelFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    getPublishedLevelByName(
       level_name: $level_name
       sortDirection: $sortDirection
       filter: $filter
@@ -296,6 +203,99 @@ export const getUserSubmission = /* GraphQL */ `
         username
         score
         level_name
+        createdAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getPublishedLevel = /* GraphQL */ `
+  query GetPublishedLevel($id: ID!) {
+    getPublishedLevel(id: $id) {
+      id
+      level_name
+      creator
+      default_code
+      task
+      tutorial
+      level_data
+      owner
+    }
+  }
+`;
+export const listPublishedLevels = /* GraphQL */ `
+  query ListPublishedLevels(
+    $filter: ModelPublishedLevelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPublishedLevels(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        level_name
+        creator
+        default_code
+        task
+        tutorial
+        level_data
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getPublishedLevelByName = /* GraphQL */ `
+  query GetPublishedLevelByName(
+    $level_name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelPublishedLevelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getPublishedLevelByName(
+      level_name: $level_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        level_name
+        creator
+        default_code
+        task
+        tutorial
+        level_data
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getMarkdownDocs = /* GraphQL */ `
+  query GetMarkdownDocs($id: ID!) {
+    getMarkdownDocs(id: $id) {
+      id
+      doc_name
+      doc_content
+      createdAt
+      owner
+    }
+  }
+`;
+export const listMarkdownDocss = /* GraphQL */ `
+  query ListMarkdownDocss(
+    $filter: ModelMarkdownDocsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMarkdownDocss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        doc_name
+        doc_content
         createdAt
         owner
       }

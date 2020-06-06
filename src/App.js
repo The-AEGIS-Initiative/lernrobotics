@@ -68,6 +68,19 @@ function App({ unityContent }) {
     <Switch>
       <Route exact path="/" component={StartPage} />
       <Route exact path="/home" component={HomePage} />
+      <Route
+        exact
+        path="/onboarding"
+        component={(props) => (
+          <GamePageProvider>
+            <GamePage
+              unityContent={unityContent}
+              level={"hello_world"}
+              {...props}
+            />
+          </GamePageProvider>
+        )}
+      />
       <ProtectedRoute
         exact
         path="/game/:level"

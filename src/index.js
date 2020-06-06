@@ -37,6 +37,8 @@ if (amplify_build_env === "prod") {
   configUpdate.oauth.redirectSignOut = "https://robobot.aegisinitiative.io/";
 }
 
+console.log(config);
+
 configUpdate.oauth = {};
 console.log(configUpdate);
 Amplify.configure(configUpdate);

@@ -14,7 +14,6 @@ type Level @model
 	@auth(rules: [
 		{ allow: owner }, # owner full access
 		{ allow: groups, groups:["admin"] }, # admin full access to levels
-		{ allow: private, operations: [read]}, # private user read access for levels
 	])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelByName")
 {
@@ -32,7 +31,7 @@ type PublishedLevel @model
 	@auth(rules: [
 		{ allow: owner }, # owner full access
 		{ allow: groups, groups:["admin"] }, # admin full access to levels
-		{ allow: private, operations: [read]}, # private user read access for levels
+		{ allow: public, operations: [read]}, # public user read access for levels
 	])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getPublishedLevelByName")
 {
@@ -62,7 +61,7 @@ type Submissions @model
 type MarkdownDocs @model
 	@auth(rules: [
 		{ allow: groups, groups:["admin"] }, # admin full access to levels
-    { allow: private, operations: [read]} # public guest read access for levels
+    { allow: public, operations: [read]} # public guest read access for levels
 	])
 	@key(name: "byDocName", fields: ["doc_name"], queryField: "getDocByName")
 {

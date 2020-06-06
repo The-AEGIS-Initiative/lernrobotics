@@ -43,7 +43,12 @@ function AdminPage() {
             level_list={levelList}
             renderItem={(item) => ({
               title: item.id,
-              description: <a href="https://ant.design"> {item.level_name} </a>,
+              description:  (
+                <Link to={`/admin/level/${item.id}`}>
+                  {" "}
+                  {item.level_name}{" "}
+                </Link>
+              ),
             })}
           />
         </div>

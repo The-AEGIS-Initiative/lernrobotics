@@ -125,6 +125,16 @@ export const getLevel = async ({ level_name }) => {
   return levelData;
 };
 
+// Get level data
+export const getLevelByID = async ({ id }) => {
+  const data = await API.graphql(
+    graphqlOperation(queries.getLevel, { id: id })
+  );
+  const levelData = data.data.getLevel;
+
+  return levelData;
+};
+
 // Get published level data
 export const getPublishedLevel = async ({ level_name }) => {
   const data = await API.graphql(

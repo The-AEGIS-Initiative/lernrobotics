@@ -1,5 +1,8 @@
 type Progress @model 
-	@auth(rules: [{ allow: owner, operations: [create, read, update, delete] }]) # owner full access
+	@auth(rules: [
+		{ allow: owner, operations: [read, update, delete] }, # owner full access
+		{ allow: private, operations: [create]}
+		])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "progressByLevelName")
 {
   id: ID!
@@ -13,7 +16,7 @@ type Progress @model
 type Level @model
 	@auth(rules: [
 		{ allow: owner }, # owner full access
-		{ allow: groups, groups:["admin"] }, # admin full access to levels
+		{ allow: groups, groups:["admin"] } # admin full access to levels
 	])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelByName")
 {
@@ -31,7 +34,8 @@ type PublishedLevel @model
 	@auth(rules: [
 		{ allow: owner }, # owner full access
 		{ allow: groups, groups:["admin"] }, # admin full access to levels
-		{ allow: public, operations: [read]}, # public user read access for levels
+		{ allow: private, operations: [read]}, # user read access
+		{ allow: public, operations: [read]} # public user read access for levels
 	])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getPublishedLevelByName")
 {
@@ -46,7 +50,10 @@ type PublishedLevel @model
 }
 
 type Submissions @model
-  @auth(rules: [{ allow: owner, operations: [create, read, update, delete] }]) # owner full access
+  @auth(rules: [
+  	{ allow: owner, operations: [read, update, delete] }, # owner full access
+  	{ allow: private, operations: [create, read]} # user create and read access
+	])
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelSubmissions")
 	@key(name: "byUserAndLevel", fields: ["username", "level_name"], queryField: "getUserSubmission")
 {
@@ -61,6 +68,7 @@ type Submissions @model
 type MarkdownDocs @model
 	@auth(rules: [
 		{ allow: groups, groups:["admin"] }, # admin full access to levels
+		{ allow: private, operations: [read]}, # public guest read access for levels
     { allow: public, operations: [read]} # public guest read access for levels
 	])
 	@key(name: "byDocName", fields: ["doc_name"], queryField: "getDocByName")

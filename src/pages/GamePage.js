@@ -4,6 +4,7 @@ import { Row, Col, Tabs, Button } from "antd";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
+import Joyride from "react-joyride";
 
 import "./GamePage.css";
 import styles from "../style.module.css";
@@ -223,7 +224,7 @@ function GamePage({ unityContent, level }) {
   }, []);
 
   useEffect(() => {
-    if (!gamePageContext.isLoading) {
+    if (!gamePageContext.isLoading && level != "hello_world") {
       // Intro modal
       setModalContent({
         visible: true,
@@ -244,6 +245,77 @@ function GamePage({ unityContent, level }) {
     }
   };
 
+  const onboardingSteps = [
+    {
+      target: "body",
+      title: "Welcome to Robobot!",
+      content: "Take a quick tour of your robotics workspace!",
+      placement: "center",
+      disableBeacon: true,
+    },
+    {
+      target: ".unity-player",
+      title: "Robot World",
+      content:
+        "Here is the viewport into the robot world with full physics capabilities",
+      placement: "right",
+      disableBeacon: true,
+    },
+    {
+      target: ".console",
+      title: "Console",
+      content:
+        "This console lets your robot communicate with you (via print statements!)",
+      placement: "right",
+      disableBeacon: true,
+    },
+    {
+      target: ".ace_scroller",
+      title: "Code Editor",
+      content: "Program your robot using this python code editor",
+      placement: "left",
+      disableBeacon: true,
+    },
+    {
+      target: ".layout-splitter",
+      title: "Resize your workspace",
+      content: "You can click and drag this splitter bar",
+      placement: "right",
+      disableBeacon: true,
+    },
+    {
+      target: "#tab-2",
+      title: "Task",
+      content:
+        "This tab contains the level specs (the task for your robot to complete)",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: "#tab-3",
+      title: "Tutorial",
+      content:
+        "This tab contains educational resources to help you complete the level",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: "#tab-4",
+      title: "Leaderboard",
+      content:
+        "See how your robot stacks up against robots all around the world",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: ".submit-button",
+      title: "Submit your code",
+      content: "Try pressing this button and see your robot go!",
+      placement: "top-left",
+      disableBeacon: true,
+    },
+  ];
+
   // Necessary check to ensure unity content waits until level data is fetched
   if (levelData != "") {
     //console.log(`levelData: ${levelData}`);
@@ -251,8 +323,18 @@ function GamePage({ unityContent, level }) {
       <div style={{ overflow: "hidden", height: "100vh" }}>
         <div
           className="game-container"
-          style={{ opacity: gamePageContext.isLoading ? 0 : 1 }}
+          style={{
+            opacity: gamePageContext.isLoading ? 0 : 1,
+            overflow: "hidden",
+          }}
         >
+          {!gamePageContext.isLoading && (
+            <Joyride
+              steps={onboardingSteps}
+              continuous={true}
+              showSkipButton={true}
+            />
+          )}
           <TopNavBar
             type="sub"
             className="nav-container"
@@ -276,10 +358,14 @@ function GamePage({ unityContent, level }) {
                       unityContent={unityContent}
                       level_name={level}
                       levelData={levelData}
+                      className={"unity_viewport"}
                     />
                   }
                   bottom_section={
-                    <ConsoleSection style={{ backgroundColor: "black" }} />
+                    <ConsoleSection
+                      className={"console"}
+                      style={{ backgroundColor: "black" }}
+                    />
                   }
                   dependent="bottom"
                   parent_height={windowSize.height - 45}
@@ -311,6 +397,7 @@ function GamePage({ unityContent, level }) {
                     gamePageContext.setEditorContent(value)
                   }
                   isLoading={gamePageContext.isLoading}
+                  className={"code-editor"}
                 />
               </div>
               <div className="footer-container">
@@ -324,7 +411,7 @@ function GamePage({ unityContent, level }) {
                 >
                   <Button
                     type="primary"
-                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    className={`${styles.ui_font} ${styles.dark_buttons} stop-button`}
                     loading={gamePageContext.isLoading}
                     onClick={() => {
                       setIsSubmitting(false);
@@ -335,7 +422,7 @@ function GamePage({ unityContent, level }) {
                   </Button>
                   <Button
                     type="primary"
-                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    className={`${styles.ui_font} ${styles.dark_buttons} submit-button`}
                     loading={gamePageContext.isLoading || isSubmitting}
                     onClick={() => {
                       setIsSubmitting(true);

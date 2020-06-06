@@ -61,6 +61,12 @@ function App({ unityContent }) {
     });
   }, []);
 
+  useEffect(() => {
+    if (!appContext.isAuth) {
+      history.push("/");
+    }
+  }, [appContext.isAuth]);
+
   /**useEffect(() => {
     stopUserCode();
   }, [location])*/

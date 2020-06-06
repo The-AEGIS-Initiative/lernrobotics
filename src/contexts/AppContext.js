@@ -1,6 +1,5 @@
 import React, { useEffect, useState, createContext } from "react";
 import { getData } from "../components/HttpController";
-
 import { Auth, Hub } from "aws-amplify";
 
 export const AppContext = createContext();

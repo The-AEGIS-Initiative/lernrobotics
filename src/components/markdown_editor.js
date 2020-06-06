@@ -21,7 +21,7 @@ import PlayModeControls from "../components/play_mode_controls";
  * Split-view markdown editor
  */
 
-function MarkdownEditor({ handleChange, placeholder }) {
+function MarkdownEditor({ handleChange, placeholder, mode }) {
   const [content, setContent] = useState(placeholder);
   const [resizedFlag, setResizedflag] = useState(false);
 
@@ -36,7 +36,7 @@ function MarkdownEditor({ handleChange, placeholder }) {
       }}
     >
       <CodeEditor
-        mode="markdown"
+        mode={mode}
         placeholder={placeholder}
         handleChange={(e) => {
           setContent(e);

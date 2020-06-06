@@ -24,7 +24,7 @@ import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 import LoginRegisterModal from "../components/login_register_modal";
 import LoadingScreen from "../components/loading_screen";
-import GameOverModal from "../components/game_over_modal";
+import GameModal from "../components/game_modal";
 import Leaderboard from "../components/leaderboard";
 
 import * as graphqlController from "../graphql/graphql-controller";
@@ -44,16 +44,18 @@ function GamePage({ unityContent, level }) {
   const [levelData, setLevelData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [gameOverMsg, setGameOverMsg] = useState("");
-  const [gameOverVisible, setGameOverVisible] = useState(false);
-  const [timeTaken, setTimeTaken] = useState(0);
+  const [modalContent, setModalContent] = useState({
+    visible: false,
+    title: "",
+    msg: "",
+  });
   const [rankings, setRankings] = useState([]);
   const [gameAPI, setGameAPI] = useState("");
   const [faq, setFaq] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   const windowSize = useWindowSize();
-  console.log(windowSize);
+  //console.log(windowSize);
   const { TabPane } = Tabs;
 
   // Fetch level data and user progress from graphql api
@@ -75,6 +77,22 @@ function GamePage({ unityContent, level }) {
         setTask(data[0].task);
         setTutorial(data[0].tutorial);
         setLevelData(data[0].level_data);
+
+        // Parse task for intro modal
+        // Get 2nd non-empty line
+        var i = 0;
+        data[0].task.split("\n").forEach((line) => {
+          if (line != "") {
+            if (i == 1) {
+              setModalContent({
+                visible: false,
+                title: "Your Task",
+                msg: line.match(/[^*].*[^*]/g).toString(),
+              });
+            }
+            i += 1;
+          }
+        });
 
         // Fetch user progress
         const progressData = await graphqlController.getProgress({
@@ -120,6 +138,7 @@ function GamePage({ unityContent, level }) {
       fetchHelloWorld();
     }
     setIsLoading(false);
+
     //console.log(`levelData: ${levelData}`);
   }, []);
 
@@ -192,9 +211,11 @@ function GamePage({ unityContent, level }) {
       console.log(gameOverJson);
       const data = JSON.parse(gameOverJson);
       setIsSuccess(data.isSuccess);
-      setGameOverMsg(data.message);
-      setTimeTaken(data.timeTaken);
-      setGameOverVisible(true);
+      setModalContent({
+        visible: true,
+        msg: `${data.message};${data.timeTaken}`,
+        title: data.isSuccess ? "Success!" : "Try Again!",
+      });
       updateLeaderboard(data); // Submit score to leaderboard
     });
 
@@ -202,7 +223,23 @@ function GamePage({ unityContent, level }) {
       console.log("Game started");
       setIsSubmitting(false);
     });
+
+    unityContent.on("ConsoleLog", (log) => {
+      // Split multiline logs into multi logs.
+      gamePageContext.setLogs([...gamePageContext.logs, ...log.split("\n")]);
+    });
   }, []);
+
+  useEffect(() => {
+    if (!gamePageContext.isLoading) {
+      // Intro modal
+      setModalContent({
+        visible: true,
+        title: modalContent.title,
+        msg: modalContent.msg,
+      });
+    }
+  }, [gamePageContext.isLoading]);
 
   const handleGuestLogin = () => {};
 
@@ -262,19 +299,19 @@ function GamePage({ unityContent, level }) {
                   update_flags={resizedFlag}
                 />
               </TabPane>
-              <TabPane tab="Task" key="2">
+              <TabPane tab="Task" key="2" data-cy="tab">
                 <MarkdownViewer markdownText={task} />
               </TabPane>
-              <TabPane tab="Tutorial" key="3">
+              <TabPane tab="Tutorial" key="3" data-cy="tab">
                 <MarkdownViewer markdownText={tutorial} />
               </TabPane>
-              <TabPane tab="Leaderboard" key="4">
+              <TabPane tab="Leaderboard" key="4" data-cy="tab">
                 <Leaderboard rankings={rankings} />
               </TabPane>
-              <TabPane tab="FAQ" key="5">
+              <TabPane tab="FAQ" key="5" data-cy="tab">
                 <MarkdownViewer markdownText={faq} />
               </TabPane>
-              <TabPane tab="API " key="6">
+              <TabPane tab="API " key="6" data-cy="tab">
                 <MarkdownViewer markdownText={gameAPI} />
               </TabPane>
             </Tabs>
@@ -329,15 +366,15 @@ function GamePage({ unityContent, level }) {
 
         {gamePageContext.isLoading && <LoadingScreen />}
 
-        <GameOverModal
-          visible={gameOverVisible}
-          message={`${gameOverMsg};Time taken: ${timeTaken} seconds`}
-          isSuccess={isSuccess}
+        <GameModal
+          visible={modalContent.visible}
+          message={modalContent.msg}
+          title={modalContent.title}
           handleOk={() => {
-            setGameOverVisible(false);
+            setModalContent({ visible: false, title: "", msg: "" });
           }}
           handleCancel={() => {
-            setGameOverVisible(false);
+            setModalContent({ visible: false, title: "", msg: "" });
           }}
         />
       </div>

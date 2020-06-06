@@ -15,7 +15,7 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   const maxWidth = Math.round(
     (useWindowSize().height - 45 - 35) * 1.77777777778
   );
-  console.log(maxWidth);
+  //console.log(maxWidth);
   useEffect(() => {
     // When unity webgl has loaded, send assigned port
     // to unity so that unity knows which websocket to connect

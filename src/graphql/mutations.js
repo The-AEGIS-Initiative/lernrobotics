@@ -159,6 +159,7 @@ export const createSubmissions = /* GraphQL */ `
       score
       level_name
       createdAt
+      owner
     }
   }
 `;
@@ -173,6 +174,7 @@ export const updateSubmissions = /* GraphQL */ `
       score
       level_name
       createdAt
+      owner
     }
   }
 `;
@@ -187,6 +189,7 @@ export const deleteSubmissions = /* GraphQL */ `
       score
       level_name
       createdAt
+      owner
     }
   }
 `;
@@ -200,6 +203,7 @@ export const createMarkdownDocs = /* GraphQL */ `
       doc_name
       doc_content
       createdAt
+      owner
     }
   }
 `;
@@ -213,6 +217,7 @@ export const updateMarkdownDocs = /* GraphQL */ `
       doc_name
       doc_content
       createdAt
+      owner
     }
   }
 `;
@@ -226,6 +231,7 @@ export const deleteMarkdownDocs = /* GraphQL */ `
       doc_name
       doc_content
       createdAt
+      owner
     }
   }
 `;

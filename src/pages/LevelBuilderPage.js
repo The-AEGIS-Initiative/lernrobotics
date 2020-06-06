@@ -34,6 +34,8 @@ function LevelBuilderPage({ unityContent, levelName }) {
   const [resizedFlag, setResizedflag] = useState(false);
   const [tabKey, setTabKey] = useState("1");
   const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
+  const [gameAPI, setGameAPI] = useState("");
+  const [faq, setFaq] = useState("");
 
   const levelNameRef = useRef(null);
 
@@ -64,6 +66,22 @@ function LevelBuilderPage({ unityContent, levelName }) {
         setTutorialContent(data[0].tutorial);
         setDefaultCodeContent(data[0].default_code);
         setLevelData(data[0].level_data);
+      }
+
+      // Fetch GameAPI
+      const gameAPIData = await graphqlController.getDoc({
+        doc_name: "GameAPI",
+      });
+      if (gameAPIData.length > 0) {
+        setGameAPI(gameAPIData[0].doc_content);
+      }
+
+      // Fetch FAQ
+      const faqData = await graphqlController.getDoc({
+        doc_name: "FAQ",
+      });
+      if (faqData.length > 0) {
+        setFaq(faqData[0].doc_content);
       }
     }
 
@@ -158,6 +176,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
           </TabPane>
           <TabPane tab="Prompt" key="3">
             <MarkdownEditor
+              mode={"markdown"}
               placeholder={taskContent}
               handleChange={(e) => {
                 setTaskContent(e);
@@ -166,6 +185,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
           </TabPane>
           <TabPane tab="Learn" key="4">
             <MarkdownEditor
+              mode={"markdown"}
               placeholder={tutorialContent}
               handleChange={(e) => {
                 setTutorialContent(e);
@@ -173,11 +193,11 @@ function LevelBuilderPage({ unityContent, levelName }) {
             />
           </TabPane>
           <TabPane tab="Help" key="5">
-            <MarkdownViewer markdownSrc={`/instructions.md`}></MarkdownViewer>
+            <MarkdownViewer markdownText={faq} />
           </TabPane>
 
           <TabPane tab="API " key="6">
-            <MarkdownViewer markdownSrc={`/game_api_docs.md`}></MarkdownViewer>
+            <MarkdownViewer markdownText={gameAPI} />
           </TabPane>
         </Tabs>
 

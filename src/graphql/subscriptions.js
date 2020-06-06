@@ -122,35 +122,38 @@ export const onDeletePublishedLevel = /* GraphQL */ `
   }
 `;
 export const onCreateSubmissions = /* GraphQL */ `
-  subscription OnCreateSubmissions {
-    onCreateSubmissions {
+  subscription OnCreateSubmissions($owner: String!) {
+    onCreateSubmissions(owner: $owner) {
       id
       username
       score
       level_name
       createdAt
+      owner
     }
   }
 `;
 export const onUpdateSubmissions = /* GraphQL */ `
-  subscription OnUpdateSubmissions {
-    onUpdateSubmissions {
+  subscription OnUpdateSubmissions($owner: String!) {
+    onUpdateSubmissions(owner: $owner) {
       id
       username
       score
       level_name
       createdAt
+      owner
     }
   }
 `;
 export const onDeleteSubmissions = /* GraphQL */ `
-  subscription OnDeleteSubmissions {
-    onDeleteSubmissions {
+  subscription OnDeleteSubmissions($owner: String!) {
+    onDeleteSubmissions(owner: $owner) {
       id
       username
       score
       level_name
       createdAt
+      owner
     }
   }
 `;
@@ -161,6 +164,7 @@ export const onCreateMarkdownDocs = /* GraphQL */ `
       doc_name
       doc_content
       createdAt
+      owner
     }
   }
 `;
@@ -171,6 +175,7 @@ export const onUpdateMarkdownDocs = /* GraphQL */ `
       doc_name
       doc_content
       createdAt
+      owner
     }
   }
 `;
@@ -181,6 +186,7 @@ export const onDeleteMarkdownDocs = /* GraphQL */ `
       doc_name
       doc_content
       createdAt
+      owner
     }
   }
 `;

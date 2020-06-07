@@ -1,6 +1,5 @@
 import React, { useEffect, useState, createContext } from "react";
 import { getData } from "../components/HttpController";
-
 import { Auth, Hub } from "aws-amplify";
 
 export const AppContext = createContext();
@@ -13,7 +12,6 @@ export class AppContextProvider extends React.Component {
   constructor(props) {
     super(props);
     this.setAuth = this.setAuth.bind(this);
-    this.setAuthModalVisible = this.setAuthModalVisible.bind(this);
 
     this.state = {
       loadingAuth: true,
@@ -25,13 +23,7 @@ export class AppContextProvider extends React.Component {
       backENDURL: "",
       user: null,
       user_group: null,
-      authModalVisible: false,
-      setAuthModalVisible: this.setAuthModalVisible,
     };
-  }
-
-  setAuthModalVisible(isVisible) {
-    this.setState({ authModalVisible: isVisible });
   }
 
   checkAuthStatusCache() {

@@ -4,6 +4,7 @@ import { Row, Col, Tabs, Button } from "antd";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
+import Joyride from "react-joyride";
 
 import "./GamePage.css";
 import styles from "../style.module.css";
@@ -22,7 +23,6 @@ import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
 import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
-import LoginRegisterModal from "../components/login_register_modal";
 import LoadingScreen from "../components/loading_screen";
 import GameModal from "../components/game_modal";
 import Leaderboard from "../components/leaderboard";
@@ -65,12 +65,13 @@ function GamePage({ unityContent, level }) {
       const level_name = level;
 
       // Fetch level data
-      const data = await graphqlController.getPublishedLevel({
+      const data = await graphqlController.getLevelAsGuest({
         level_name: level_name,
       });
       if (data.length == 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
+        console.log(level);
         console.log("wefodi");
       } else {
         // Set task, tutorial, and leveldata content
@@ -95,79 +96,71 @@ function GamePage({ unityContent, level }) {
         });
 
         // Fetch user progress
-        const progressData = await graphqlController.getProgress({
-          username: username,
-          level_name: level_name,
-        });
-        if (progressData.length == 0) {
-          // No user progress
-          gamePageContext.setEditorContent(data[0].default_code);
+        if (appContext.isAuth) {
+          const progressData = await graphqlController.getProgress({
+            username: username,
+            level_name: level_name,
+          });
+          if (progressData.length == 0) {
+            // No user progress
+            gamePageContext.setEditorContent(data[0].default_code);
+          } else {
+            // Existing user progress
+            gamePageContext.setEditorContent(progressData[0].user_code);
+          }
+
+          // Fetch leaderboard
+          const rankingData = await graphqlController.getLevelSubmissions({
+            level_name: level_name,
+          });
+          setRankings(rankingData);
+
+          // Fetch GameAPI
+          const gameAPIData = await graphqlController.getDoc({
+            doc_name: "GameAPI",
+          });
+
+          // Fetch FAQ
+          const faqData = await graphqlController.getDoc({
+            doc_name: "FAQ",
+          });
+
+          if (gameAPIData.length > 0) {
+            setGameAPI(gameAPIData[0].doc_content);
+          }
+
+          if (faqData.length > 0) {
+            setFaq(faqData[0].doc_content);
+          }
         } else {
-          // Existing user progress
-          gamePageContext.setEditorContent(progressData[0].user_code);
-        }
+          gamePageContext.setEditorContent(data[0].default_code);
 
-        // Fetch leaderboard
-        const rankingData = await graphqlController.getLevelSubmissions({
-          level_name: level_name,
-        });
-        setRankings(rankingData);
+          // Fetch GameAPI
+          const gameAPIData = await graphqlController.getDocAsGuest({
+            doc_name: "GameAPI",
+          });
 
-        // Fetch GameAPI
-        const gameAPIData = await graphqlController.getDoc({
-          doc_name: "GameAPI",
-        });
-        if (gameAPIData.length > 0) {
-          setGameAPI(gameAPIData[0].doc_content);
-        }
+          // Fetch FAQ
+          const faqData = await graphqlController.getDocAsGuest({
+            doc_name: "FAQ",
+          });
 
-        // Fetch FAQ
-        const faqData = await graphqlController.getDoc({
-          doc_name: "FAQ",
-        });
-        if (faqData.length > 0) {
-          setFaq(faqData[0].doc_content);
+          if (gameAPIData.length > 0) {
+            setGameAPI(gameAPIData[0].doc_content);
+          }
+
+          if (faqData.length > 0) {
+            setFaq(faqData[0].doc_content);
+          }
         }
       }
     }
 
-    if (appContext.isAuth) {
-      // Wrapper to call async function inside useEffect()
-      fetchData();
-    } else {
-      fetchHelloWorld();
-    }
+    fetchData();
     setIsLoading(false);
 
     //console.log(`levelData: ${levelData}`);
   }, []);
-
-  const fetchHelloWorld = () => {
-    console.log("fetching default level");
-    fetch("/level_specs/hello_world.md")
-      .then((r) => r.text())
-      .then((data) => {
-        setTutorial(data);
-      });
-
-    fetch("/prompts/hello_world.md")
-      .then((r) => r.text())
-      .then((data) => {
-        setTask(data);
-      });
-
-    fetch("/default_code/hello_world.py")
-      .then((r) => r.text())
-      .then((data) => {
-        gamePageContext.setEditorContent(data);
-      });
-
-    fetch("/level_specs/hello_world.md")
-      .then((r) => r.text())
-      .then((data) => {
-        setLevelData(data);
-      });
-  };
 
   useEffect(() => {
     async function updateLeaderboard(gameOverData) {
@@ -231,7 +224,7 @@ function GamePage({ unityContent, level }) {
   }, []);
 
   useEffect(() => {
-    if (!gamePageContext.isLoading) {
+    if (!gamePageContext.isLoading && level != "hello_world") {
       // Intro modal
       setModalContent({
         visible: true,
@@ -241,8 +234,6 @@ function GamePage({ unityContent, level }) {
     }
   }, [gamePageContext.isLoading]);
 
-  const handleGuestLogin = () => {};
-
   const pushUserCode = async () => {
     if (appContext.isAuth) {
       submitUserCode(gamePageContext.editorContent);
@@ -251,11 +242,79 @@ function GamePage({ unityContent, level }) {
         user_code: gamePageContext.editorContent,
       });
       console.log(res);
-    } else {
-      // Guest user
-      appContext.setAuthModalVisible(true);
     }
   };
+
+  const onboardingSteps = [
+    {
+      target: "body",
+      title: "Welcome to Robobot!",
+      content: "Take a quick tour of your robotics workspace!",
+      placement: "center",
+      disableBeacon: true,
+    },
+    {
+      target: ".unity-player",
+      title: "Robot World",
+      content:
+        "Here is the viewport into the robot world with full physics capabilities",
+      placement: "right",
+      disableBeacon: true,
+    },
+    {
+      target: ".console",
+      title: "Console",
+      content:
+        "This console lets your robot communicate with you (via print statements!)",
+      placement: "right",
+      disableBeacon: true,
+    },
+    {
+      target: ".ace_scroller",
+      title: "Code Editor",
+      content: "Program your robot using this python code editor",
+      placement: "left",
+      disableBeacon: true,
+    },
+    {
+      target: ".layout-splitter",
+      title: "Resize your workspace",
+      content: "You can click and drag this splitter bar",
+      placement: "right",
+      disableBeacon: true,
+    },
+    {
+      target: "#tab-2",
+      title: "Task",
+      content:
+        "This tab contains the level specs (the task for your robot to complete)",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: "#tab-3",
+      title: "Tutorial",
+      content:
+        "This tab contains educational resources to help you complete the level",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: "#tab-4",
+      title: "Leaderboard",
+      content:
+        "See how your robot stacks up against robots all around the world",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: ".submit-button",
+      title: "Submit your code",
+      content: "Try pressing this button and see your robot go!",
+      placement: "top-left",
+      disableBeacon: true,
+    },
+  ];
 
   // Necessary check to ensure unity content waits until level data is fetched
   if (levelData != "") {
@@ -264,8 +323,18 @@ function GamePage({ unityContent, level }) {
       <div style={{ overflow: "hidden", height: "100vh" }}>
         <div
           className="game-container"
-          style={{ opacity: gamePageContext.isLoading ? 0 : 1 }}
+          style={{
+            opacity: gamePageContext.isLoading ? 0 : 1,
+            overflow: "hidden",
+          }}
         >
+          {!gamePageContext.isLoading && (
+            <Joyride
+              steps={onboardingSteps}
+              continuous={true}
+              showSkipButton={true}
+            />
+          )}
           <TopNavBar
             type="sub"
             className="nav-container"
@@ -289,10 +358,14 @@ function GamePage({ unityContent, level }) {
                       unityContent={unityContent}
                       level_name={level}
                       levelData={levelData}
+                      className={"unity_viewport"}
                     />
                   }
                   bottom_section={
-                    <ConsoleSection style={{ backgroundColor: "black" }} />
+                    <ConsoleSection
+                      className={"console"}
+                      style={{ backgroundColor: "black" }}
+                    />
                   }
                   dependent="bottom"
                   parent_height={windowSize.height - 45}
@@ -324,6 +397,7 @@ function GamePage({ unityContent, level }) {
                     gamePageContext.setEditorContent(value)
                   }
                   isLoading={gamePageContext.isLoading}
+                  className={"code-editor"}
                 />
               </div>
               <div className="footer-container">
@@ -337,7 +411,7 @@ function GamePage({ unityContent, level }) {
                 >
                   <Button
                     type="primary"
-                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    className={`${styles.ui_font} ${styles.dark_buttons} stop-button`}
                     loading={gamePageContext.isLoading}
                     onClick={() => {
                       setIsSubmitting(false);
@@ -348,7 +422,7 @@ function GamePage({ unityContent, level }) {
                   </Button>
                   <Button
                     type="primary"
-                    className={`${styles.ui_font} ${styles.dark_buttons}`}
+                    className={`${styles.ui_font} ${styles.dark_buttons} submit-button`}
                     loading={gamePageContext.isLoading || isSubmitting}
                     onClick={() => {
                       setIsSubmitting(true);
@@ -361,7 +435,6 @@ function GamePage({ unityContent, level }) {
               </div>
             </div>
           </SplitterLayout>
-          <LoginRegisterModal onSubmit={handleGuestLogin} />
         </div>
 
         {gamePageContext.isLoading && <LoadingScreen />}

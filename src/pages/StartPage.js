@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Card, Button } from "antd";
@@ -13,6 +13,7 @@ import styles from "../style.module.css";
 
 function StartPage() {
   const appContext = useContext(AppContext);
+  const [loginVisible, setLoginVisible] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -36,7 +37,7 @@ function StartPage() {
           </h4>
           <Button
             onClick={() => {
-              appContext.setAuthModalVisible(true);
+              setLoginVisible(true);
             }}
             className="start-button"
           >
@@ -83,7 +84,7 @@ function StartPage() {
             <h2> Excited? </h2>
             <Button
               onClick={() => {
-                appContext.setAuthModalVisible(true);
+                setLoginVisible(true);
               }}
               className="start-button"
             >
@@ -95,8 +96,10 @@ function StartPage() {
           </div>
         </SplitContainer>
       </div>
-
-      <LoginRegisterModal />
+      <LoginRegisterModal
+        visible={loginVisible}
+        handleCancel={() => setLoginVisible(false)}
+      />
     </div>
   );
 }

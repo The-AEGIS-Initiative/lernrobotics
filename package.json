@@ -33,6 +33,7 @@
     "react-game-kit": "^1.0.6",
     "react-hook-form": "^5.1.1",
     "react-hotkeys-hook": "^1.6.0",
+    "react-joyride": "^2.2.1",
     "react-latex": "^1.6.0",
     "react-markdown": "^4.3.1",
     "react-modal": "^3.11.2",

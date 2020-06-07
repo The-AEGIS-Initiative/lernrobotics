@@ -6,8 +6,8 @@ import cookie from "react-cookies";
 
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
-import { getData } from "../components/HttpController";
 import { AppContext } from "../contexts/AppContext";
+import LoginRegisterModal from "./login_register_modal";
 
 import { Auth } from "aws-amplify";
 
@@ -19,6 +19,8 @@ import styles from "../style.module.css";
  */
 function TopNavBar({ type, theme, backgroundColor }) {
   const [currentTab, setCurrentTab] = useState("");
+  const [loginVisible, setLoginVisible] = useState(false);
+
   const appContext = useContext(AppContext);
 
   var lineHeight = "4vh";
@@ -35,7 +37,7 @@ function TopNavBar({ type, theme, backgroundColor }) {
       // Clicking login/register button
       // LoginRegisterModalRef.current.openModal()
       //Auth.federatedSignIn();
-      appContext.setAuthModalVisible(true);
+      setLoginVisible(true);
     } else if (click.key === "logout") {
       // Clicking logout button
       logout();
@@ -54,6 +56,10 @@ function TopNavBar({ type, theme, backgroundColor }) {
 
   return (
     <div>
+      <LoginRegisterModal
+        visible={loginVisible}
+        handleCancel={() => setLoginVisible(false)}
+      />
       <div
         style={{
           display: "flex",

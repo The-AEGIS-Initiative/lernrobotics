@@ -328,7 +328,7 @@ function GamePage({ unityContent, level }) {
             overflow: "hidden",
           }}
         >
-          {!gamePageContext.isLoading && (
+          {!gamePageContext.isLoading && level == "hello_world" && (
             <Joyride
               steps={onboardingSteps}
               continuous={true}
@@ -343,6 +343,7 @@ function GamePage({ unityContent, level }) {
           />
           <SplitterLayout
             className="content-container"
+            percentage={true}
             onDragEnd={() => {
               setResizedflag(!resizedFlag);
             }}

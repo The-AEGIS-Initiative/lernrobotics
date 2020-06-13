@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateProgress = /* GraphQL */ `
-  subscription OnCreateProgress {
-    onCreateProgress {
+  subscription OnCreateProgress($owner: String!) {
+    onCreateProgress(owner: $owner) {
       id
       createdAt
       level_name
@@ -122,8 +122,8 @@ export const onDeletePublishedLevel = /* GraphQL */ `
   }
 `;
 export const onCreateSubmissions = /* GraphQL */ `
-  subscription OnCreateSubmissions {
-    onCreateSubmissions {
+  subscription OnCreateSubmissions($owner: String!) {
+    onCreateSubmissions(owner: $owner) {
       id
       username
       score

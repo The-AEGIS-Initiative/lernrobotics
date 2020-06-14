@@ -28,7 +28,6 @@ function AdminPage() {
   return (
     <div>
       <h1> Welcome to the Admin page! </h1>
-      <Link to="/admin/levelbuilder/test_level"> Level Builder </Link>
       <div
         style={{
           display: "flex",
@@ -38,6 +37,13 @@ function AdminPage() {
       >
         <div>
           <h2> Game Content </h2>
+          <div style={{ marginBottom: "20px" }}>
+            <Search
+              placeholder={"level name (no spaces)"}
+              onSearch={(value) => history.push(`/admin/levelbuilder/${value}`)}
+              enterButton="Create Level"
+            />
+          </div>
           <h3> Levels List </h3>
           <LevelList
             level_list={levelList}

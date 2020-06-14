@@ -7,6 +7,7 @@ import LoginRegisterModal from "../components/login_register_modal";
 import GamePage from "./GamePage";
 import TopNavBar from "../components/top_nav_bar";
 import LevelCard from "../components/level_card";
+import Footer from "../components/footer";
 
 import { AppContext } from "../contexts/AppContext";
 import { Auth } from "aws-amplify";
@@ -94,6 +95,7 @@ function HomePage() {
           User{" "}
         </Button>
       )}
+      <Footer />
     </div>
   );
 }

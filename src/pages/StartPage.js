@@ -10,6 +10,7 @@ import { Auth } from "aws-amplify";
 import SplitContainer from "../components/split_container";
 import "./StartPage.css";
 import styles from "../style.module.css";
+import Footer from "../components/footer";
 
 function StartPage() {
   const appContext = useContext(AppContext);
@@ -96,6 +97,7 @@ function StartPage() {
           </div>
         </SplitContainer>
       </div>
+      <Footer />
       <LoginRegisterModal
         visible={loginVisible}
         handleCancel={() => setLoginVisible(false)}

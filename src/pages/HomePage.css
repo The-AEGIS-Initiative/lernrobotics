@@ -3,6 +3,12 @@
   min-height: 100vh;
 }
 
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
 .home-page .module {
   display: flex;
   flex-direction: column;

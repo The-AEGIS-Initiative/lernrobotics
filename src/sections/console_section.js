@@ -29,14 +29,6 @@ function ConsoleSection({ height, width, unityContent }) {
         Clear
       </button>
 
-      <button
-        style={{ position: "absolute", margin: 0, right: 10, zIndex: "1" }}
-        className={`${styles.ui_font} ${styles.dark_buttons}`}
-        onClick={() => setLogs([...logs, "Sdfiwejf"])}
-      >
-        Add Log
-      </button>
-
       <div
         className="console"
         style={{

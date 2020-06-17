@@ -216,11 +216,6 @@ function GamePage({ unityContent, level }) {
       console.log("Game started");
       setIsSubmitting(false);
     });
-
-    unityContent.on("ConsoleLog", (log) => {
-      // Split multiline logs into multi logs.
-      gamePageContext.setLogs([...gamePageContext.logs, ...log.split("\n")]);
-    });
   }, []);
 
   useEffect(() => {
@@ -366,6 +361,7 @@ function GamePage({ unityContent, level }) {
                     <ConsoleSection
                       className={"console"}
                       style={{ backgroundColor: "black" }}
+                      unityContent={unityContent}
                     />
                   }
                   dependent="bottom"

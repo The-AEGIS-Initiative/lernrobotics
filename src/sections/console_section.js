@@ -1,19 +1,22 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { Hook, Console, Decode } from "console-feed";
-import { GamePageContext } from "../contexts/GamePageContext";
 import { FixedSizeList } from "react-window";
 
 import styles from "../style.module.css";
 
-function ConsoleSection({ height, width }) {
-  const gamePageContext = useContext(GamePageContext);
-
+function ConsoleSection({ height, width, unityContent }) {
+  const [logs, setLogs] = useState([]);
   const parent = useRef(null);
+
+  useEffect(() => {
+    unityContent.on("ConsoleLog", (log) => {
+      console.log(logs);
+      setLogs([...logs, ...log.split("\n")]);
+    });
+  }, [logs]);
 
   function Row({ index, style }) {
     console.log(index);
-    console.log(parent.current.offsetHeight);
-    return <div> {gamePageContext.logs[index]} </div>;
+    return <div style={style}> {logs[index]} </div>;
   }
 
   return (
@@ -21,9 +24,17 @@ function ConsoleSection({ height, width }) {
       <button
         style={{ position: "absolute", margin: 0, right: 0, zIndex: "1" }}
         className={`${styles.ui_font} ${styles.dark_buttons}`}
-        onClick={() => gamePageContext.setLogs({ logs: [] })}
+        onClick={() => setLogs([])}
       >
         Clear
+      </button>
+
+      <button
+        style={{ position: "absolute", margin: 0, right: 10, zIndex: "1" }}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
+        onClick={() => setLogs([...logs, "Sdfiwejf"])}
+      >
+        Add Log
       </button>
 
       <div
@@ -38,7 +49,7 @@ function ConsoleSection({ height, width }) {
           <FixedSizeList
             className="console-logs"
             height={parent.current.offsetHeight}
-            itemCount={gamePageContext.logs.length}
+            itemCount={logs.length}
             itemSize={25}
             width={parent.current.offsetWidth}
           >

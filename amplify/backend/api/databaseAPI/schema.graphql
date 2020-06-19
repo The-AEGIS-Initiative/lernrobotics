@@ -20,7 +20,7 @@ type Level @model
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getLevelByName")
 {
 	id: ID!
-	level_name: String!
+	level_name: String
 	creator: String!
 	default_code: String!
 	task: String!
@@ -39,7 +39,7 @@ type PublishedLevel @model
 	@key(name: "byLevelName", fields: ["level_name"], queryField: "getPublishedLevelByName")
 {
 	id: ID!
-	level_name: String!
+	level_name: String
 	creator: String!
 	default_code: String!
 	task: String!
@@ -73,7 +73,7 @@ type MarkdownDocs @model
 	@key(name: "byDocName", fields: ["doc_name"], queryField: "getDocByName")
 {
 	id: ID!
-	doc_name: String!
+	doc_name: String
 	doc_content: String!
 	createdAt: AWSDateTime
   owner: String

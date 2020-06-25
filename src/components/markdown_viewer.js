@@ -4,16 +4,18 @@
  */
 import React from "react";
 import ReactDOM from "react-dom";
-import md from "markdown-it";
 import mj from "markdown-it-mathjax";
-
+var md = require("markdown-it")({
+  html: true,
+  linkify: true,
+});
 /**
  * Render markdown content
  */
 class MarkdownViewer extends React.Component {
   constructor(props) {
     super(props);
-    this.md = md().use(mj());
+    this.md = md.use(mj());
     this.state = { markdownData: "" };
   }
 

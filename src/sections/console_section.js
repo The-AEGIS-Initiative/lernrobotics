@@ -17,12 +17,10 @@ function ConsoleSection({ height, width, unityContent }) {
   }, [logs]);
 
   useEffect(() => {
-    if (!gamePageContext.isLoading) {
-      unityContent.on("Start", () => {
-        setLogs([]);
-      });
-    }
-  }, [gamePageContext.isLoading]);
+    unityContent.on("Start", () => {
+      setLogs([]);
+    });
+  }, []);
 
   function Row({ index, style }) {
     console.log(index);

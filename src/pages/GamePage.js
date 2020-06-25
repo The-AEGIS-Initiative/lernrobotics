@@ -21,7 +21,6 @@ import TopNavBar from "../components/top_nav_bar";
 import MarkdownViewer from "../components/markdown_viewer";
 import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
-import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 import LoadingScreen from "../components/loading_screen";
 import GameModal from "../components/game_modal";
@@ -160,7 +159,7 @@ function GamePage({ unityContent, level }) {
     setIsLoading(false);
 
     //console.log(`levelData: ${levelData}`);
-  }, []);
+  }, [appContext.isAuth, appContext.username, gamePageContext, level]);
 
   useEffect(() => {
     async function updateLeaderboard(gameOverData) {
@@ -214,9 +213,8 @@ function GamePage({ unityContent, level }) {
 
     unityContent.on("Start", () => {
       console.log("Game started");
-      setIsSubmitting(false);
     });
-  }, []);
+  }, [appContext.username, level, unityContent]);
 
   useEffect(() => {
     if (!gamePageContext.isLoading && level != "hello_world") {
@@ -227,7 +225,7 @@ function GamePage({ unityContent, level }) {
         msg: modalContent.msg,
       });
     }
-  }, [gamePageContext.isLoading]);
+  }, [gamePageContext.isLoading, level, modalContent.msg, modalContent.title]);
 
   const pushUserCode = async () => {
     if (appContext.isAuth) {
@@ -426,7 +424,7 @@ function GamePage({ unityContent, level }) {
                       pushUserCode();
                     }}
                   >
-                    Submit
+                    {isSubmitting ? "Running" : "Submit"}
                   </Button>
                 </div>
               </div>

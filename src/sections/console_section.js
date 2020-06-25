@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { FixedSizeList } from "react-window";
+import { GamePageContext } from "../contexts/GamePageContext";
 
 import styles from "../style.module.css";
 
 function ConsoleSection({ height, width, unityContent }) {
+  const gamePageContext = useContext(GamePageContext);
   const [logs, setLogs] = useState([]);
   const parent = useRef(null);
 
@@ -13,6 +15,14 @@ function ConsoleSection({ height, width, unityContent }) {
       setLogs([...logs, ...log.split("\n")]);
     });
   }, [logs]);
+
+  useEffect(() => {
+    if (!gamePageContext.isLoading) {
+      unityContent.on("Start", () => {
+        setLogs([]);
+      });
+    }
+  }, [gamePageContext.isLoading]);
 
   function Row({ index, style }) {
     console.log(index);

@@ -5,6 +5,7 @@ import { Row, Col, Tabs, Button } from "antd";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import Joyride from "react-joyride";
+import DiffMatchPatch from "diff-match-patch";
 
 import "./GamePage.css";
 import styles from "../style.module.css";
@@ -43,6 +44,8 @@ function GamePage({ unityContent, level }) {
   const [levelData, setLevelData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [defaultCode, setDefaultCode] = useState(false);
+
   const [modalContent, setModalContent] = useState({
     visible: false,
     title: "",
@@ -84,6 +87,7 @@ function GamePage({ unityContent, level }) {
         data[0].task.split("\n").forEach((line) => {
           if (line != "") {
             if (i == 1) {
+              console.log(i);
               setModalContent({
                 visible: false,
                 title: "Your Task",
@@ -105,7 +109,26 @@ function GamePage({ unityContent, level }) {
             gamePageContext.setEditorContent(data[0].default_code);
           } else {
             // Existing user progress
-            gamePageContext.setEditorContent(progressData[0].user_code);
+
+            // Attempt to apply any skeleton code updates to user code.
+            const old_default_code = progressData[0].default_code;
+            const new_default_code = data[0].default_code;
+            const user_code = progressData[0].user_code;
+
+            setDefaultCode(new_default_code); // Not what is displayed in editor necessarily. Just storing in state for future use.
+
+            if (old_default_code == null || old_default_code == "") {
+              // Backwards compatibility for when progressData did not contain default_code info
+              gamePageContext.setEditorContent(progressData[0].user_code);
+            } else {
+              // Merge skeleton code changes into user code (prioritizes user changes over default code changes)
+              const mergedUserCode = mergeUserCode(
+                old_default_code,
+                new_default_code,
+                user_code
+              );
+              gamePageContext.setEditorContent(mergedUserCode);
+            }
           }
 
           // Fetch leaderboard
@@ -159,7 +182,7 @@ function GamePage({ unityContent, level }) {
     setIsLoading(false);
 
     //console.log(`levelData: ${levelData}`);
-  }, [appContext.isAuth, appContext.username, gamePageContext, level]);
+  }, []);
 
   useEffect(() => {
     async function updateLeaderboard(gameOverData) {
@@ -219,13 +242,27 @@ function GamePage({ unityContent, level }) {
   useEffect(() => {
     if (!gamePageContext.isLoading && level != "hello_world") {
       // Intro modal
-      setModalContent({
-        visible: true,
-        title: modalContent.title,
-        msg: modalContent.msg,
-      });
+      if (modalContent.title != "") {
+        setModalContent({
+          visible: true,
+          title: modalContent.title,
+          msg: modalContent.msg,
+        });
+      }
     }
   }, [gamePageContext.isLoading, level, modalContent.msg, modalContent.title]);
+
+  const mergeUserCode = (old_default, new_default, user_code) => {
+    /**
+     * Merge Process:
+     * 1) Compute patches from old_default_code and user_code
+     * 2) Apply patches to new_default_code
+     */
+    const dmp = new DiffMatchPatch();
+    const patches = dmp.patch_make(old_default, user_code);
+    const merged_code = dmp.patch_apply(patches, new_default)[0];
+    return merged_code;
+  };
 
   const pushUserCode = async () => {
     if (appContext.isAuth) {
@@ -233,6 +270,7 @@ function GamePage({ unityContent, level }) {
       const res = await graphqlController.upsertProgress({
         level_name: level,
         user_code: gamePageContext.editorContent,
+        default_code: defaultCode,
       });
       console.log(res);
     }

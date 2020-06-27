@@ -3,16 +3,29 @@ import * as mutations from "./mutations";
 import * as queries from "./queries";
 
 // Create new user progress
-export const createProgress = async ({ level_name, user_code }) => {
+export const createProgress = async ({
+  level_name,
+  user_code,
+  default_code,
+}) => {
   const data = await API.graphql(
     graphqlOperation(mutations.createProgress, {
-      input: { level_name: level_name, user_code: user_code, stars: 0 },
+      input: {
+        level_name: level_name,
+        user_code: user_code,
+        stars: 0,
+        default_code: default_code,
+      },
     })
   );
 };
 
 // Update or create user progress if does not exist
-export const upsertProgress = async ({ level_name, user_code }) => {
+export const upsertProgress = async ({
+  level_name,
+  user_code,
+  default_code,
+}) => {
   const currentProgress = await getProgress({
     level_name: level_name,
   });
@@ -24,6 +37,7 @@ export const upsertProgress = async ({ level_name, user_code }) => {
       level_name: level_name,
       user_code: user_code,
       stars: 0,
+      default_code: default_code,
     });
   } else {
     // Update progress
@@ -34,15 +48,22 @@ export const upsertProgress = async ({ level_name, user_code }) => {
       user_code: user_code,
       level_name: currentProgress[0].level_name,
       stars: currentProgress[0].stars,
+      default_code: default_code,
     });
   }
 };
 
 // Update user progress
-export const updateProgress = async ({ id, level_name, user_code, stars }) => {
+export const updateProgress = async ({
+  id,
+  level_name,
+  user_code,
+  stars,
+  default_code,
+}) => {
   const data = await API.graphql(
     graphqlOperation(mutations.updateProgress, {
-      input: { id: id, user_code: user_code },
+      input: { id: id, user_code: user_code, default_code: default_code },
     })
   );
 };

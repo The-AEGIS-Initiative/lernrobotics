@@ -10,6 +10,7 @@ type Progress @model
   user_code: String
   stars: Int!
   owner: String
+  default_code: String
 }
 
 type Level @model

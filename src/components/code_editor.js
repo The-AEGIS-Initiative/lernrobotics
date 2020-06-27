@@ -7,9 +7,12 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/mode-json";
-
 import "ace-builds/src-noconflict/theme-monokai";
-import "./code_editor.css";
+import "ace-builds/src-min-noconflict/ext-language_tools";
+import "ace-builds/src-noconflict/snippets/python";
+import "ace-builds/src-noconflict/theme-github";
+import "brace/snippets/python";
+import "brace/ext/language_tools";
 
 import { useHotkeys } from "react-hotkeys-hook";
 
@@ -36,6 +39,9 @@ function CodeEditor({ mode, placeholder, handleChange, isLoading }) {
           console.log("captured ctrl+s from editor");
         },
       });
+
+      // Fill container
+      editorRef.current.editor.resize();
     }
   }, [editorRef]); // Run when editorRef is assigned
 
@@ -54,6 +60,7 @@ function CodeEditor({ mode, placeholder, handleChange, isLoading }) {
         height: "auto",
         width: "100%",
       }}
+      id="editor-container"
     >
       <AceEditor
         ref={editorRef}
@@ -64,11 +71,12 @@ function CodeEditor({ mode, placeholder, handleChange, isLoading }) {
           setContent(value);
         }}
         value={content}
-        name="UNIQUE_ID_OF_DIV"
+        name="editor-container"
         editorProps={{ $blockScrolling: true }}
         showPrintMargin={false}
         fontSize="16px"
-        style={{ zIndex: 0 }}
+        style={{ zIndex: 0, height: "100%", width: "100%" }}
+        enableLiveAutocompletion={true}
       />
     </div>
   );

@@ -10,6 +10,7 @@ export const onCreateProgress = /* GraphQL */ `
       user_code
       stars
       owner
+      default_code
     }
   }
 `;
@@ -22,6 +23,7 @@ export const onUpdateProgress = /* GraphQL */ `
       user_code
       stars
       owner
+      default_code
     }
   }
 `;
@@ -34,6 +36,7 @@ export const onDeleteProgress = /* GraphQL */ `
       user_code
       stars
       owner
+      default_code
     }
   }
 `;

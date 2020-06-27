@@ -87,6 +87,7 @@ function GamePage({ unityContent, level }) {
         data[0].task.split("\n").forEach((line) => {
           if (line != "") {
             if (i == 1) {
+              console.log(i);
               setModalContent({
                 visible: false,
                 title: "Your Task",
@@ -241,11 +242,13 @@ function GamePage({ unityContent, level }) {
   useEffect(() => {
     if (!gamePageContext.isLoading && level != "hello_world") {
       // Intro modal
-      setModalContent({
-        visible: true,
-        title: modalContent.title,
-        msg: modalContent.msg,
-      });
+      if (modalContent.title != "") {
+        setModalContent({
+          visible: true,
+          title: modalContent.title,
+          msg: modalContent.msg,
+        });
+      }
     }
   }, [gamePageContext.isLoading, level, modalContent.msg, modalContent.title]);
 

@@ -10,6 +10,7 @@ export const getProgress = /* GraphQL */ `
       user_code
       stars
       owner
+      default_code
     }
   }
 `;
@@ -27,6 +28,7 @@ export const listProgresss = /* GraphQL */ `
         user_code
         stars
         owner
+        default_code
       }
       nextToken
     }
@@ -120,6 +122,7 @@ export const progressByLevelName = /* GraphQL */ `
         user_code
         stars
         owner
+        default_code
       }
       nextToken
     }

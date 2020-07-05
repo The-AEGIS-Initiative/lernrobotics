@@ -4,5 +4,6 @@
             "authrobobotd4fad0e6",
             "Outputs.UserPoolId"
         ]
-    }
+    },
+    "APIKeyExpirationEpoch": -1
 }

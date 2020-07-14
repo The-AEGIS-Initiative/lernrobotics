@@ -5,7 +5,7 @@ import { Row, Col, Tabs, Button } from "antd";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import Joyride from "react-joyride";
-import DiffMatchPatch from "diff-match-patch";
+import * as Diff3 from "node-diff3";
 
 import "./GamePage.css";
 import styles from "../style.module.css";
@@ -258,10 +258,22 @@ function GamePage({ unityContent, level }) {
      * 1) Compute patches from old_default_code and user_code
      * 2) Apply patches to new_default_code
      */
-    const dmp = new DiffMatchPatch();
-    const patches = dmp.patch_make(old_default, user_code);
-    const merged_code = dmp.patch_apply(patches, new_default)[0];
-    return merged_code;
+    console.log(old_default);
+    console.log(new_default);
+    console.log(user_code);
+    const result = Diff3.merge(
+      new_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      old_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      user_code.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      { stringSeperator: /\s{1}/ }
+    );
+    console.log(result.result);
+    //return user_code
+    return result.result
+      .join(" ")
+      .split("\\n")
+      .join("\n")
+      .replace(/\\t/g, "    ");
   };
 
   const pushUserCode = async () => {

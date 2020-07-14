@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button } from "antd";
-import { CheckOutlined } from "@ant-design/icons";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import styles from "../style.module.css";
 
 const { Meta } = Card;
 
-function LevelCard({ title, description, link, difficulty, completion }) {
+function LevelCard({ title, description, link, difficulty, stars }) {
   return (
     <div className="level-card" data-cy="level-card">
       <Card
@@ -33,9 +33,12 @@ function LevelCard({ title, description, link, difficulty, completion }) {
           </div>
 
           <div className="level-card-completion">
-            {
-              //< CheckOutlined />
-            }
+            {Array.from(Array(3 - stars)).map(() => (
+              <StarOutlined />
+            ))}
+            {Array.from(Array(stars)).map(() => (
+              <StarFilled />
+            ))}
           </div>
         </div>
       </Card>

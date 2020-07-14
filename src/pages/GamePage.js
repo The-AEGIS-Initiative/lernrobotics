@@ -45,6 +45,7 @@ function GamePage({ unityContent, level }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [defaultCode, setDefaultCode] = useState(false);
+  const [stars, setStars] = useState(0);
 
   const [modalContent, setModalContent] = useState({
     visible: false,
@@ -80,6 +81,7 @@ function GamePage({ unityContent, level }) {
         setTask(data[0].task);
         setTutorial(data[0].tutorial);
         setLevelData(data[0].level_data);
+        setStars(data[0].stars);
 
         // Parse task for intro modal
         // Get 2nd non-empty line
@@ -226,6 +228,13 @@ function GamePage({ unityContent, level }) {
       console.log(gameOverJson);
       const data = JSON.parse(gameOverJson);
       setIsSuccess(data.isSuccess);
+
+      if (data.isSuccess) {
+        pushUserCode({ stars: 3 });
+      } else {
+        pushUserCode({ stars: 0 });
+      }
+
       setModalContent({
         visible: true,
         msg: `${data.message};${data.timeTaken}`,
@@ -276,16 +285,33 @@ function GamePage({ unityContent, level }) {
       .replace(/\\t/g, "    ");
   };
 
+  // Sandbox and execute user code
+  // Save user code to backend database
   const pushUserCode = async () => {
     if (appContext.isAuth) {
-      submitUserCode(gamePageContext.editorContent);
       const res = await graphqlController.upsertProgress({
         level_name: level,
         user_code: gamePageContext.editorContent,
         default_code: defaultCode,
+        stars: 0,
       });
-      console.log(res);
+      submitUserCode(gamePageContext.editorContent);
     }
+  };
+
+  // Update user progress with specified number of stars
+  const updateProgressStars = async ({ stars }) => {
+    const progressData = await graphqlController.getProgress({
+      username: appContext.username,
+      level_name: level,
+    });
+    console.log(progressData[0].user_code);
+    const res = await graphqlController.upsertProgress({
+      level_name: level,
+      user_code: progressData[0].user_code,
+      default_code: defaultCode,
+      stars: stars,
+    });
   };
 
   const onboardingSteps = [

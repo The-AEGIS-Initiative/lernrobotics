@@ -29,7 +29,7 @@ export default function Footer() {
         </div>
 
         <div className="column">
-          <p className="col-title"> Company </p>
+          <p className="col-title"> The AEGIS Initiative </p>
           <a
             className="col-item"
             href={"https://www.aegisinitiative.io/who-we-are"}

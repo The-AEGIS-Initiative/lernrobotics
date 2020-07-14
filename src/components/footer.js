@@ -38,11 +38,18 @@ export default function Footer() {
             About Us
           </a>
           <p className="col-item"> Our Team </p>
-          <p className="col-item"> Donate </p>
+          <p className="col-item"> Support Us </p>
         </div>
 
         <div className="column">
           <p className="col-title"> Contact Us </p>
+          <a
+            className="col-item"
+            href={"https://discord.gg/sDgHhzj"}
+            target={"_blank"}
+          >
+            Our Discord Server
+          </a>
           <a
             className="col-item email-link"
             href={"mailto:contact@aegisinitiative.io"}

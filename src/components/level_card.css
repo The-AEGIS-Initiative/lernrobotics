@@ -15,3 +15,27 @@
   background-color: #5372a4;
   border: 0;
 }
+
+.level-card .level-card-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.level-card .level-card-difficulty {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  margin-top: auto;
+}
+
+.level-card .level-card-completion {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  margin-top: auto;
+}
+
+.level-card .level-card-completion svg {
+  width: 2em;
+  height: 2em;
+}

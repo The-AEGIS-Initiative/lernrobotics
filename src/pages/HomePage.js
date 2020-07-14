@@ -73,6 +73,7 @@ function HomePage() {
                         title={level.title}
                         description={level.description}
                         link={`/game/${level.level_name}`}
+                        difficulty={level.difficulty}
                       />
                     );
                   })}

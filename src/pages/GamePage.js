@@ -245,9 +245,9 @@ function GamePage({ unityContent, level }) {
       setIsSuccess(data.isSuccess);
 
       if (data.isSuccess) {
-        pushUserCode({ stars: 3 });
+        updateProgressStars({ stars: 3 });
       } else {
-        pushUserCode({ stars: 0 });
+        updateProgressStars({ stars: 0 });
       }
 
       setModalContent({

@@ -83,10 +83,18 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             lineHeight: lineHeight,
           }}
         >
+          {type === "main" && (
+            <Menu.Item key="back" style={{ marginRight: "auto" }}>
+              <Link to={"/"} className={`${styles.ui_font}`}>
+                Robobot
+              </Link>
+            </Menu.Item>
+          )}
+
           {!(type === "main") && (
             <Menu.Item key="back" style={{}}>
               <Link to={"/"} className={`${styles.ui_font}`}>
-                Home
+                Back
               </Link>
             </Menu.Item>
           )}

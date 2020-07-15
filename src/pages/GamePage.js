@@ -44,7 +44,7 @@ function GamePage({ unityContent, level }) {
   const [levelData, setLevelData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [defaultCode, setDefaultCode] = useState(false);
+  const [defaultCode, setDefaultCode] = useState("");
   const [stars, setStars] = useState(0);
   const [levelDisplayName, setLevelDisplayName] = useState("");
 
@@ -72,7 +72,7 @@ function GamePage({ unityContent, level }) {
       const data = await graphqlController.getPublishedLevel({
         level_name: level_name,
       });
-      if (data.length == 0) {
+      if (data.length === 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
         console.log(level);
@@ -88,8 +88,8 @@ function GamePage({ unityContent, level }) {
         // Get 2nd non-empty line
         var i = 0;
         data[0].task.split("\n").forEach((line) => {
-          if (line != "") {
-            if (i == 1) {
+          if (line !== "") {
+            if (i === 1) {
               console.log(i);
               setModalContent({
                 visible: false,
@@ -123,6 +123,7 @@ function GamePage({ unityContent, level }) {
           });
           if (progressData.length == 0) {
             // No user progress
+            setDefaultCode(data[0].default_code);
             gamePageContext.setEditorContent(data[0].default_code);
           } else {
             // Existing user progress
@@ -310,6 +311,7 @@ function GamePage({ unityContent, level }) {
         default_code: defaultCode,
         stars: 0,
       });
+      console.log(res);
       submitUserCode(gamePageContext.editorContent);
     }
   };
@@ -327,6 +329,7 @@ function GamePage({ unityContent, level }) {
       default_code: defaultCode,
       stars: stars,
     });
+    console.log(res);
   };
 
   const onboardingSteps = [

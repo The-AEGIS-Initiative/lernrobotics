@@ -5,7 +5,7 @@ import { Row, Col, Tabs, Button } from "antd";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import Joyride from "react-joyride";
-import DiffMatchPatch from "diff-match-patch";
+import * as Diff3 from "node-diff3";
 
 import "./GamePage.css";
 import styles from "../style.module.css";
@@ -44,7 +44,9 @@ function GamePage({ unityContent, level }) {
   const [levelData, setLevelData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [defaultCode, setDefaultCode] = useState(false);
+  const [defaultCode, setDefaultCode] = useState("");
+  const [stars, setStars] = useState(0);
+  const [levelDisplayName, setLevelDisplayName] = useState("");
 
   const [modalContent, setModalContent] = useState({
     visible: false,
@@ -70,7 +72,7 @@ function GamePage({ unityContent, level }) {
       const data = await graphqlController.getPublishedLevel({
         level_name: level_name,
       });
-      if (data.length == 0) {
+      if (data.length === 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
         console.log(level);
@@ -80,13 +82,14 @@ function GamePage({ unityContent, level }) {
         setTask(data[0].task);
         setTutorial(data[0].tutorial);
         setLevelData(data[0].level_data);
+        setStars(data[0].stars);
 
         // Parse task for intro modal
         // Get 2nd non-empty line
         var i = 0;
         data[0].task.split("\n").forEach((line) => {
-          if (line != "") {
-            if (i == 1) {
+          if (line !== "") {
+            if (i === 1) {
               console.log(i);
               setModalContent({
                 visible: false,
@@ -98,6 +101,20 @@ function GamePage({ unityContent, level }) {
           }
         });
 
+        const contentSchema = await graphqlController.getDoc({
+          doc_name: "ContentSchema",
+        });
+
+        const contentData = JSON.parse(contentSchema[0].doc_content);
+
+        contentData.modules.map((module) => {
+          console.log(module);
+          var displayName = module.levels.find((o) => o.level_name == level);
+          if (displayName != null) {
+            setLevelDisplayName(displayName.title);
+          }
+        });
+
         // Fetch user progress
         if (appContext.isAuth) {
           const progressData = await graphqlController.getProgress({
@@ -106,6 +123,7 @@ function GamePage({ unityContent, level }) {
           });
           if (progressData.length == 0) {
             // No user progress
+            setDefaultCode(data[0].default_code);
             gamePageContext.setEditorContent(data[0].default_code);
           } else {
             // Existing user progress
@@ -226,6 +244,13 @@ function GamePage({ unityContent, level }) {
       console.log(gameOverJson);
       const data = JSON.parse(gameOverJson);
       setIsSuccess(data.isSuccess);
+
+      if (data.isSuccess) {
+        updateProgressStars({ stars: 3 });
+      } else {
+        updateProgressStars({ stars: 0 });
+      }
+
       setModalContent({
         visible: true,
         msg: `${data.message};${data.timeTaken}`,
@@ -258,22 +283,53 @@ function GamePage({ unityContent, level }) {
      * 1) Compute patches from old_default_code and user_code
      * 2) Apply patches to new_default_code
      */
-    const dmp = new DiffMatchPatch();
-    const patches = dmp.patch_make(old_default, user_code);
-    const merged_code = dmp.patch_apply(patches, new_default)[0];
-    return merged_code;
+    console.log(old_default);
+    console.log(new_default);
+    console.log(user_code);
+    const result = Diff3.merge(
+      new_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      old_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      user_code.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      { stringSeperator: /\s{1}/ }
+    );
+    console.log(result.result);
+    //return user_code
+    return result.result
+      .join(" ")
+      .split("\\n")
+      .join("\n")
+      .replace(/\\t/g, "    ");
   };
 
+  // Sandbox and execute user code
+  // Save user code to backend database
   const pushUserCode = async () => {
     if (appContext.isAuth) {
-      submitUserCode(gamePageContext.editorContent);
       const res = await graphqlController.upsertProgress({
         level_name: level,
         user_code: gamePageContext.editorContent,
         default_code: defaultCode,
+        stars: 0,
       });
       console.log(res);
+      submitUserCode(gamePageContext.editorContent);
     }
+  };
+
+  // Update user progress with specified number of stars
+  const updateProgressStars = async ({ stars }) => {
+    const progressData = await graphqlController.getProgress({
+      username: appContext.username,
+      level_name: level,
+    });
+    console.log(progressData[0].user_code);
+    const res = await graphqlController.upsertProgress({
+      level_name: level,
+      user_code: progressData[0].user_code,
+      default_code: defaultCode,
+      stars: stars,
+    });
+    console.log(res);
   };
 
   const onboardingSteps = [
@@ -371,6 +427,7 @@ function GamePage({ unityContent, level }) {
             className="nav-container"
             theme="dark"
             backgroundColor="#222222"
+            title={levelDisplayName}
           />
           <SplitterLayout
             className="content-container"

@@ -1,10 +1,14 @@
 import React, { useState, useRef, useContext } from "react";
-import { Menu } from "antd";
+import { Menu, Divider } from "antd";
 import { Link } from "react-router-dom";
 
 import cookie from "react-cookies";
 
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  UserOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 
 import { AppContext } from "../contexts/AppContext";
 import LoginRegisterModal from "./login_register_modal";
@@ -13,15 +17,20 @@ import { Auth } from "aws-amplify";
 
 import styles from "../style.module.css";
 
+import "./top_nav_bar.css";
+
 /**
  * Main navigation bar
  * theme: dark or light
  */
-function TopNavBar({ type, theme, backgroundColor }) {
+function TopNavBar({ type, theme, backgroundColor, title }) {
   const [currentTab, setCurrentTab] = useState("");
   const [loginVisible, setLoginVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(null);
 
   const appContext = useContext(AppContext);
+
+  const { SubMenu } = Menu;
 
   var lineHeight = "4vh";
   if (type == "main") {
@@ -61,6 +70,7 @@ function TopNavBar({ type, theme, backgroundColor }) {
         handleCancel={() => setLoginVisible(false)}
       />
       <div
+        className="top-nav-bar"
         style={{
           display: "flex",
           flex: 1,
@@ -73,6 +83,10 @@ function TopNavBar({ type, theme, backgroundColor }) {
           selectedKeys={[currentTab]}
           mode="horizontal"
           theme={theme}
+          triggerSubMenuAction="click"
+          onOpenChange={() => {
+            setMenuOpen(menuOpen ? false : true);
+          }}
           style={{
             width: "100vw",
             display: "flex",
@@ -83,23 +97,31 @@ function TopNavBar({ type, theme, backgroundColor }) {
             lineHeight: lineHeight,
           }}
         >
-          {!(type === "main") && (
+          {type === "main" && (
             <Menu.Item key="back" style={{ marginRight: "auto" }}>
               <Link to={"/"} className={`${styles.ui_font}`}>
-                Home
+                <div style={{ fontSize: "24px" }}> Robobot </div>
               </Link>
             </Menu.Item>
+          )}
+
+          {!(type === "main") && (
+            <Menu.Item key="back" style={{}}>
+              <Link to={"/"} className={`${styles.ui_font}`}>
+                Back
+              </Link>
+            </Menu.Item>
+          )}
+
+          {!(type === "main") && (
+            <div className={`${styles.ui_font}`} style={{ margin: "auto" }}>
+              {title}
+            </div>
           )}
 
           {!appContext.isAuth && (
             <Menu.Item key="login/register" data-cy="login-register-link">
               <p className={`${styles.ui_font}`}>Login / Register</p>
-            </Menu.Item>
-          )}
-
-          {appContext.isAuth && (
-            <Menu.Item key="logout" data-cy="logout-link">
-              <p className={`${styles.ui_font}`}>Logout</p>
             </Menu.Item>
           )}
 
@@ -109,6 +131,46 @@ function TopNavBar({ type, theme, backgroundColor }) {
                 Admin Console
               </Link>
             </Menu.Item>
+          )}
+
+          {appContext.isAuth && (
+            <SubMenu
+              title={
+                <div>
+                  <UserOutlined className="user-icon" data-cy="nav-bar-menu" />
+                  {menuOpen == null && <DownOutlined className="menu-arrow" />}
+                  {menuOpen && (
+                    <DownOutlined
+                      className="menu-arrow"
+                      style={{
+                        animation: `spin 0.25s linear forwards`,
+                      }}
+                    />
+                  )}
+                  {!menuOpen && menuOpen != null && (
+                    <DownOutlined
+                      className="menu-arrow"
+                      style={{
+                        animation: `reverse-spin 0.25s linear forwards`,
+                      }}
+                    />
+                  )}
+                </div>
+              }
+            >
+              <div className="top-nav-bar-username">
+                <UserOutlined className="top-nav-bar-submenu-profile-icon" />
+                {appContext.username}
+              </div>
+              <Divider className="top-nav-bar-divider" />
+              <Menu.Item
+                key="logout"
+                data-cy="logout-link"
+                style={{ marginBottom: "20px" }}
+              >
+                Logout
+              </Menu.Item>
+            </SubMenu>
           )}
         </Menu>
       </div>

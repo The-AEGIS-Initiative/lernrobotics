@@ -21,6 +21,7 @@ const { Meta } = Card;
 function HomePage() {
   const appContext = useContext(AppContext);
   const [contentSchema, setContentSchema] = useState({});
+  const [progress, setProgress] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
@@ -33,6 +34,9 @@ function HomePage() {
       const contentData = await graphqlController.getDoc({
         doc_name: "ContentSchema",
       });
+
+      const progress = await graphqlController.listProgress();
+      setProgress(progress);
 
       if (contentData.length > 0) {
         setContentSchema(JSON.parse(contentData[0].doc_content));
@@ -67,12 +71,22 @@ function HomePage() {
                     {module.name}{" "}
                   </h1>
                   {module.levels.map((level) => {
+                    var level_progress = progress.find(
+                      (o) => o.level_name == level.level_name
+                    );
+                    var stars = 0;
+                    if (level_progress != null) {
+                      var stars = level_progress.stars;
+                    }
+
                     return (
                       <LevelCard
                         key={level.level_name}
                         title={level.title}
                         description={level.description}
                         link={`/game/${level.level_name}`}
+                        difficulty={level.difficulty}
+                        stars={stars}
                       />
                     );
                   })}

@@ -6,7 +6,7 @@ describe("Login", () => {
     cy.get("[data-cy=username-input]").type("test");
     cy.get("[data-cy=password-input]").type("password");
     cy.get("[data-cy=sign-in-button]").click();
-    cy.get("[data-cy=nav-bar-menu]").click();
+    cy.get("[data-cy=nav-bar-menu]", { timeout: 15000 }).click();
     cy.get("[data-cy=logout-link]").should("exist");
     cy.get("[data-cy=admin-console-link]").should("not.exist");
     cy.contains("Admin").should("not.exist");
@@ -46,7 +46,7 @@ describe("Homepage redirect", () => {
     cy.visit(`${Cypress.env("baseUrl")}`);
     cy.login();
     cy.get("[data-cy=home-page]").should("exist");
-    cy.get("[data-cy=nav-bar-menu]").click();
+    cy.get("[data-cy=nav-bar-menu]", { timeout: 15000 }).click();
     cy.get("[data-cy=logout-link]").click();
     cy.get("[data-cy=start-page]").should("exist");
   });

@@ -125,6 +125,14 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             </Menu.Item>
           )}
 
+          {appContext.isAuth && appContext.user_group === "admin" && (
+            <Menu.Item key="admin" data-cy="admin-console-link">
+              <Link to={"/admin"} className={`${styles.ui_font}`}>
+                Admin Console
+              </Link>
+            </Menu.Item>
+          )}
+
           {appContext.isAuth && (
             <SubMenu
               title={
@@ -155,18 +163,14 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                 {appContext.username}
               </div>
               <Divider className="top-nav-bar-divider" />
-              <Menu.Item key="logout" data-cy="logout-link">
+              <Menu.Item
+                key="logout"
+                data-cy="logout-link"
+                style={{ marginBottom: "20px" }}
+              >
                 Logout
               </Menu.Item>
             </SubMenu>
-          )}
-
-          {appContext.isAuth && appContext.user_group === "admin" && (
-            <Menu.Item key="admin" data-cy="admin-console-link">
-              <Link to={"/admin"} className={`${styles.ui_font}`}>
-                Admin Console
-              </Link>
-            </Menu.Item>
           )}
         </Menu>
       </div>

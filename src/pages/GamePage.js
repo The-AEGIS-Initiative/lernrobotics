@@ -5,7 +5,7 @@ import { Row, Col, Tabs, Button } from "antd";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import Joyride from "react-joyride";
-import DiffMatchPatch from "diff-match-patch";
+import * as Diff3 from "node-diff3";
 
 import "./GamePage.css";
 import styles from "../style.module.css";
@@ -45,6 +45,8 @@ function GamePage({ unityContent, level }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [defaultCode, setDefaultCode] = useState(false);
+  const [stars, setStars] = useState(0);
+  const [levelDisplayName, setLevelDisplayName] = useState("");
 
   const [modalContent, setModalContent] = useState({
     visible: false,
@@ -80,6 +82,7 @@ function GamePage({ unityContent, level }) {
         setTask(data[0].task);
         setTutorial(data[0].tutorial);
         setLevelData(data[0].level_data);
+        setStars(data[0].stars);
 
         // Parse task for intro modal
         // Get 2nd non-empty line
@@ -95,6 +98,20 @@ function GamePage({ unityContent, level }) {
               });
             }
             i += 1;
+          }
+        });
+
+        const contentSchema = await graphqlController.getDoc({
+          doc_name: "ContentSchema",
+        });
+
+        const contentData = JSON.parse(contentSchema[0].doc_content);
+
+        contentData.modules.map((module) => {
+          console.log(module);
+          var displayName = module.levels.find((o) => o.level_name == level);
+          if (displayName != null) {
+            setLevelDisplayName(displayName.title);
           }
         });
 
@@ -226,6 +243,13 @@ function GamePage({ unityContent, level }) {
       console.log(gameOverJson);
       const data = JSON.parse(gameOverJson);
       setIsSuccess(data.isSuccess);
+
+      if (data.isSuccess) {
+        pushUserCode({ stars: 3 });
+      } else {
+        pushUserCode({ stars: 0 });
+      }
+
       setModalContent({
         visible: true,
         msg: `${data.message};${data.timeTaken}`,
@@ -258,22 +282,51 @@ function GamePage({ unityContent, level }) {
      * 1) Compute patches from old_default_code and user_code
      * 2) Apply patches to new_default_code
      */
-    const dmp = new DiffMatchPatch();
-    const patches = dmp.patch_make(old_default, user_code);
-    const merged_code = dmp.patch_apply(patches, new_default)[0];
-    return merged_code;
+    console.log(old_default);
+    console.log(new_default);
+    console.log(user_code);
+    const result = Diff3.merge(
+      new_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      old_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      user_code.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      { stringSeperator: /\s{1}/ }
+    );
+    console.log(result.result);
+    //return user_code
+    return result.result
+      .join(" ")
+      .split("\\n")
+      .join("\n")
+      .replace(/\\t/g, "    ");
   };
 
+  // Sandbox and execute user code
+  // Save user code to backend database
   const pushUserCode = async () => {
     if (appContext.isAuth) {
-      submitUserCode(gamePageContext.editorContent);
       const res = await graphqlController.upsertProgress({
         level_name: level,
         user_code: gamePageContext.editorContent,
         default_code: defaultCode,
+        stars: 0,
       });
-      console.log(res);
+      submitUserCode(gamePageContext.editorContent);
     }
+  };
+
+  // Update user progress with specified number of stars
+  const updateProgressStars = async ({ stars }) => {
+    const progressData = await graphqlController.getProgress({
+      username: appContext.username,
+      level_name: level,
+    });
+    console.log(progressData[0].user_code);
+    const res = await graphqlController.upsertProgress({
+      level_name: level,
+      user_code: progressData[0].user_code,
+      default_code: defaultCode,
+      stars: stars,
+    });
   };
 
   const onboardingSteps = [
@@ -371,6 +424,7 @@ function GamePage({ unityContent, level }) {
             className="nav-container"
             theme="dark"
             backgroundColor="#222222"
+            title={levelDisplayName}
           />
           <SplitterLayout
             className="content-container"

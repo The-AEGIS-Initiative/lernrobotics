@@ -45,6 +45,7 @@ describe("Homepage redirect", () => {
     cy.visit(`${Cypress.env("baseUrl")}`);
     cy.login();
     cy.get("[data-cy=home-page]").should("exist");
+    cy.get("[data-cy=nav-bar-menu]").click();
     cy.get("[data-cy=logout-link]").click();
     cy.get("[data-cy=start-page]").should("exist");
   });

@@ -25,6 +25,7 @@ export const upsertProgress = async ({
   level_name,
   user_code,
   default_code,
+  stars,
 }) => {
   const currentProgress = await getProgress({
     level_name: level_name,
@@ -36,7 +37,7 @@ export const upsertProgress = async ({
     await createProgress({
       level_name: level_name,
       user_code: user_code,
-      stars: 0,
+      stars: stars,
       default_code: default_code,
     });
   } else {
@@ -47,7 +48,7 @@ export const upsertProgress = async ({
       id: currentProgress[0].id,
       user_code: user_code,
       level_name: currentProgress[0].level_name,
-      stars: currentProgress[0].stars,
+      stars: stars,
       default_code: default_code,
     });
   }
@@ -63,9 +64,16 @@ export const updateProgress = async ({
 }) => {
   const data = await API.graphql(
     graphqlOperation(mutations.updateProgress, {
-      input: { id: id, user_code: user_code, default_code: default_code },
+      input: {
+        id: id,
+        user_code: user_code,
+        default_code: default_code,
+        stars: stars,
+      },
     })
   );
+
+  console.log(data);
 };
 
 // Get current progress
@@ -79,6 +87,14 @@ export const getProgress = async ({ level_name }) => {
   });
 
   return dataByDate;
+};
+
+// List all progress
+export const listProgress = async () => {
+  const data = await API.graphql(graphqlOperation(queries.listProgresss));
+
+  console.log(data.data.listProgresss.items);
+  return data.data.listProgresss.items;
 };
 
 // Create level

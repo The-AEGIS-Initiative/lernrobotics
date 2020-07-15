@@ -1,10 +1,14 @@
 import React, { useState, useRef, useContext } from "react";
-import { Menu } from "antd";
+import { Menu, Divider } from "antd";
 import { Link } from "react-router-dom";
 
 import cookie from "react-cookies";
 
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  UserOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 
 import { AppContext } from "../contexts/AppContext";
 import LoginRegisterModal from "./login_register_modal";
@@ -13,6 +17,8 @@ import { Auth } from "aws-amplify";
 
 import styles from "../style.module.css";
 
+import "./top_nav_bar.css";
+
 /**
  * Main navigation bar
  * theme: dark or light
@@ -20,8 +26,11 @@ import styles from "../style.module.css";
 function TopNavBar({ type, theme, backgroundColor, title }) {
   const [currentTab, setCurrentTab] = useState("");
   const [loginVisible, setLoginVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(null);
 
   const appContext = useContext(AppContext);
+
+  const { SubMenu } = Menu;
 
   var lineHeight = "4vh";
   if (type == "main") {
@@ -61,6 +70,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
         handleCancel={() => setLoginVisible(false)}
       />
       <div
+        className="top-nav-bar"
         style={{
           display: "flex",
           flex: 1,
@@ -73,6 +83,10 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
           selectedKeys={[currentTab]}
           mode="horizontal"
           theme={theme}
+          triggerSubMenuAction="click"
+          onOpenChange={() => {
+            setMenuOpen(menuOpen ? false : true);
+          }}
           style={{
             width: "100vw",
             display: "flex",
@@ -86,7 +100,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
           {type === "main" && (
             <Menu.Item key="back" style={{ marginRight: "auto" }}>
               <Link to={"/"} className={`${styles.ui_font}`}>
-                Robobot
+                <div style={{ fontSize: "24px" }}> Robobot </div>
               </Link>
             </Menu.Item>
           )}
@@ -112,9 +126,37 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
           )}
 
           {appContext.isAuth && (
-            <Menu.Item key="logout" data-cy="logout-link">
-              <p className={`${styles.ui_font}`}>Logout</p>
-            </Menu.Item>
+            <SubMenu
+              title={
+                <div>
+                  <UserOutlined className="user-icon" data-cy="nav-bar-menu" />
+                  {menuOpen == null && <DownOutlined className="menu-arrow" />}
+                  {menuOpen && (
+                    <DownOutlined
+                      className="menu-arrow"
+                      style={{
+                        animation: `spin 0.25s linear forwards`,
+                      }}
+                    />
+                  )}
+                  {!menuOpen && menuOpen != null && (
+                    <DownOutlined
+                      className="menu-arrow"
+                      style={{
+                        animation: `reverse-spin 0.25s linear forwards`,
+                      }}
+                    />
+                  )}
+                </div>
+              }
+            >
+              <div className="top-nav-bar-username">
+                <UserOutlined className="top-nav-bar-submenu-profile-icon" />
+                {appContext.username}
+              </div>
+              <Divider className="top-nav-bar-divider" />
+              <Menu.Item key="logout">Logout</Menu.Item>
+            </SubMenu>
           )}
 
           {appContext.isAuth && appContext.user_group === "admin" && (

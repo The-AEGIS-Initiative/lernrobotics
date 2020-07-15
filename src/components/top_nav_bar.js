@@ -155,7 +155,9 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                 {appContext.username}
               </div>
               <Divider className="top-nav-bar-divider" />
-              <Menu.Item key="logout">Logout</Menu.Item>
+              <Menu.Item key="logout" data-cy="logout-link">
+                Logout
+              </Menu.Item>
             </SubMenu>
           )}
 

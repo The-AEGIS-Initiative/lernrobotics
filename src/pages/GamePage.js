@@ -46,6 +46,7 @@ function GamePage({ unityContent, level }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [defaultCode, setDefaultCode] = useState(false);
   const [stars, setStars] = useState(0);
+  const [levelDisplayName, setLevelDisplayName] = useState("");
 
   const [modalContent, setModalContent] = useState({
     visible: false,
@@ -97,6 +98,20 @@ function GamePage({ unityContent, level }) {
               });
             }
             i += 1;
+          }
+        });
+
+        const contentSchema = await graphqlController.getDoc({
+          doc_name: "ContentSchema",
+        });
+
+        const contentData = JSON.parse(contentSchema[0].doc_content);
+
+        contentData.modules.map((module) => {
+          console.log(module);
+          var displayName = module.levels.find((o) => o.level_name == level);
+          if (displayName != null) {
+            setLevelDisplayName(displayName.title);
           }
         });
 
@@ -409,6 +424,7 @@ function GamePage({ unityContent, level }) {
             className="nav-container"
             theme="dark"
             backgroundColor="#222222"
+            title={levelDisplayName}
           />
           <SplitterLayout
             className="content-container"

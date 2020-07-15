@@ -17,7 +17,7 @@ import styles from "../style.module.css";
  * Main navigation bar
  * theme: dark or light
  */
-function TopNavBar({ type, theme, backgroundColor }) {
+function TopNavBar({ type, theme, backgroundColor, title }) {
   const [currentTab, setCurrentTab] = useState("");
   const [loginVisible, setLoginVisible] = useState(false);
 
@@ -84,11 +84,17 @@ function TopNavBar({ type, theme, backgroundColor }) {
           }}
         >
           {!(type === "main") && (
-            <Menu.Item key="back" style={{ marginRight: "auto" }}>
+            <Menu.Item key="back" style={{}}>
               <Link to={"/"} className={`${styles.ui_font}`}>
                 Home
               </Link>
             </Menu.Item>
+          )}
+
+          {!(type === "main") && (
+            <div className={`${styles.ui_font}`} style={{ margin: "auto" }}>
+              {title}
+            </div>
           )}
 
           {!appContext.isAuth && (

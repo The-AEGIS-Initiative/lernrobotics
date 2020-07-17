@@ -12,6 +12,7 @@ import DocumentEditorPage from "./pages/DocumentEditorPage";
 import LoginPage from "./pages/LoginPage";
 import StartPage from "./pages/StartPage";
 import AdminLevelPage from "./pages/AdminLevelPage";
+import DashboardPage from "./pages/DashboardPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
@@ -130,6 +131,12 @@ function App({ unityContent }) {
         protection_level="admin"
       />
       <Route exact path="/login-endpoint" component={LoginPage} />
+      <ProtectedRoute
+        exact
+        path="/admin/dashboard"
+        component={(props) => <DashboardPage {...props} />}
+        protection_level="admin"
+      />
     </Switch>
   );
 }

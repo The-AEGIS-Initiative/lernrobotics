@@ -1,0 +1,44 @@
+.raise:hover,
+.raise:focus {
+  transform: translateY(-0.25em);
+  background-color: #333333;
+  border: 0px;
+  color: white;
+}
+
+.dashboard-button button {
+  background-color: #214775;
+  color: white;
+  border: 0px;
+  font-size: 36px;
+  font-family: Bebas Neue, cursive;
+}
+
+.dashboard-button .ant-btn:disabled {
+  background-color: #214775;
+  opacity: 0.5;
+  color: white;
+  cursor: default;
+}
+
+.dashboard-button .coming-soon {
+  position: absolute;
+  visibility: hidden;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+.dashboard-button .ant-btn:disabled .coming-soon {
+  visibility: hidden;
+}
+
+.dashboard-button .ant-btn:disabled:hover .coming-soon {
+  visibility: visible;
+}
+
+.dashboard-button .ant-btn.disabled {
+}

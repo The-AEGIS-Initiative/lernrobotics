@@ -133,6 +133,14 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             </Menu.Item>
           )}
 
+          {appContext.isAuth && appContext.user_group === "admin" && (
+            <Menu.Item key="dashboard" data-cy="dashboard-link">
+              <Link to={"/admin/dashboard"} className={`${styles.ui_font}`}>
+                Dashboard
+              </Link>
+            </Menu.Item>
+          )}
+
           {appContext.isAuth && (
             <SubMenu
               title={

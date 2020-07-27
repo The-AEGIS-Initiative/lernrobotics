@@ -1,13 +1,13 @@
 .raise:hover,
 .raise:focus {
   transform: translateY(-0.25em);
-  background-color: #333333;
+  background-color: #4c43bb;
   border: 0px;
   color: white;
 }
 
 .dashboard-button button {
-  background-color: #214775;
+  background-color: #4c43bb;
   color: white;
   border: 0px;
   font-size: 36px;

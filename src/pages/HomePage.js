@@ -47,7 +47,7 @@ function HomePage() {
     fetchData();
   }, [appContext.isAuth]);
 
-  const navBarColor = "#3a608d";
+  const navBarColor = "#4C43BB";
 
   return (
     <div className="home-page" data-cy="home-page">

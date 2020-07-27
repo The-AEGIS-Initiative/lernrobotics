@@ -12,36 +12,37 @@ const { Meta } = Card;
 function LevelCard({ title, description, link, difficulty, stars }) {
   return (
     <div className="level-card" data-cy="level-card">
-      <Card
-        style={{
-          width: "600px",
-          height: "175px",
-          margin: "30px",
-          backgroundColor: "#214775",
-        }}
-      >
-        <Meta title={title} description={description} />
-        <div className="level-card-row">
-          <Button
-            className={`${styles.ui_font} button`}
-            data-cy="level-start-button"
-          >
-            <Link to={link}>Start</Link>
-          </Button>
-          <div className="level-card-difficulty">
-            Difficulty: <strong>{difficulty}</strong>
-          </div>
+      <Link to={link}>
+        <Card
+          style={{
+            width: "600px",
+            height: "175px",
+            margin: "30px",
+          }}
+        >
+          <Meta title={title} description={description} />
+          <div className="level-card-row">
+            {/**<Button
+              className={`${styles.ui_font} button`}
+              data-cy="level-start-button"
+            >
+              <Link to={link}>Start</Link>
+            </Button>*/}
 
-          <div className="level-card-completion">
-            {Array.from(Array(3 - stars)).map(() => (
-              <StarOutlined />
-            ))}
-            {Array.from(Array(stars)).map(() => (
-              <StarFilled />
-            ))}
+            <div className="level-card-completion">
+              {Array.from(Array(3 - stars)).map(() => (
+                <StarOutlined />
+              ))}
+              {Array.from(Array(stars)).map(() => (
+                <StarFilled />
+              ))}
+            </div>
+            <div className="level-card-difficulty">
+              Difficulty: <strong>{difficulty}</strong>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      </Link>
     </div>
   );
 }

@@ -19,7 +19,7 @@ function StartPage() {
 
   useEffect(() => {
     if (appContext.isAuth) {
-      history.push("/home");
+      history.push("/dashboard");
     }
   }, [appContext.isAuth]);
 

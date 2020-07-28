@@ -99,7 +99,11 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
         >
           {type === "main" && (
             <Menu.Item key="back" style={{ marginRight: "auto" }}>
-              <Link to={"/"} className={`${styles.ui_font}`}>
+              <Link
+                to={"/"}
+                className={`${styles.ui_font}`}
+                data-cy="dashboard-link"
+              >
                 <div style={{ fontSize: "24px" }}> Robobot </div>
               </Link>
             </Menu.Item>
@@ -129,14 +133,6 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             <Menu.Item key="admin" data-cy="admin-console-link">
               <Link to={"/admin"} className={`${styles.ui_font}`}>
                 Admin Console
-              </Link>
-            </Menu.Item>
-          )}
-
-          {appContext.isAuth && appContext.user_group === "admin" && (
-            <Menu.Item key="dashboard" data-cy="dashboard-link">
-              <Link to={"/admin/dashboard"} className={`${styles.ui_font}`}>
-                Dashboard
               </Link>
             </Menu.Item>
           )}

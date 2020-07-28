@@ -21,7 +21,7 @@ function LevelCard({ title, description, link, difficulty, stars }) {
           }}
         >
           <Meta title={title} description={description} />
-          <div className="level-card-row">
+          <div className="level-card-row" data-cy="level-start-button">
             {/**<Button
               className={`${styles.ui_font} button`}
               data-cy="level-start-button"

@@ -50,7 +50,7 @@ function HomePage() {
   const navBarColor = "#4C43BB";
 
   return (
-    <div className="home-page" data-cy="home-page">
+    <div className="home-page" data-cy="practice-levels">
       <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
       <nav>
         <ul

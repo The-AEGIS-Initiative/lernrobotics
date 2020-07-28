@@ -8,8 +8,8 @@ import "./DashboardPage.css";
 
 function DashboardPage() {
   return (
-    <div className="dashboard-page">
-      <TopNavBar type="main" backgroundColor="#3a608d" theme="dark" />
+    <div className="dashboard-page" data-cy="dashboard">
+      <TopNavBar type="main" backgroundColor="#4C43BB" theme="dark" />
       <div className="dashboard-container">
         <Space direction="vertical" size="middle">
           <Row>
@@ -18,8 +18,8 @@ function DashboardPage() {
                 <DashboardButton
                   width="400px"
                   height="200px"
-                  content="Modules"
-                  link="/home"
+                  content="Practice"
+                  link="/practice"
                 />
               </Col>
 
@@ -27,7 +27,7 @@ function DashboardPage() {
                 <DashboardButton
                   width="400px"
                   height="200px"
-                  content="Competitions"
+                  content="Compete"
                   disabled={true}
                 />
               </Col>
@@ -39,7 +39,7 @@ function DashboardPage() {
                 <DashboardButton
                   width="266px"
                   height="200px"
-                  content="Leaderboard"
+                  content="Leaderboards"
                   disabled={true}
                 />
               </Col>

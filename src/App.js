@@ -75,7 +75,7 @@ function App({ unityContent }) {
   return (
     <Switch>
       <Route exact path="/" component={StartPage} />
-      <Route exact path="/home" component={HomePage} />
+      <Route exact path="/practice" component={HomePage} />
       <ProtectedRoute
         exact
         path="/game/:level"
@@ -131,12 +131,7 @@ function App({ unityContent }) {
         protection_level="admin"
       />
       <Route exact path="/login-endpoint" component={LoginPage} />
-      <ProtectedRoute
-        exact
-        path="/admin/dashboard"
-        component={(props) => <DashboardPage {...props} />}
-        protection_level="admin"
-      />
+      <Route exact path="/dashboard" component={DashboardPage} />
     </Switch>
   );
 }

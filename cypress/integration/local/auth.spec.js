@@ -33,6 +33,12 @@ describe("Unauthorized Access", () => {
 
     cy.visit(`${Cypress.env("baseUrl")}/admin/levelbuilder/level`);
     cy.contains("Unauthorized");
+
+    cy.visit(`${Cypress.env("baseUrl")}/dashboard`);
+    cy.get("[data-cy=start-page]").should("exist");
+
+    cy.visit(`${Cypress.env("baseUrl")}/practice`);
+    cy.get("[data-cy=start-page]").should("exist");
   });
 });
 
@@ -42,12 +48,12 @@ describe("Homepage redirect", () => {
     cy.get("[data-cy=start-page]").should("exist");
   });
 
-  it(`Should redirect to dashboard on login and back to start on logout), () => {
+  it(`Should redirect to dashboard on login and back to start on logout`, () => {
     cy.visit(`${Cypress.env("baseUrl")}`);
     cy.login();
     cy.get("[data-cy=dashboard]").should("exist");
     cy.get("[data-cy=nav-bar-menu]", { timeout: 15000 }).click();
     cy.get("[data-cy=logout-link]").click();
     cy.get("[data-cy=start-page]").should("exist");
-  }
+  });
 });

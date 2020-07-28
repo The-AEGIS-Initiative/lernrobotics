@@ -1,12 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import DashboardButton from "../components/dashboard_button";
 import { Row, Col, Space } from "antd";
 
 import TopNavBar from "../components/top_nav_bar";
+import { AppContext } from "../contexts/AppContext";
+import { useHistory } from "react-router-dom";
 
 import "./DashboardPage.css";
 
 function DashboardPage() {
+  const appContext = useContext(AppContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!appContext.isAuth) {
+      history.push("/");
+    }
+  }, [appContext.isAuth]);
+
   return (
     <div className="dashboard-page" data-cy="dashboard">
       <TopNavBar type="main" backgroundColor="#4C43BB" theme="dark" />

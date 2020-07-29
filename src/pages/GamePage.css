@@ -9,7 +9,7 @@ body,
   display: flex;
   flex-flow: column;
   height: 100%;
-  background-color: #333333;
+  background-color: #2f3129;
 }
 
 .nav-container {

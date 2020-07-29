@@ -408,13 +408,7 @@ function GamePage({ unityContent, level }) {
     //console.log(`levelData: ${levelData}`);
     return (
       <div style={{ overflow: "hidden", height: "100vh" }}>
-        <div
-          className="game-container"
-          style={{
-            opacity: gamePageContext.isLoading ? 0 : 1,
-            overflow: "hidden",
-          }}
-        >
+        <div className="game-container">
           {!gamePageContext.isLoading && level == "hello_world" && (
             <Joyride
               steps={onboardingSteps}
@@ -426,7 +420,7 @@ function GamePage({ unityContent, level }) {
             type="sub"
             className="nav-container"
             theme="dark"
-            backgroundColor="#222222"
+            backgroundColor="#172437"
             title={levelDisplayName}
           />
           <SplitterLayout

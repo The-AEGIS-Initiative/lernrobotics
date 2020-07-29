@@ -1,3 +1,7 @@
+.top-nav-bar {
+  z-index: 100;
+}
+
 .top-nav-bar .user-icon {
   line-height: 2;
   padding-top: 16%;

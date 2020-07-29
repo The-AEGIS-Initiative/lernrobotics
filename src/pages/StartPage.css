@@ -5,7 +5,7 @@ html {
 .start-page-container {
   display: flex;
   flex-direction: column;
-  background-color: #bae2f8;
+  background-color: #e8f0fb;
 }
 
 .banner-container {
@@ -13,7 +13,7 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #3fabfc;
+  background-color: #005b86;
   padding: 50px;
   height: 500px;
 }
@@ -25,13 +25,13 @@ html {
 
 .banner-container .heading {
   font-size: 48px;
-  color: white;
+  color: #e6ffff;
   font-family: Bebas Neue, cursive;
 }
 
 .banner-container .description {
   font-size: 18px;
-  color: white;
+  color: #e6ffff;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -76,8 +76,8 @@ img {
   height: 50px;
   font-size: 15px;
   font-weight: bold;
-  color: white;
-  background-color: #3cc732;
+  color: var(--default-black-color);
+  background-color: #e99e24;
   margin-top: 20px;
   border: 0;
   font-family: Open Sans, sans-serif;

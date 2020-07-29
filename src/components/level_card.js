@@ -17,7 +17,6 @@ function LevelCard({ title, description, link, difficulty, stars }) {
           style={{
             width: "600px",
             height: "175px",
-            margin: "30px",
           }}
         >
           <Meta title={title} description={description} />

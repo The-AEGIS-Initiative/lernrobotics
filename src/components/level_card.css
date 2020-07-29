@@ -46,7 +46,13 @@
 }
 
 .level-card .ant-card:hover {
-  transform: translateY(-0.25em);
+  transform: translateY(-0.7em);
   cursor: pointer;
-  background-color: #5b5ec5;
+  background-color: #4c43bb;
+}
+
+.level-card .ant-card-bordered {
+  margin: 0px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }

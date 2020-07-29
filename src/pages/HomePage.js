@@ -47,7 +47,7 @@ function HomePage() {
     fetchData();
   }, [appContext.isAuth]);
 
-  const navBarColor = "#4C43BB";
+  const navBarColor = "#172437";
 
   return (
     <div className="home-page" data-cy="practice-levels">

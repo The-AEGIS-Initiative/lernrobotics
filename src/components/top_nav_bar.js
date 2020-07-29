@@ -64,7 +64,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
   };
 
   return (
-    <div>
+    <div style={{ zIndex: 100 }}>
       <LoginRegisterModal
         visible={loginVisible}
         handleCancel={() => setLoginVisible(false)}
@@ -111,7 +111,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
 
           {!(type === "main") && (
             <Menu.Item key="back" style={{}}>
-              <Link to={"/"} className={`${styles.ui_font}`}>
+              <Link to={"/practice"} className={`${styles.ui_font}`}>
                 Back
               </Link>
             </Menu.Item>
@@ -123,18 +123,48 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             </div>
           )}
 
-          {!appContext.isAuth && (
-            <Menu.Item key="login/register" data-cy="login-register-link">
-              <p className={`${styles.ui_font}`}>Login / Register</p>
-            </Menu.Item>
-          )}
-
           {appContext.isAuth && appContext.user_group === "admin" && (
             <Menu.Item key="admin" data-cy="admin-console-link">
               <Link to={"/admin"} className={`${styles.ui_font}`}>
                 Admin Console
               </Link>
             </Menu.Item>
+          )}
+
+          {!appContext.isAuth && (
+            <SubMenu
+              style={{ marginTop: "5px" }}
+              title={
+                <div>
+                  <UserOutlined className="user-icon" data-cy="nav-bar-menu" />
+                  {menuOpen == null && <DownOutlined className="menu-arrow" />}
+                  {menuOpen && (
+                    <DownOutlined
+                      className="menu-arrow"
+                      style={{
+                        animation: `spin 0.25s linear forwards`,
+                      }}
+                    />
+                  )}
+                  {!menuOpen && menuOpen != null && (
+                    <DownOutlined
+                      className="menu-arrow"
+                      style={{
+                        animation: `reverse-spin 0.25s linear forwards`,
+                      }}
+                    />
+                  )}
+                </div>
+              }
+            >
+              <Menu.Item
+                key="login/register"
+                data-cy="login-register-link"
+                style={{ marginBottom: "3px" }}
+              >
+                Login / Register
+              </Menu.Item>
+            </SubMenu>
           )}
 
           {appContext.isAuth && (

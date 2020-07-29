@@ -20,7 +20,7 @@ function DashboardPage() {
 
   return (
     <div className="dashboard-page" data-cy="dashboard">
-      <TopNavBar type="main" backgroundColor="#4C43BB" theme="dark" />
+      <TopNavBar type="main" backgroundColor="#172437" theme="dark" />
       <div className="dashboard-container">
         <Space direction="vertical" size="middle">
           <Row>

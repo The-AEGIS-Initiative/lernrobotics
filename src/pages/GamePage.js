@@ -38,7 +38,7 @@ import {
   BulbOutlined,
   FileTextOutlined,
   SolutionOutlined,
-  TrophyOutlined
+  TrophyOutlined,
 } from "@ant-design/icons";
 
 // Contains Unity game, code editor, and console
@@ -444,7 +444,7 @@ function GamePage({ unityContent, level }) {
               tabPosition={"left"}
               style={{ color: "white", width: "100%" }}
             >
-              <TabPane tab={<RocketOutlined data-tip="Simulation"/>} key="1" >
+              <TabPane tab={<RocketOutlined data-tip="Simulation" />} key="1">
                 <HorizontalSplitLayout
                   top_section={
                     <UnityPlayer
@@ -466,19 +466,35 @@ function GamePage({ unityContent, level }) {
                   update_flags={resizedFlag}
                 />
               </TabPane>
-              <TabPane tab={<BuildOutlined data-tip="Tasks"/>} key="2" data-cy="tab" >
+              <TabPane
+                tab={<BuildOutlined data-tip="Tasks" />}
+                key="2"
+                data-cy="tab"
+              >
                 <MarkdownViewer markdownText={task} />
               </TabPane>
-              <TabPane tab={<BulbOutlined data-tip="Tutorials"/>} key="3" data-cy="tab" >
+              <TabPane
+                tab={<BulbOutlined data-tip="Tutorials" />}
+                key="3"
+                data-cy="tab"
+              >
                 <MarkdownViewer markdownText={tutorial} />
               </TabPane>
-              <TabPane tab={<TrophyOutlined data-tip="Leaderboard"/>} key="4" data-cy="tab" >
+              <TabPane
+                tab={<TrophyOutlined data-tip="Leaderboard" />}
+                key="4"
+                data-cy="tab"
+              >
                 <Leaderboard rankings={rankings} />
               </TabPane>
               {/**<TabPane tab={<SolutionOutlined data-tip="FAQ"/>} key="5" data-cy="tab" >
                 <MarkdownViewer markdownText={faq} />
               </TabPane>*/}
-              <TabPane tab={<FileTextOutlined data-tip="API"/>} key="6" data-cy="tab" >
+              <TabPane
+                tab={<FileTextOutlined data-tip="API" />}
+                key="6"
+                data-cy="tab"
+              >
                 <MarkdownViewer markdownText={gameAPI} />
               </TabPane>
             </Tabs>
@@ -544,7 +560,7 @@ function GamePage({ unityContent, level }) {
             setModalContent({ visible: false, title: "", msg: "" });
           }}
         />
-        <ReactTooltip place="right" effect="solid" backgroundColor="#172437"/>
+        <ReactTooltip place="right" effect="solid" backgroundColor="#172437" />
       </div>
     );
   } else {

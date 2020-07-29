@@ -12,7 +12,7 @@ body,
   background-color: #2f3129;
 }
 
-.game-container .ant-tabs svg{
+.game-container .ant-tabs svg {
   width: 1.5em;
   height: 1.5em;
   margin-left: 20px;
@@ -21,7 +21,7 @@ body,
   margin-top: 10px;
 }
 
-.game-container .anticon{
+.game-container .anticon {
   margin-right: 0px !important;
 }
 

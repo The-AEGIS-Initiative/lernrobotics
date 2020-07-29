@@ -1,6 +1,7 @@
 describe("Login", () => {
   it("should be able to login", () => {
     cy.visit(Cypress.env("baseUrl"));
+    cy.get("[data-cy=nav-bar-menu]", { timeout: 15000 }).click();
     cy.get("[data-cy=login-register-link]").should("exist");
     cy.visit(`${Cypress.env("baseUrl")}/login-endpoint`);
     cy.get("[data-cy=username-input]").type("test");

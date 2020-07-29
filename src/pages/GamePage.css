@@ -9,7 +9,20 @@ body,
   display: flex;
   flex-flow: column;
   height: 100%;
-  background-color: #333333;
+  background-color: #2f3129;
+}
+
+.game-container .ant-tabs svg {
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.game-container .anticon {
+  margin-right: 0px !important;
 }
 
 .nav-container {
@@ -64,6 +77,7 @@ body,
 
 .ant-tabs-tab {
   font-family: "Open Sans", sans-serif !important;
+  padding: 0 0 0 0 !important;
 }
 .ant-tabs-bar {
   height: 100%;

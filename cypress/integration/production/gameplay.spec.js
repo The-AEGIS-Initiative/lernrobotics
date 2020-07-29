@@ -2,7 +2,6 @@ describe("Gameplay", () => {
   it("Can submit user code and run the game", () => {
     cy.visit(Cypress.env("baseUrl"));
     cy.login();
-    cy.contains("Logout");
 
     cy.visit(`${Cypress.env("baseUrl")}/game/hello_world`);
 

@@ -8,6 +8,7 @@ import { AppContext } from "../contexts/AppContext";
 export function ProtectedRoute({
   component: Component,
   protection_level,
+  redirect,
   ...rest
 }) {
   const appContext = useContext(AppContext);
@@ -38,6 +39,9 @@ export function ProtectedRoute({
         } else {
           console.log("Protected route access not authorized ");
           //history.push("/unauthorized");
+          if (redirect) {
+            history.push(redirect);
+          }
           return <h1> Unauthorized access! </h1>;
         }
       }}

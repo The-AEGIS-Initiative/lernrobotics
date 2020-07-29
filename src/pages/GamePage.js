@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 
-import { Row, Col, Tabs, Button } from "antd";
+import { Row, Col, Tabs, Button, Space } from "antd";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import Joyride from "react-joyride";
 import * as Diff3 from "node-diff3";
+import ReactTooltip from "react-tooltip";
 
 import "./GamePage.css";
 import styles from "../style.module.css";
@@ -30,6 +31,15 @@ import Leaderboard from "../components/leaderboard";
 import * as graphqlController from "../graphql/graphql-controller";
 
 import { submitUserCode, stopUserCode } from "../sockets/emit";
+
+import {
+  RocketOutlined,
+  BuildOutlined,
+  BulbOutlined,
+  FileTextOutlined,
+  SolutionOutlined,
+  TrophyOutlined,
+} from "@ant-design/icons";
 
 // Contains Unity game, code editor, and console
 function GamePage({ unityContent, level }) {
@@ -408,13 +418,7 @@ function GamePage({ unityContent, level }) {
     //console.log(`levelData: ${levelData}`);
     return (
       <div style={{ overflow: "hidden", height: "100vh" }}>
-        <div
-          className="game-container"
-          style={{
-            opacity: gamePageContext.isLoading ? 0 : 1,
-            overflow: "hidden",
-          }}
-        >
+        <div className="game-container">
           {!gamePageContext.isLoading && level == "hello_world" && (
             <Joyride
               steps={onboardingSteps}
@@ -426,7 +430,7 @@ function GamePage({ unityContent, level }) {
             type="sub"
             className="nav-container"
             theme="dark"
-            backgroundColor="#222222"
+            backgroundColor="#172437"
             title={levelDisplayName}
           />
           <SplitterLayout
@@ -440,7 +444,7 @@ function GamePage({ unityContent, level }) {
               tabPosition={"left"}
               style={{ color: "white", width: "100%" }}
             >
-              <TabPane tab="Game" key="1">
+              <TabPane tab={<RocketOutlined data-tip="Simulation" />} key="1">
                 <HorizontalSplitLayout
                   top_section={
                     <UnityPlayer
@@ -462,19 +466,35 @@ function GamePage({ unityContent, level }) {
                   update_flags={resizedFlag}
                 />
               </TabPane>
-              <TabPane tab="Task" key="2" data-cy="tab">
+              <TabPane
+                tab={<BuildOutlined data-tip="Tasks" />}
+                key="2"
+                data-cy="tab"
+              >
                 <MarkdownViewer markdownText={task} />
               </TabPane>
-              <TabPane tab="Tutorial" key="3" data-cy="tab">
+              <TabPane
+                tab={<BulbOutlined data-tip="Tutorials" />}
+                key="3"
+                data-cy="tab"
+              >
                 <MarkdownViewer markdownText={tutorial} />
               </TabPane>
-              <TabPane tab="Leaderboard" key="4" data-cy="tab">
+              <TabPane
+                tab={<TrophyOutlined data-tip="Leaderboard" />}
+                key="4"
+                data-cy="tab"
+              >
                 <Leaderboard rankings={rankings} />
               </TabPane>
-              <TabPane tab="FAQ" key="5" data-cy="tab">
+              {/**<TabPane tab={<SolutionOutlined data-tip="FAQ"/>} key="5" data-cy="tab" >
                 <MarkdownViewer markdownText={faq} />
-              </TabPane>
-              <TabPane tab="API " key="6" data-cy="tab">
+              </TabPane>*/}
+              <TabPane
+                tab={<FileTextOutlined data-tip="API" />}
+                key="6"
+                data-cy="tab"
+              >
                 <MarkdownViewer markdownText={gameAPI} />
               </TabPane>
             </Tabs>
@@ -540,6 +560,7 @@ function GamePage({ unityContent, level }) {
             setModalContent({ visible: false, title: "", msg: "" });
           }}
         />
+        <ReactTooltip place="right" effect="solid" backgroundColor="#172437" />
       </div>
     );
   } else {

@@ -47,10 +47,10 @@ function HomePage() {
     fetchData();
   }, [appContext.isAuth]);
 
-  const navBarColor = "#3a608d";
+  const navBarColor = "#172437";
 
   return (
-    <div className="home-page" data-cy="home-page">
+    <div className="home-page" data-cy="practice-levels">
       <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
       <nav>
         <ul

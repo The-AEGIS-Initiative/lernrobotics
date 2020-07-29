@@ -12,7 +12,7 @@ function LoadingScreen() {
     <div
       style={{
         backgroundColor: "#333333",
-        height: "100vh",
+        height: "100%",
         width: "100vw",
         display: "flex",
         justifyContent: "center",
@@ -20,6 +20,8 @@ function LoadingScreen() {
         flexDirection: "column",
         position: "absolute",
         top: "0px",
+        zIndex: 5,
+        overflow: "hidden",
       }}
     >
       <Spin indicator={antIcon} />

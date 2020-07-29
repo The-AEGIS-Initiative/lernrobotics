@@ -12,6 +12,7 @@ import DocumentEditorPage from "./pages/DocumentEditorPage";
 import LoginPage from "./pages/LoginPage";
 import StartPage from "./pages/StartPage";
 import AdminLevelPage from "./pages/AdminLevelPage";
+import DashboardPage from "./pages/DashboardPage";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
@@ -74,7 +75,13 @@ function App({ unityContent }) {
   return (
     <Switch>
       <Route exact path="/" component={StartPage} />
-      <Route exact path="/home" component={HomePage} />
+      <ProtectedRoute
+        exact
+        path="/practice"
+        component={HomePage}
+        protection_level="user"
+        redirect="/"
+      />
       <ProtectedRoute
         exact
         path="/game/:level"
@@ -130,6 +137,13 @@ function App({ unityContent }) {
         protection_level="admin"
       />
       <Route exact path="/login-endpoint" component={LoginPage} />
+      <ProtectedRoute
+        exact
+        path="/dashboard"
+        component={DashboardPage}
+        protection_level="user"
+        redirect="/"
+      />
     </Switch>
   );
 }

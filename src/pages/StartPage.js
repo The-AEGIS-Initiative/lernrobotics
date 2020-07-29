@@ -19,15 +19,15 @@ function StartPage() {
 
   useEffect(() => {
     if (appContext.isAuth) {
-      history.push("/home");
+      history.push("/dashboard");
     }
   }, [appContext.isAuth]);
 
-  const navBarColor = "#e6ffff";
+  const navBarColor = "#172437";
 
   return (
     <div className="start-page-container" data-cy="start-page">
-      <TopNavBar type="main" backgroundColor={navBarColor} theme="light" />
+      <TopNavBar type="main" backgroundColor={navBarColor} theme="dark" />
       <div className="banner-container">
         <div className="text-container">
           <h1 className="heading">Learn Robotics in your Browser</h1>
@@ -42,7 +42,7 @@ function StartPage() {
             }}
             className="start-button"
           >
-            GET STARTED!
+            Get Started!
           </Button>
         </div>
       </div>
@@ -89,7 +89,7 @@ function StartPage() {
               }}
               className="start-button"
             >
-              GET STARTED!
+              Get Started!
             </Button>
           </div>
           <div>

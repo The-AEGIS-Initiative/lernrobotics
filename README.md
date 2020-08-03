@@ -1,10 +1,11 @@
 # Robobot
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
-![Discord](https://img.shields.io/discord/700225957314691083?label=Discord&style=plastic)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
+[![](https://img.shields.io/badge/powered--by-AWS_Amplify-brightgreen)](https://aws.amazon.com/amplify/)
 
-This repo is the codebase for the main [Robobot](https://robobot.aegisinitiative.io/) website. 
+This repo is the codebase for the main [Robobot](https://robobot.aegisinitiative.io/) app. 
 
-See [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) for the code-sandbox microservice that powers Robobot
+See [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) for the code-sandbox service that powers Robobot.
 
 ## What is Robobot?
 **Robobot is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 

@@ -62,16 +62,6 @@ function App({ unityContent }) {
     });
   }, []);
 
-  useEffect(() => {
-    if (!appContext.isAuth && history.location.pathname != "/login_endpoint") {
-      //history.push("/");
-    }
-  }, [appContext.isAuth]);
-
-  /**useEffect(() => {
-    stopUserCode();
-  }, [location])*/
-
   return (
     <Switch>
       <Route exact path="/" component={StartPage} />

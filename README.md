@@ -1,4 +1,18 @@
-Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbucket.org/theaegisinitiative/front-end/)
+# Robobot
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+![Discord](https://img.shields.io/discord/700225957314691083?label=Discord&style=plastic)
+
+This repo is the codebase for the main [Robobot](https://robobot.aegisinitiative.io/) website. 
+
+See [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) for the code-sandbox microservice that powers Robobot
+
+## What is Robobot?
+**Robobot is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
+
+Robobot is open-source projected developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
+
+## Status
+Robobot has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
 
 # Development Setup
 

@@ -17,35 +17,30 @@ Robobot has been in active development since Janurary 2020. This project would n
 
 # Development Setup
 
-## Step 1: Basic Git Stuff
+## Step 1) Configure AWS Amplify
+This app is powered by AWS Amplify. Amplify is a serverless infrastructure that handles all the standard back-end functionalities such as authentication and databases so that we can focus on building the app it self. 
 
-*  `git init`
-*  `git remote add origin \<repo-url>`
-*  `git pull origin master`
-*  `npm install`
-*  `git checkout -b "<your-branch-name>"`
+Follow Amplify's setup instructions here: 
+[https://docs.amplify.aws/cli/start/install](https://docs.amplify.aws/cli/start/install)
 
-## Step 2: Install AWS CLI and Configure IAM User
+Now you should have your own AWS account, an IAM user for Amplify, and a fully configured Amplify CLI.
 
-- https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
-- `aws configure` (Restart terminal if aws command not found)
-  - AWS Access Key: \*\*
-  - AWS Secret Access Key: \*\*
-  - Default region name: _us-west-2_
-  - Default output format: _json_
+## Step 2) Set up the app
+1. Clone the repo: `git clone https://github.com/The-AEGIS-Initiative/robobot.git`
+2. Move into project root: `cd robobot`
+3. Install dependencies: `npm install` 
+2. Initialize amplify env for this project: `amplify init`
+    - Enter a name for the environment: `<your-env-name>`
+    - Do you want to use an AWS profile? `Yes`
+    - Please choose the profile you want to use: `default`
+3. Provision AWS resources on your AWS account: `amplify push`
+    - Are you sure you want to continue? `Yes`
+    - Do you want to update code for your updated GraphQL API? `No`
 
-## Step 3: Setup Amplify CLI and Project
+At this point you will have your own fully functional copy of the Robobot app to develop on. All back-end resources for auth and APIs are provisioned on your own AWS account. For dev purposes, AWS usage falls well within
+the free tiers AWS provides. 
 
-*  `npm install -g @aws-amplify/cli`
-*  `amplify init`
-  *  Do you want to use an existing environment? _Yes_
-  *  Choose the environment you would like to use: _dev_
-  *  Choose your default editor: _Your preferred editor_
-  *  Do you want to use an AWS Profile: _Y_
-    *  Select your profile from Step 2
-*  `amplify pull`
-
-## Step 4: Create a Robobot Account
+## Step 3) Create a Robobot Account
 
 *  Go to [https://development-robobot.aegisinitiative.io/](https://development-robobot.aegisinitiative.io/)
 
@@ -57,7 +52,7 @@ Robobot has been in active development since Janurary 2020. This project would n
 
 *  Contact an admin to give your developer account admin status
 
-## Step 5: Configure Cypress Environment
+## Step 4) Configure Cypress Environment
 
 *  Create a `cypress.env.json` file in the root directory
 *  Add the following to the `cypress.env.json` file (replace with your test account credentials):

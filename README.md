@@ -15,11 +15,11 @@ Robobot is open-source projected developed and maintained by [The AEGIS Initiati
 ## Status
 Robobot has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
 
-# Development Setup
+## Development Setup
 
 As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
 
-## Step 1) Configure AWS Amplify
+### Step 1) Configure AWS Amplify
 This app is powered by AWS Amplify. Amplify is a serverless infrastructure that handles all the standard back-end functionalities such as authentication and databases so that we can focus on building the app it self. 
 
 Follow Amplify's setup instructions here: 
@@ -27,7 +27,7 @@ Follow Amplify's setup instructions here:
 
 Now you should have your own AWS account, an IAM user for Amplify, and a fully configured Amplify CLI.
 
-## Step 2) Set up the app
+### Step 2) Set up the app
 1. Clone the repo: `git clone https://github.com/The-AEGIS-Initiative/robobot.git`
 2. Move into project root: `cd robobot`
 3. Install dependencies: `npm install` 
@@ -42,7 +42,7 @@ Now you should have your own AWS account, an IAM user for Amplify, and a fully c
 At this point you will have your own fully functional copy of the Robobot app to develop on. All back-end resources for auth and APIs are provisioned on your own AWS account. For dev purposes, AWS usage falls well within
 the free tiers AWS provides. 
 
-## Step 3) Create a Robobot Account
+### Step 3) Create a Robobot Account
 1. Start the robobot app locally: `npm start`
 2. Create an general purpose developer admin account (for manual local app usage)
     - Create the account in your local robobot app
@@ -55,7 +55,7 @@ the free tiers AWS provides.
     - Simply create this account, no extra steps needed
     - Do not use this account manually
   
-## Step 4) Configure Cypress Environment
+### Step 4) Configure Cypress Environment
 *  Create a `cypress.env.json` file in the root directory
 *  Add the following to the `cypress.env.json` file (replace with your test account credentials from Step 3):
 
@@ -68,7 +68,7 @@ the free tiers AWS provides.
 
 You are done!
 
-# Development Workflow
+## Development Workflow
 
 ### Before making changes:
 
@@ -110,7 +110,7 @@ When your changes are complete, make a pull request into the `master` branch.
 *  Log-in to the AWS Amplify console and confirm that the development branch is green.
   *  If there are errors, fix them ASAP.
 
-# Writing Tests
+## Writing Tests
 
 Cypress tests are stored in the `cypress/integration/` folder. This project breaks up the tests into 2 folders:
 

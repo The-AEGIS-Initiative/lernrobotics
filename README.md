@@ -134,17 +134,6 @@ Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.
 ### File Structure
 ```sh
 robobot/
-├── src        # Front-end react app
-├── athena     # Worker server (notifications and general processing)
-├── chronos    # Worker server (cron jobs)
-├── desktop    # desktop apps (build with electron)
-├── docs
-├── email-templates
-├── hermes     # Worker server (email sending)
-├── hyperion   # Rendering server
-├── mercury    # Worker server (reputation)
-├── public     # Public files used on the frontend
-├── shared     # Shared JavaScript code
-├── src        # Frontend SPA
-└── vulcan     # Worker server (search indexing; syncing with Algolia)
+├── src        # Front-end react 
+└── test     # Worker server (search indexing; syncing with Algolia)
 ```

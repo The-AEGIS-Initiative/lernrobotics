@@ -23,7 +23,7 @@ export default function DashboardButton({
           }}
         >
           {content}
-          <p class="coming-soon"> Coming Soon! </p>
+          <p className="coming-soon"> Coming Soon! </p>
         </Button>
       </div>
     </Link>

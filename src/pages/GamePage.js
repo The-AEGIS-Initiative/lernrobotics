@@ -11,8 +11,6 @@ import ReactTooltip from "react-tooltip";
 import "./GamePage.css";
 import styles from "../style.module.css";
 
-import ConsoleSection from "../sections/console_section";
-
 import { GamePageContext } from "../contexts/GamePageContext";
 import { AppContext } from "../contexts/AppContext";
 
@@ -27,6 +25,7 @@ import CodeEditor from "../components/code_editor";
 import LoadingScreen from "../components/loading_screen";
 import GameModal from "../components/game_modal";
 import Leaderboard from "../components/leaderboard";
+import Console from "../components/console";
 
 import * as graphqlController from "../graphql/graphql-controller";
 
@@ -455,7 +454,7 @@ function GamePage({ unityContent, level }) {
                     />
                   }
                   bottom_section={
-                    <ConsoleSection
+                    <Console
                       className={"console"}
                       style={{ backgroundColor: "black" }}
                       unityContent={unityContent}

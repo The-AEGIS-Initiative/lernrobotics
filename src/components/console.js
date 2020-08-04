@@ -4,7 +4,7 @@ import { GamePageContext } from "../contexts/GamePageContext";
 
 import styles from "../style.module.css";
 
-function ConsoleSection({ height, width, unityContent }) {
+function Console({ height, width, unityContent }) {
   const gamePageContext = useContext(GamePageContext);
   const [logs, setLogs] = useState([]);
   const parent = useRef(null);
@@ -89,4 +89,4 @@ const filter = (log) => {
   return log.trim();
 };
 
-export default ConsoleSection;
+export default Console;

@@ -6,23 +6,23 @@ import Unity from "react-unity-webgl";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
-import "./LevelBuilderPage.css";
-import styles from "../style.module.css";
+import "./index.css";
+import styles from "style.module.css";
 
-import { GamePageContext } from "../contexts/GamePageContext";
-import { AppContext } from "../contexts/AppContext";
-import { LevelBuilderContext } from "../contexts/LevelBuilderContext";
+import { GamePageContext } from "contexts/GamePageContext";
+import { AppContext } from "contexts/AppContext";
+import { LevelBuilderContext } from "contexts/LevelBuilderContext";
 
-import { useWindowSize } from "../hooks/useWindowSize";
+import { useWindowSize } from "hooks/useWindowSize";
 
-import TopNavBar from "../components/top_nav_bar";
-import MarkdownViewer from "../components/markdown_viewer";
-import UnityPlayer from "../components/unity_player";
-import HorizontalSplitLayout from "../components/horizontal_split_layout";
-import CodeEditor from "../components/code_editor";
-import MarkdownEditor from "../components/markdown_editor";
+import TopNavBar from "components/top_nav_bar";
+import MarkdownViewer from "components/markdown_viewer";
+import UnityPlayer from "components/unity_player";
+import HorizontalSplitLayout from "components/horizontal_split_layout";
+import CodeEditor from "components/code_editor";
+import MarkdownEditor from "components/markdown_editor";
 
-import * as graphqlController from "../graphql/graphql-controller";
+import * as graphqlController from "graphql/graphql-controller";
 
 // Contains Unity game, code editor, and console
 function LevelBuilderPage({ unityContent, levelName }) {

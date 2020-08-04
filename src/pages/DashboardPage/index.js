@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import DashboardButton from "../components/dashboard_button";
 import { Row, Col, Space } from "antd";
-
-import TopNavBar from "../components/top_nav_bar";
-import { AppContext } from "../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 
-import "./DashboardPage.css";
+import DashboardButton from "components/dashboard_button";
+import TopNavBar from "components/top_nav_bar";
+import { AppContext } from "contexts/AppContext";
+
+import "./index.css";
 
 function DashboardPage() {
   const appContext = useContext(AppContext);

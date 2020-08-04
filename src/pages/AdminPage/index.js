@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button, Input } from "antd";
-import LevelList from "../components/level_list";
-import * as graphqlController from "../graphql/graphql-controller";
+import LevelList from "components/level_list";
+import * as graphqlController from "graphql/graphql-controller";
 
 function AdminPage() {
   const [levelList, setLevelList] = useState([]);

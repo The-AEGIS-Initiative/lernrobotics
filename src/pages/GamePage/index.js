@@ -8,28 +8,28 @@ import Joyride from "react-joyride";
 import * as Diff3 from "node-diff3";
 import ReactTooltip from "react-tooltip";
 
-import "./GamePage.css";
-import styles from "../style.module.css";
+import "./index.css";
+import styles from "style.module.css";
 
-import { GamePageContext } from "../contexts/GamePageContext";
-import { AppContext } from "../contexts/AppContext";
+import { GamePageContext } from "contexts/GamePageContext";
+import { AppContext } from "contexts/AppContext";
 
-import { useWindowSize } from "../hooks/useWindowSize";
+import { useWindowSize } from "hooks/useWindowSize";
 import { useHistory } from "react-router-dom";
 
-import TopNavBar from "../components/top_nav_bar";
-import MarkdownViewer from "../components/markdown_viewer";
-import UnityPlayer from "../components/unity_player";
-import HorizontalSplitLayout from "../components/horizontal_split_layout";
-import CodeEditor from "../components/code_editor";
-import LoadingScreen from "../components/loading_screen";
-import GameModal from "../components/game_modal";
-import Leaderboard from "../components/leaderboard";
-import Console from "../components/console";
+import TopNavBar from "components/top_nav_bar";
+import MarkdownViewer from "components/markdown_viewer";
+import UnityPlayer from "components/unity_player";
+import HorizontalSplitLayout from "components/horizontal_split_layout";
+import CodeEditor from "components/code_editor";
+import LoadingScreen from "components/loading_screen";
+import GameModal from "components/game_modal";
+import Leaderboard from "components/leaderboard";
+import Console from "components/console";
 
-import * as graphqlController from "../graphql/graphql-controller";
+import * as graphqlController from "graphql/graphql-controller";
 
-import { submitUserCode, stopUserCode } from "../sockets/emit";
+import { submitUserCode, stopUserCode } from "sockets/emit";
 
 import {
   RocketOutlined,

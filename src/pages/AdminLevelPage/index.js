@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button, Input } from "antd";
-import * as graphqlController from "../graphql/graphql-controller";
+import * as graphqlController from "graphql/graphql-controller";
 
 async function changeLevelName(value, level) {
   // TODO : probably add a warning modal or some other form of authentication here

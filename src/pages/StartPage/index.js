@@ -3,14 +3,14 @@ import { useHistory } from "react-router-dom";
 
 import { Card, Button } from "antd";
 
-import LoginRegisterModal from "../components/login_register_modal";
-import TopNavBar from "../components/top_nav_bar";
-import { AppContext } from "../contexts/AppContext";
+import LoginRegisterModal from "components/login_register_modal";
+import TopNavBar from "components/top_nav_bar";
+import { AppContext } from "contexts/AppContext";
 import { Auth } from "aws-amplify";
-import SplitContainer from "../components/split_container";
-import "./StartPage.css";
-import styles from "../style.module.css";
-import Footer from "../components/footer";
+import SplitContainer from "components/split_container";
+import "./index.css";
+import styles from "style.module.css";
+import Footer from "components/footer";
 
 function StartPage() {
   const appContext = useContext(AppContext);

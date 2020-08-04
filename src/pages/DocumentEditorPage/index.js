@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
-import MarkdownEditor from "../components/markdown_editor";
-import styles from "../style.module.css";
-import * as graphqlController from "../graphql/graphql-controller";
+
+import MarkdownEditor from "components/markdown_editor";
+import styles from "style.module.css";
+import * as graphqlController from "graphql/graphql-controller";
 
 export default function DocumentEditorPage({ docName }) {
   const [content, setContent] = useState(null);

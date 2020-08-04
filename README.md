@@ -43,21 +43,21 @@ At this point you will have your own fully functional copy of the Robobot app to
 the free tiers AWS provides. 
 
 ## Step 3) Create a Robobot Account
-
-*  Go to [https://development-robobot.aegisinitiative.io/](https://development-robobot.aegisinitiative.io/)
-
-*  Create 2 accounts:
-  *  General purpose developer admin account
-    *  This is the account you will use when interacting with the app
-  *  Test account
-    *  This will be the test account Cypress uses to run tests. Do not use this account manually.
-
-*  Contact an admin to give your developer account admin status
-
+1. Start the robobot app locally: `npm start`
+2. Create an general purpose developer admin account (for manual local app usage)
+    - Create the account in your local robobot app
+    - Login to AWS Console and navigate to AWS Cognito
+    - Click "Manage User Pools"
+    - Select your user pool: "robobot*****_userpools_*****-<your-amplify-env-name>"
+    - Go to "Users and groups" tab
+    - Select the user you created, then add to "Admin" group
+3. Create an test account for Cypress
+    - Simply create this account, no extra steps needed
+    - Do not use this account manually
+  
 ## Step 4) Configure Cypress Environment
-
 *  Create a `cypress.env.json` file in the root directory
-*  Add the following to the `cypress.env.json` file (replace with your test account credentials):
+*  Add the following to the `cypress.env.json` file (replace with your test account credentials from Step 3):
 
     ```
     {

@@ -66,6 +66,8 @@ the free tiers AWS provides.
     }
     ```
 
+You are done!
+
 # Development Workflow
 
 ### Before making changes:

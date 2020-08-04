@@ -15,6 +15,15 @@ Robobot is open-source projected developed and maintained by [The AEGIS Initiati
 ## Status
 Robobot has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
 
+## Table of Contents
+  * [Development Setup](#development-setup)
+    + [Step 1) Configure AWS Amplify](#step-1-configure-aws-amplify)
+    + [Step 2) Set up the app](#step-2-set-up-the-app)
+    + [Step 3) Create a Robobot Account](#step-3-create-a-robobot-account)
+    + [Step 4) Configure Cypress Environment](#step-4-configure-cypress-environment)
+  * [Development Workflow](#development-workflow)
+  * [Writing Tests](#writing-tests)
+
 ## Development Setup
 
 As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
@@ -120,3 +129,22 @@ Cypress tests are stored in the `cypress/integration/` folder. This project brea
   *  These tests require the back-end to be running. These are usually end-2-end (E2E) tests.
 
 Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html)
+
+## Codebase
+### File Structure
+```sh
+robobot/
+├── src        # Front-end react app
+├── athena     # Worker server (notifications and general processing)
+├── chronos    # Worker server (cron jobs)
+├── desktop    # desktop apps (build with electron)
+├── docs
+├── email-templates
+├── hermes     # Worker server (email sending)
+├── hyperion   # Rendering server
+├── mercury    # Worker server (reputation)
+├── public     # Public files used on the frontend
+├── shared     # Shared JavaScript code
+├── src        # Frontend SPA
+└── vulcan     # Worker server (search indexing; syncing with Algolia)
+```

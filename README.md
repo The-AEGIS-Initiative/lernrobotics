@@ -17,6 +17,8 @@ Robobot has been in active development since Janurary 2020. This project would n
 
 # Development Setup
 
+As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
+
 ## Step 1) Configure AWS Amplify
 This app is powered by AWS Amplify. Amplify is a serverless infrastructure that handles all the standard back-end functionalities such as authentication and databases so that we can focus on building the app it self. 
 

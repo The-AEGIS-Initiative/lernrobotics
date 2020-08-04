@@ -10,14 +10,14 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 
-import { AppContext } from "../contexts/AppContext";
-import LoginRegisterModal from "./login_register_modal";
+import { AppContext } from "contexts/AppContext";
+import LoginRegisterModal from "../login_register_modal";
 
 import { Auth } from "aws-amplify";
 
-import styles from "../style.module.css";
+import styles from "style.module.css";
 
-import "./top_nav_bar.css";
+import "./index.css";
 
 /**
  * Main navigation bar

@@ -19,7 +19,6 @@ import TopNavBar from "../components/top_nav_bar";
 import MarkdownViewer from "../components/markdown_viewer";
 import UnityPlayer from "../components/unity_player";
 import HorizontalSplitLayout from "../components/horizontal_split_layout";
-import PlayModeControls from "../components/play_mode_controls";
 import CodeEditor from "../components/code_editor";
 import MarkdownEditor from "../components/markdown_editor";
 

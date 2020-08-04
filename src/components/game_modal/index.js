@@ -1,7 +1,7 @@
 import React, { Text, useState, useEffect } from "react";
 import { Modal } from "antd";
 
-import "./game_modal.css";
+import "./index.css";
 
 function GameModal({ visible, title, message, handleOk, handleCancel }) {
   return (

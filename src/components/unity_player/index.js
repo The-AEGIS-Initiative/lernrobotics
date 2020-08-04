@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 import Unity from "react-unity-webgl";
-import { GamePageContext } from "../contexts/GamePageContext";
+import { GamePageContext } from "contexts/GamePageContext";
 import { UnityContent } from "react-unity-webgl";
-import { useWindowSize } from "../hooks/useWindowSize";
+import { useWindowSize } from "hooks/useWindowSize";
 
-import "./unity_player.css";
+import "./index.css";
 
 function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   const gamePageContext = useContext(GamePageContext);

@@ -1,7 +1,7 @@
 import React, { Text, useState, useEffect } from "react";
 import { Table } from "antd";
 
-import "./leaderboard.css";
+import "./index.css";
 
 function Leaderboard({ rankings }) {
   const columns = [

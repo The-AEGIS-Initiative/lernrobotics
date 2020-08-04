@@ -10,9 +10,9 @@ import {
 } from "@aws-amplify/ui-react";
 import { Auth } from "aws-amplify";
 
-import { AppContext } from "../contexts/AppContext";
+import { AppContext } from "contexts/AppContext";
 
-import "./login_register_modal.css";
+import "./index.css";
 
 function LoginRegisterModal({ onSubmit, visible, handleCancel }) {
   const appContext = useContext(AppContext);

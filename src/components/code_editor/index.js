@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 
 import { Row, Col, Button } from "antd";
-import styles from "../style.module.css";
+import styles from "style.module.css";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -17,8 +17,7 @@ import "brace/ext/language_tools";
 
 import { useHotkeys } from "react-hotkeys-hook";
 
-import { postData, getData } from "../components/HttpController";
-import { submitUserCode, stopUserCode } from "../sockets/emit";
+import { submitUserCode, stopUserCode } from "sockets/emit";
 
 /**
  * Code editor

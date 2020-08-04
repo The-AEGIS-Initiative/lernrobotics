@@ -4,8 +4,8 @@ import { StarOutlined, StarFilled } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
-import "./level_card.css";
-import styles from "../style.module.css";
+import "./index.css";
+import styles from "style.module.css";
 
 const { Meta } = Card;
 

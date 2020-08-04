@@ -1,21 +1,15 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 
 import { Row, Col, Button } from "antd";
-import styles from "../style.module.css";
+import styles from "style.module.css";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-monokai";
 
-import { useHotkeys } from "react-hotkeys-hook";
-
-import { postData, getData } from "../components/HttpController";
-import { submitUserCode, stopUserCode } from "../sockets/emit";
-
 import SplitterLayout from "react-splitter-layout";
-import MarkdownViewer from "../components/markdown_viewer";
-import CodeEditor from "../components/code_editor";
-import PlayModeControls from "../components/play_mode_controls";
+import MarkdownViewer from "../markdown_viewer";
+import CodeEditor from "../code_editor";
 
 /**
  * Split-view markdown editor

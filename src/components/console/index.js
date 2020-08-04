@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { FixedSizeList } from "react-window";
-import { GamePageContext } from "../contexts/GamePageContext";
+import { GamePageContext } from "contexts/GamePageContext";
 
-import styles from "../style.module.css";
+import styles from "style.module.css";
 
 function Console({ height, width, unityContent }) {
   const gamePageContext = useContext(GamePageContext);

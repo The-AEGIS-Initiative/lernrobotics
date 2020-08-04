@@ -2,7 +2,7 @@ import React, { Text, useState, useEffect } from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 
-import "./dashboard_button.css";
+import "./index.css";
 
 export default function DashboardButton({
   width,

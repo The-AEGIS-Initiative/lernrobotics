@@ -17,7 +17,7 @@ import * as graphqlController from "graphql/graphql-controller";
 
 const { Meta } = Card;
 
-function HomePage() {
+function PracticePage() {
   const appContext = useContext(AppContext);
   const [contentSchema, setContentSchema] = useState({});
   const [progress, setProgress] = useState([]);
@@ -113,4 +113,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default PracticePage;

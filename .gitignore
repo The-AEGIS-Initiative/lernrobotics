@@ -33,6 +33,14 @@ yarn-error.log*
 /public/env-config.js
 env-config.js
 
+cypress/screenshots
+cypress/videos
+cypress.env.json
+*.env.*
+*.env
+
+.vs/
+
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -43,18 +51,9 @@ build/
 dist/
 node_modules/
 aws-exports.js
-team-provider-info.json
 awsconfiguration.json
 amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifyxc.config
-
-cypress/screenshots
-cypress/videos
-cypress.env.json
-*.env.*
-*.env
-
-.vs/
-
+team-provider-info.json

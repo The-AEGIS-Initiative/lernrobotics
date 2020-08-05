@@ -4,7 +4,7 @@
 import React, { useEffect, useContext } from "react";
 
 import GamePage from "./pages/GamePage";
-import HomePage from "./pages/HomePage";
+import PracticePage from "./pages/PracticePage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import AdminPage from "./pages/AdminPage";
 import LevelBuilderPage from "./pages/LevelBuilderPage";
@@ -60,7 +60,7 @@ function App({ unityContent }) {
     history.listen((location) => {
       stopUserCode();
     });
-  }, []);
+  }, [history]);
 
   return (
     <Switch>
@@ -68,7 +68,7 @@ function App({ unityContent }) {
       <ProtectedRoute
         exact
         path="/practice"
-        component={HomePage}
+        component={PracticePage}
         protection_level="user"
         redirect="/"
       />

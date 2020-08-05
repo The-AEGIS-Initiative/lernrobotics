@@ -32,7 +32,7 @@
                         {
                             "authenticationType": "API_KEY",
                             "apiKeyConfig": {
-                                "description": "public guest access",
+                                "description": "guest_access_key",
                                 "apiKeyExpirationDays": "365"
                             }
                         }

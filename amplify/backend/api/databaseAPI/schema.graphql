@@ -24,7 +24,7 @@ type Level @model
 	level_name: String!
 	creator: String!
 	default_code: String!
-	task: String!
+	task: String! 
 	tutorial: String!
 	level_data: String!
   owner: String

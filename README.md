@@ -1,51 +1,72 @@
-Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbucket.org/theaegisinitiative/front-end/)
+# Robobot
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
+[![](https://img.shields.io/badge/powered--by-AWS_Amplify-brightgreen)](https://aws.amazon.com/amplify/)
 
-# Development Setup
+This repo is the codebase for the main [Robobot](https://robobot.aegisinitiative.io/) app. 
 
-## Step 1: Basic Git Stuff
+See [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) for the code-sandbox service that powers Robobot.
 
-*  `git init`
-*  `git remote add origin \<repo-url>`
-*  `git pull origin master`
-*  `npm install`
-*  `git checkout -b "<your-branch-name>"`
+## What is Robobot?
+**Robobot is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
 
-## Step 2: Install AWS CLI and Configure IAM User
+Robobot is open-source projected developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
 
-- https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
-- `aws configure` (Restart terminal if aws command not found)
-  - AWS Access Key: \*\*
-  - AWS Secret Access Key: \*\*
-  - Default region name: _us-west-2_
-  - Default output format: _json_
+## Status
+Robobot has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
 
-## Step 3: Setup Amplify CLI and Project
+## Table of Contents
+  * [Development Setup](#development-setup)
+    + [Step 1) Configure AWS Amplify](#step-1-configure-aws-amplify)
+    + [Step 2) Set up the app](#step-2-set-up-the-app)
+    + [Step 3) Create a Robobot Account](#step-3-create-a-robobot-account)
+    + [Step 4) Configure Cypress Environment](#step-4-configure-cypress-environment)
+  * [Development Workflow](#development-workflow)
+  * [Writing Tests](#writing-tests)
 
-*  `npm install -g @aws-amplify/cli`
-*  `amplify init`
-  *  Do you want to use an existing environment? _Yes_
-  *  Choose the environment you would like to use: _dev_
-  *  Choose your default editor: _Your preferred editor_
-  *  Do you want to use an AWS Profile: _Y_
-    *  Select your profile from Step 2
-*  `amplify pull`
+## Development Setup
 
-## Step 4: Create a Robobot Account
+As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
 
-*  Go to [https://development-robobot.aegisinitiative.io/](https://development-robobot.aegisinitiative.io/)
+### Step 1) Configure AWS Amplify
+This app is powered by AWS Amplify. Amplify is a serverless infrastructure that handles all the standard back-end functionalities such as authentication and databases so that we can focus on building the app it self. 
 
-*  Create 2 accounts:
-  *  General purpose developer admin account
-    *  This is the account you will use when interacting with the app
-  *  Test account
-    *  This will be the test account Cypress uses to run tests. Do not use this account manually.
+Follow Amplify's setup instructions here: 
+[https://docs.amplify.aws/cli/start/install](https://docs.amplify.aws/cli/start/install)
 
-*  Contact an admin to give your developer account admin status
+Now you should have your own AWS account, an IAM user for Amplify, and a fully configured Amplify CLI.
 
-## Step 5: Configure Cypress Environment
+### Step 2) Set up the app
+1. Clone the repo: `git clone https://github.com/The-AEGIS-Initiative/robobot.git`
+2. Move into project root: `cd robobot`
+3. Install dependencies: `npm install` 
+2. Initialize amplify env for this project: `amplify init`
+    - Enter a name for the environment: `<your-env-name>`
+    - Do you want to use an AWS profile? `Yes`
+    - Please choose the profile you want to use: `default`
+3. Provision AWS resources on your AWS account: `amplify push`
+    - Are you sure you want to continue? `Yes`
+    - Do you want to update code for your updated GraphQL API? `No`
 
+At this point you will have your own fully functional copy of the Robobot app to develop on. All back-end resources for auth and APIs are provisioned on your own AWS account. For dev purposes, AWS usage falls well within
+the free tiers AWS provides. 
+
+### Step 3) Create a Robobot Account
+1. Start the robobot app locally: `npm start`
+2. Create an general purpose developer admin account (for manual local app usage)
+    - Create the account in your local robobot app
+    - Login to AWS Console and navigate to AWS Cognito
+    - Click "Manage User Pools"
+    - Select your user pool: "robobot*****_userpools_*****-<your-amplify-env-name>"
+    - Go to "Users and groups" tab
+    - Select the user you created, then add to "Admin" group
+3. Create an test account for Cypress
+    - Simply create this account, no extra steps needed
+    - Do not use this account manually
+  
+### Step 4) Configure Cypress Environment
 *  Create a `cypress.env.json` file in the root directory
-*  Add the following to the `cypress.env.json` file (replace with your test account credentials):
+*  Add the following to the `cypress.env.json` file (replace with your test account credentials from Step 3):
 
     ```
     {
@@ -54,7 +75,9 @@ Repository: [https://bitbucket.org/theaegisinitiative/front-end/](https://bitbuc
     }
     ```
 
-# Development Workflow
+You are done!
+
+## Development Workflow
 
 ### Before making changes:
 
@@ -96,7 +119,7 @@ When your changes are complete, make a pull request into the `master` branch.
 *  Log-in to the AWS Amplify console and confirm that the development branch is green.
   *  If there are errors, fix them ASAP.
 
-# Writing Tests
+## Writing Tests
 
 Cypress tests are stored in the `cypress/integration/` folder. This project breaks up the tests into 2 folders:
 
@@ -106,3 +129,11 @@ Cypress tests are stored in the `cypress/integration/` folder. This project brea
   *  These tests require the back-end to be running. These are usually end-2-end (E2E) tests.
 
 Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html)
+
+## Codebase
+### File Structure
+```sh
+robobot/
+├── src        # Front-end react 
+└── test     # Worker server (search indexing; syncing with Algolia)
+```

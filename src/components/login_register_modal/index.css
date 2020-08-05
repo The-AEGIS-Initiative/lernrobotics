@@ -1,0 +1,14 @@
+:root {
+  --amplify-primary-color: #e99e24;
+  --amplify-primary-tint: #ff7359;
+  --amplify-primary-shade: #e0573e;
+  --amplify-secondary-color: #5372a4;
+  --amplify-tertiary-color: #5372a4;
+}
+
+.auth-modal .ant-modal-body {
+  padding: 30px;
+  padding-top: 40px;
+  padding-bottom: 0px;
+  background-color: #e6ffff;
+}

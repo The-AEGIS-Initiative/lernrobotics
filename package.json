@@ -96,7 +96,9 @@
     "wait-on": "^4.0.2"
   },
   "lint-staged": {
-    "*.{js,css}": "prettier --write"
+    "*.{js,css}": [
+      "prettier --write"
+    ]
   },
   "jest": {
     "testResultsProcessor": "jest-sonar-reporter"

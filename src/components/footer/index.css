@@ -1,0 +1,44 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #243041;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.footer .row {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 1000px;
+}
+
+.footer .column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer .col-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #bbbbbb;
+}
+
+.footer .col-item {
+  font-weight: bold;
+  font-size: 14px;
+  color: #dddddd;
+  padding-bottom: 6px;
+  margin: 0px;
+}
+
+.footer .email-link {
+  font-weight: normal;
+}
+
+.footer a:hover {
+  color: #999999;
+}

@@ -58,3 +58,5 @@ amplify-build-config.json
 amplify-gradle-config.json
 amplifyxc.config
 team-provider-info.json
+
+!/public/unity_webgl/robobot/Build

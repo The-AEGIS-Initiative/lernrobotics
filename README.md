@@ -27,7 +27,6 @@ Robobot has been in active development since Janurary 2020. This project would n
 
 ## Development Setup
 
-
 As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
 
 ### Step 1) Configure AWS Amplify

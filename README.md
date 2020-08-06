@@ -5,7 +5,8 @@
 
 This repo is the codebase for the main [Robobot](https://robobot.aegisinitiative.io/) app. 
 
-See [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) for the code-sandbox service that powers Robobot.
+See [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) for the code-sandbox microservice.
+See [robobot-game-server](https://github.com/The-AEGIS-Initiative/python-game-server) for the python robot API.
 
 ## What is Robobot?
 **Robobot is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
@@ -61,13 +62,12 @@ the free tiers AWS provides.
     - Go to "Users and groups" tab
     - Select the user you created, then add to "Admin" group
 3. Create an test account for Cypress
-    - Simply create this account, no extra steps needed
-    - Do not use this account manually
+    - Create an account in your local robobot app (Don't worry about confirming email)
+    - In the AWS Cognito user pool, select the test account and click "Confirm User"
   
 ### Step 4) Configure Cypress Environment
 *  Create a `cypress.env.json` file in the root directory
 *  Add the following to the `cypress.env.json` file (replace with your test account credentials from Step 3):
-
     ```
     {
       "username": "<your-test-account-username>",
@@ -75,7 +75,7 @@ the free tiers AWS provides.
     }
     ```
 
-You are done!
+...And you are done!
 
 ## Development Workflow
 

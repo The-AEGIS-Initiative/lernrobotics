@@ -68,7 +68,7 @@ function GamePage({ unityContent, level }) {
   const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   const windowSize = useWindowSize();
-  //console.log(windowSize);
+  // console.log(windowSize);
   const { TabPane } = Tabs;
 
   // Fetch level data and user progress from graphql api
@@ -208,7 +208,7 @@ function GamePage({ unityContent, level }) {
     fetchData();
     setIsLoading(false);
 
-    //console.log(`levelData: ${levelData}`);
+    // console.log(`levelData: ${levelData}`);
   }, []);
 
   useEffect(() => {
@@ -302,7 +302,7 @@ function GamePage({ unityContent, level }) {
       { stringSeperator: /\s{1}/ }
     );
     console.log(result.result);
-    //return user_code
+    // return user_code
     return result.result
       .join(" ")
       .split("\\n")
@@ -414,7 +414,7 @@ function GamePage({ unityContent, level }) {
 
   // Necessary check to ensure unity content waits until level data is fetched
   if (levelData != "") {
-    //console.log(`levelData: ${levelData}`);
+    // console.log(`levelData: ${levelData}`);
     return (
       <div style={{ overflow: "hidden", height: "100vh" }}>
         <div className="game-container">
@@ -486,9 +486,9 @@ function GamePage({ unityContent, level }) {
               >
                 <Leaderboard rankings={rankings} />
               </TabPane>
-              {/**<TabPane tab={<SolutionOutlined data-tip="FAQ"/>} key="5" data-cy="tab" >
+              {/** <TabPane tab={<SolutionOutlined data-tip="FAQ"/>} key="5" data-cy="tab" >
                 <MarkdownViewer markdownText={faq} />
-              </TabPane>*/}
+              </TabPane> */}
               <TabPane
                 tab={<FileTextOutlined data-tip="API" />}
                 key="6"

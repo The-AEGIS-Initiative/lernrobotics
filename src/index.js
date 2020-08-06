@@ -51,8 +51,8 @@ console.log(configUpdate);
 Amplify.configure(configUpdate);
 
 const unityContent = new UnityContent(
-  `/unity_webgl/robobot/Build/robobot.json`,
-  `/unity_webgl/robobot/Build/UnityLoader.js`
+  "/unity_webgl/robobot/Build/robobot.json",
+  "/unity_webgl/robobot/Build/UnityLoader.js"
 );
 
 // Configure and initialize socket connection to back-end

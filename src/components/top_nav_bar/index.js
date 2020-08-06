@@ -47,7 +47,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
     if (click.key == "login/register") {
       // Clicking login/register button
       // LoginRegisterModalRef.current.openModal()
-      //Auth.federatedSignIn();
+      // Auth.federatedSignIn();
       setLoginVisible(true);
     } else if (click.key === "logout") {
       // Clicking logout button
@@ -89,7 +89,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
           theme={theme}
           triggerSubMenuAction="click"
           onOpenChange={() => {
-            setMenuOpen(menuOpen ? false : true);
+            setMenuOpen(!menuOpen);
           }}
           style={{
             width: "100vw",
@@ -138,7 +138,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `spin 0.25s linear forwards`,
+                        animation: "spin 0.25s linear forwards",
                       }}
                     />
                   )}
@@ -146,7 +146,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `reverse-spin 0.25s linear forwards`,
+                        animation: "reverse-spin 0.25s linear forwards",
                       }}
                     />
                   )}
@@ -174,7 +174,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `spin 0.25s linear forwards`,
+                        animation: "spin 0.25s linear forwards",
                       }}
                     />
                   )}
@@ -182,7 +182,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `reverse-spin 0.25s linear forwards`,
+                        animation: "reverse-spin 0.25s linear forwards",
                       }}
                     />
                   )}

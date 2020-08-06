@@ -20,7 +20,7 @@ export const submitUserCode = (userCode) => {
   console.log("User code submitted");
   if (checkUserCode(userCode)) {
     socket.emit("submitUserCode", {
-      client_id: sessionStorage["client_id"],
+      client_id: sessionStorage.client_id,
       data: userCode,
     });
   }
@@ -39,7 +39,7 @@ export const submitUserCode = (userCode) => {
  */
 export const stopUserCode = () => {
   console.log("User code stopped");
-  socket.emit("stopUserCode", { client_id: sessionStorage["client_id"] });
+  socket.emit("stopUserCode", { client_id: sessionStorage.client_id });
 };
 
 // Check for dangerous statements

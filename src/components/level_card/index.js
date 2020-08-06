@@ -21,12 +21,12 @@ function LevelCard({ title, description, link, difficulty, stars }) {
         >
           <Meta title={title} description={description} />
           <div className="level-card-row" data-cy="level-start-button">
-            {/**<Button
+            {/** <Button
               className={`${styles.ui_font} button`}
               data-cy="level-start-button"
             >
               <Link to={link}>Start</Link>
-            </Button>*/}
+            </Button> */}
 
             <div className="level-card-completion">
               {Array.from(Array(3 - stars)).map(() => (

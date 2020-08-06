@@ -42,13 +42,13 @@ function AdminLevelPage({ levelID }) {
         Temporarily disabled name change because it will desync the way levels
         are loaded in HomePage currently
       </p>
-      {/**<Search
+      {/** <Search
         placeholder={"Enter new name for level"}
         onSearch={async (value) => {
           //await changeLevelName(value, level);
         }}
         enterButton="Change Name"
-      />*/}
+      /> */}
       <h2> Level Builder:</h2>
       <Link to={`/admin/levelbuilder/${level.level_name}`}>
         {" "}

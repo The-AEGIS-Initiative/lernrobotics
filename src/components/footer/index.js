@@ -37,6 +37,7 @@ export default function Footer() {
           >
             About Us
           </a>
+          
           <p className="col-item"> Our Team </p>
           <p className="col-item"> Support Us </p>
         </div>

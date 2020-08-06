@@ -19,9 +19,9 @@ import "./commands";
 Cypress.Commands.add("login", () => {
   cy.visit(`${Cypress.env("baseUrl")}/login-endpoint`);
   cy.get("[data-cy=username-input]").type(Cypress.env("username"));
-  wait(200);
+  cy.wait(200);
   cy.get("[data-cy=password-input]").type(Cypress.env("password"));
-  wait(200);
+  cy.wait(200);
   cy.get("[data-cy=sign-in-button]").click();
 });
 

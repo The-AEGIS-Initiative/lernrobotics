@@ -3,9 +3,10 @@ describe("Gameplay", () => {
     cy.visit(Cypress.env("baseUrl"));
     cy.login();
 
+    cy.get("[data-cy=dashboard]").should("exist");
+
     cy.visit(`${Cypress.env("baseUrl")}/game/hello_world`);
 
-    cy.wait(1000);
     cy.contains("Loading", { timeout: 10000 });
 
     cy.contains("Skip", { timeout: 60000 }).click();

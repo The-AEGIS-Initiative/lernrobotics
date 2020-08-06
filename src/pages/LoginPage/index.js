@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-import { Button } from "antd";
-import { useHistory } from "react-router-dom";
+import { Button } from 'antd'
+import { useHistory } from 'react-router-dom'
 
-import { Auth } from "aws-amplify";
+import { Auth } from 'aws-amplify'
 
 /**
  * NOT SECURE
  * For use in testing only! Do not use in production.
  */
-function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function LoginPage () {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-  const history = useHistory();
+  const history = useHistory()
 
-  async function handleSignIn() {
-    await Auth.signIn(username, password);
-    setUsername("");
-    setPassword("");
-    history.push("/");
+  async function handleSignIn () {
+    await Auth.signIn(username, password)
+    setUsername('')
+    setPassword('')
+    history.push('/')
   }
 
   return (
@@ -41,7 +41,7 @@ function LoginPage() {
         Sign in
       </Button>
     </div>
-  );
+  )
 }
 
-export default LoginPage;
+export default LoginPage

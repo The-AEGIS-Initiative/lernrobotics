@@ -1,15 +1,15 @@
-import React, { Text, useState, useEffect } from "react";
-import { Button } from "antd";
-import { Link } from "react-router-dom";
+import React, { Text, useState, useEffect } from 'react'
+import { Button } from 'antd'
+import { Link } from 'react-router-dom'
 
-import "./index.css";
+import './index.css'
 
-export default function DashboardButton({
+export default function DashboardButton ({
   width,
   height,
   content,
   link,
-  disabled,
+  disabled
 }) {
   return (
     <Link to={link}>
@@ -19,7 +19,7 @@ export default function DashboardButton({
           disabled={disabled}
           style={{
             width: width,
-            height: height,
+            height: height
           }}
         >
           {content}
@@ -27,5 +27,5 @@ export default function DashboardButton({
         </Button>
       </div>
     </Link>
-  );
+  )
 }

@@ -1,25 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react'
 
-import { Modal } from "antd";
+import { Modal } from 'antd'
 
 import {
   AmplifyAuthenticator,
   AmplifySignIn,
   AmplifySignUp,
-  AmplifyConfirmSignUp,
-} from "@aws-amplify/ui-react";
-import { Auth } from "aws-amplify";
+  AmplifyConfirmSignUp
+} from '@aws-amplify/ui-react'
+import { Auth } from 'aws-amplify'
 
-import { AppContext } from "contexts/AppContext";
+import { AppContext } from 'contexts/AppContext'
 
-import "./index.css";
+import './index.css'
 
-function LoginRegisterModal({ onSubmit, visible, handleCancel }) {
-  const appContext = useContext(AppContext);
+function LoginRegisterModal ({ onSubmit, visible, handleCancel }) {
+  const appContext = useContext(AppContext)
 
   const handleOk = () => {
-    console.log("modal ok");
-  };
+    console.log('modal ok')
+  }
 
   return (
     <div className="auth-modal">
@@ -38,23 +38,23 @@ function LoginRegisterModal({ onSubmit, visible, handleCancel }) {
             usernameAlias="username"
             formFields={[
               {
-                type: "username",
-                label: "Username",
-                placerholder: "Enter your username",
-                required: true,
+                type: 'username',
+                label: 'Username',
+                placerholder: 'Enter your username',
+                required: true
               },
               {
-                type: "email",
-                label: "Email",
-                placeholder: "Enter your email",
-                required: true,
+                type: 'email',
+                label: 'Email',
+                placeholder: 'Enter your email',
+                required: true
               },
               {
-                type: "password",
-                label: "Password",
-                placeholder: "Enter your password",
-                required: "true",
-              },
+                type: 'password',
+                label: 'Password',
+                placeholder: 'Enter your password',
+                required: 'true'
+              }
             ]}
           />
 
@@ -71,7 +71,7 @@ function LoginRegisterModal({ onSubmit, visible, handleCancel }) {
         </AmplifyAuthenticator>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default LoginRegisterModal;
+export default LoginRegisterModal

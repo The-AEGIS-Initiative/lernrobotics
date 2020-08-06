@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Button, Input } from "antd";
-import * as graphqlController from "graphql/graphql-controller";
+import React, { useEffect, useState, useContext, useRef } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { Button, Input } from 'antd'
+import * as graphqlController from 'graphql/graphql-controller'
 
-async function changeLevelName(value, level) {
+async function changeLevelName (value, level) {
   // TODO : probably add a warning modal or some other form of authentication here
 
   await graphqlController.updateLevel({
@@ -13,24 +13,24 @@ async function changeLevelName(value, level) {
     default_code: level.default_code,
     task: level.task,
     tutorial: level.tutorial,
-    level_data: level.level_data,
-  });
-  window.location.reload();
+    level_data: level.level_data
+  })
+  window.location.reload()
 }
 
-function AdminLevelPage({ levelID }) {
-  const [level, setLevel] = useState("");
+function AdminLevelPage ({ levelID }) {
+  const [level, setLevel] = useState('')
 
-  const { Search } = Input;
+  const { Search } = Input
   useEffect(() => {
-    async function get_data() {
-      var jsonObject = await graphqlController.getLevelByID({ id: levelID });
+    async function get_data () {
+      var jsonObject = await graphqlController.getLevelByID({ id: levelID })
 
-      setLevel(jsonObject);
+      setLevel(jsonObject)
     }
 
-    get_data();
-  }, []);
+    get_data()
+  }, [])
 
   // TODO : styles.css for admin pages
 
@@ -51,11 +51,11 @@ function AdminLevelPage({ levelID }) {
       /> */}
       <h2> Level Builder:</h2>
       <Link to={`/admin/levelbuilder/${level.level_name}`}>
-        {" "}
-        {level.level_name}{" "}
+        {' '}
+        {level.level_name}{' '}
       </Link>
     </>
-  );
+  )
 }
 
-export default AdminLevelPage;
+export default AdminLevelPage

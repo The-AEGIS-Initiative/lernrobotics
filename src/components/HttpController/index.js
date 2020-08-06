@@ -3,9 +3,9 @@
  * @requires axios
  */
 
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-axios.defaults.withCredentials = false;
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+axios.defaults.withCredentials = false
 
 /**
  * Custom Hook to GET data from API
@@ -25,60 +25,60 @@ axios.defaults.withCredentials = false;
  *   );
  * }
  */
-export function useGetData(url) {
-  const [res, setRes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export function useGetData (url) {
+  const [res, setRes] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     axios
       .get(url)
       .then((res) => {
-        setRes(JSON.stringify(res.data));
-        setLoading(false);
+        setRes(JSON.stringify(res.data))
+        setLoading(false)
       })
       .catch((e) => {
-        setError(JSON.stringify(e));
-      });
-  }, [url]);
+        setError(JSON.stringify(e))
+      })
+  }, [url])
 
-  return { res, loading, error };
+  return { res, loading, error }
 }
 
-export function postData(url, data, callback) {
+export function postData (url, data, callback) {
   fetch(url, {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(data),
     headers: {
-      "Content-Type": "application/json",
-    }, //, credentials: 'include'
+      'Content-Type': 'application/json'
+    } //, credentials: 'include'
   })
     .then((res) => {
-      callback(res);
+      callback(res)
     })
     .catch((err) => {
       // Log errors
-      console.error(err);
-      alert("POST error, please try again");
-    });
+      console.error(err)
+      alert('POST error, please try again')
+    })
 }
 
-export function getData(url, callback) {
+export function getData (url, callback) {
   fetch(url, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       // Prevent using cache with out of date response
-      "Cache-Control": "no-cache",
-    }, //, credentials: 'include'
+      'Cache-Control': 'no-cache'
+    } //, credentials: 'include'
   })
     .then((res) => {
-      callback(res);
+      callback(res)
     })
     .catch((err) => {
       // Log errors
-      console.error(err);
-      alert("GET error, please try again");
-    });
+      console.error(err)
+      alert('GET error, please try again')
+    })
 }

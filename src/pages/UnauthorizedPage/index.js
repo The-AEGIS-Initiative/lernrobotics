@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
-function UnauthorizedPage() {
-  return <h1> Unauthorized Access Detected </h1>;
+function UnauthorizedPage () {
+  return <h1> Unauthorized Access Detected </h1>
 }
 
-export default UnauthorizedPage;
+export default UnauthorizedPage

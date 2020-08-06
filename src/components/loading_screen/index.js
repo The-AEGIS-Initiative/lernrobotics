@@ -1,42 +1,42 @@
-import React from "react";
+import React from 'react'
 
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 
-function LoadingScreen() {
+function LoadingScreen () {
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 34, color: "white" }} spin />
-  );
+    <LoadingOutlined style={{ fontSize: 34, color: 'white' }} spin />
+  )
 
   return (
     <div
       style={{
-        backgroundColor: "#333333",
-        height: "100%",
-        width: "100vw",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        position: "absolute",
-        top: "0px",
+        backgroundColor: '#333333',
+        height: '100%',
+        width: '100vw',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        position: 'absolute',
+        top: '0px',
         zIndex: 5,
-        overflow: "hidden",
+        overflow: 'hidden'
       }}
     >
       <Spin indicator={antIcon} />
       <h1
         style={{
-          color: "white",
-          fontSize: "16px",
-          fontFamily: "Montserrat",
-          marginTop: "14px",
+          color: 'white',
+          fontSize: '16px',
+          fontFamily: 'Montserrat',
+          marginTop: '14px'
         }}
       >
         Loading Level...
       </h1>
     </div>
-  );
+  )
 }
 
-export default LoadingScreen;
+export default LoadingScreen

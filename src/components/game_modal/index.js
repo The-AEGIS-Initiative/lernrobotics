@@ -1,9 +1,9 @@
-import React, { Text, useState, useEffect } from "react";
-import { Modal } from "antd";
+import React, { Text, useState, useEffect } from 'react'
+import { Modal } from 'antd'
 
-import "./index.css";
+import './index.css'
 
-function GameModal({ visible, title, message, handleOk, handleCancel }) {
+function GameModal ({ visible, title, message, handleOk, handleCancel }) {
   return (
     <div className="game-over-modal" data-cy="game-modal">
       <Modal
@@ -12,18 +12,18 @@ function GameModal({ visible, title, message, handleOk, handleCancel }) {
         visible={visible}
         footer={null}
         onOk={() => {
-          handleOk();
+          handleOk()
         }}
         onCancel={() => {
-          handleCancel();
+          handleCancel()
         }}
       >
-        {message.split(";").map((value, index) => {
-          return <p>{value}</p>;
+        {message.split(';').map((value, index) => {
+          return <p>{value}</p>
         })}
       </Modal>
     </div>
-  );
+  )
 }
 
-export default GameModal;
+export default GameModal

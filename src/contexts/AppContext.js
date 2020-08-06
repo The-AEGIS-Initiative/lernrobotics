@@ -1,17 +1,17 @@
-import React, { useEffect, useState, createContext } from "react";
-import { getData } from "../components/HttpController";
-import { Auth, Hub } from "aws-amplify";
+import React, { useEffect, useState, createContext } from 'react'
+import { getData } from '../components/HttpController'
+import { Auth, Hub } from 'aws-amplify'
 
-export const AppContext = createContext();
+export const AppContext = createContext()
 
 // Holds global app wide information
 // Contains:
 // isAuth: current client authentication status
 // setAuth: Queries backend server to update authentication status
 export class AppContextProvider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.setAuth = this.setAuth.bind(this);
+  constructor (props) {
+    super(props)
+    this.setAuth = this.setAuth.bind(this)
 
     this.state = {
       loadingAuth: true,
@@ -19,43 +19,43 @@ export class AppContextProvider extends React.Component {
       isAuth: false,
       setAuth: this.setAuth,
       checkAuth: this.setAuth,
-      username: "",
-      backENDURL: "",
+      username: '',
+      backENDURL: '',
       user: null,
-      user_group: null,
-    };
+      user_group: null
+    }
   }
 
-  checkAuthStatusCache() {
-    const userCookie = localStorage.getItem("user");
+  checkAuthStatusCache () {
+    const userCookie = localStorage.getItem('user')
     if (userCookie == null || userCookie == false) {
       this.setState({
         isAuth: false,
-        username: "",
+        username: '',
         user: null,
-        user_group: null,
-      });
-      return false;
+        user_group: null
+      })
+      return false
     } else {
       this.setState({
         isAuth: true,
         username: userCookie.username,
-        user_group: userCookie.user_group,
-      });
-      return true;
+        user_group: userCookie.user_group
+      })
+      return true
     }
   }
 
-  async setAuth() {
+  async setAuth () {
     // checkAuthStatusCache();
 
     await Auth.currentAuthenticatedUser()
       .then((user) => {
         // console.log(user);
-        const access_token = user.signInUserSession.accessToken;
-        var user_group = "user";
-        if (access_token.payload["cognito:groups"] != null) {
-          user_group = access_token.payload["cognito:groups"][0];
+        const access_token = user.signInUserSession.accessToken
+        var user_group = 'user'
+        if (access_token.payload['cognito:groups'] != null) {
+          user_group = access_token.payload['cognito:groups'][0]
         }
         // console.log(access_token.payload["cognito:groups"]);
         // console.log(user_group)
@@ -65,58 +65,58 @@ export class AppContextProvider extends React.Component {
           user: user,
           user_group: user_group,
           isLoadingAuth: false,
-          authModalVisible: false,
-        });
+          authModalVisible: false
+        })
         // this.setAuthModalVisible(false);
-        localStorage.setItem("user", {
+        localStorage.setItem('user', {
           username: user.username,
-          user_group: user_group,
-        });
+          user_group: user_group
+        })
       })
       .catch((err) => {
-        console.log("User Not logged in");
-        console.log(err);
+        console.log('User Not logged in')
+        console.log(err)
         this.setState({
           isAuth: false,
-          username: "",
+          username: '',
           user: null,
           user_group: null,
           isLoadingAuth: false,
-          authModalVisible: false,
-        });
-        localStorage.setItem("user", null);
-      });
+          authModalVisible: false
+        })
+        localStorage.setItem('user', null)
+      })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     // Check for authentication status
-    Hub.listen("auth", (data) => {
-      const { payload } = data;
-      if (payload.event === "signIn") {
-        this.setAuth();
+    Hub.listen('auth', (data) => {
+      const { payload } = data
+      if (payload.event === 'signIn') {
+        this.setAuth()
       }
-      if (payload.event === "signOut") {
-        console.log("a user has signed out!");
-        this.setAuth();
+      if (payload.event === 'signOut') {
+        console.log('a user has signed out!')
+        this.setAuth()
       }
-    });
+    })
 
-    this.setAuth();
+    this.setAuth()
 
     if (process.env.REACT_APP_BACKEND_URL == null) {
-      this.setState({ backEndURL: "http://localhost:8000" });
+      this.setState({ backEndURL: 'http://localhost:8000' })
     } else {
-      this.setState({ backEndURL: process.env.REACT_APP_BACKEND_URL });
+      this.setState({ backEndURL: process.env.REACT_APP_BACKEND_URL })
     }
   }
 
-  render() {
+  render () {
     return (
       <AppContext.Provider value={this.state}>
         {this.props.children}
       </AppContext.Provider>
-    );
+    )
   }
 }
 
-export const AppConsumer = AppContext.Consumer;
+export const AppConsumer = AppContext.Consumer

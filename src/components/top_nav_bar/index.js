@@ -1,71 +1,71 @@
-import React, { useState, useRef, useContext } from "react";
-import { Menu, Divider } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useRef, useContext } from 'react'
+import { Menu, Divider } from 'antd'
+import { Link, useHistory } from 'react-router-dom'
 
-import cookie from "react-cookies";
+import cookie from 'react-cookies'
 
 import {
   ArrowLeftOutlined,
   UserOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+  DownOutlined
+} from '@ant-design/icons'
 
-import { AppContext } from "contexts/AppContext";
-import LoginRegisterModal from "../login_register_modal";
+import { AppContext } from 'contexts/AppContext'
+import LoginRegisterModal from '../login_register_modal'
 
-import { Auth } from "aws-amplify";
+import { Auth } from 'aws-amplify'
 
-import styles from "style.module.css";
+import styles from 'style.module.css'
 
-import "./index.css";
+import './index.css'
 
 /**
  * Main navigation bar
  * theme: dark or light
  */
-function TopNavBar({ type, theme, backgroundColor, title }) {
-  const [currentTab, setCurrentTab] = useState("");
-  const [loginVisible, setLoginVisible] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(null);
+function TopNavBar ({ type, theme, backgroundColor, title }) {
+  const [currentTab, setCurrentTab] = useState('')
+  const [loginVisible, setLoginVisible] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(null)
 
-  const appContext = useContext(AppContext);
+  const appContext = useContext(AppContext)
 
-  const history = useHistory();
+  const history = useHistory()
 
-  const { SubMenu } = Menu;
+  const { SubMenu } = Menu
 
-  var lineHeight = "4vh";
-  if (type == "main") {
-    lineHeight = "60px";
+  var lineHeight = '4vh'
+  if (type == 'main') {
+    lineHeight = '60px'
   } else {
-    lineHeight = "45px";
+    lineHeight = '45px'
   }
 
   // Handle nav bar clicks
   const handleClick = (click) => {
-    console.log("click ", click);
-    if (click.key == "login/register") {
+    console.log('click ', click)
+    if (click.key == 'login/register') {
       // Clicking login/register button
       // LoginRegisterModalRef.current.openModal()
       // Auth.federatedSignIn();
-      setLoginVisible(true);
-    } else if (click.key === "logout") {
+      setLoginVisible(true)
+    } else if (click.key === 'logout') {
       // Clicking logout button
-      logout();
-    } else if (click.key === "admin") {
-      history.push("/admin");
+      logout()
+    } else if (click.key === 'admin') {
+      history.push('/admin')
     }
-  };
+  }
 
   // Logout
   const logout = () => {
     Auth.signOut()
       .then((data) => {
-        console.log(data);
-        appContext.checkAuth();
+        console.log(data)
+        appContext.checkAuth()
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   return (
     <div style={{ zIndex: 100 }}>
@@ -76,10 +76,10 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
       <div
         className="top-nav-bar"
         style={{
-          display: "flex",
+          display: 'flex',
           flex: 1,
-          justifyContent: "flex-start",
-          height: lineHeight,
+          justifyContent: 'flex-start',
+          height: lineHeight
         }}
       >
         <Menu
@@ -89,47 +89,47 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
           theme={theme}
           triggerSubMenuAction="click"
           onOpenChange={() => {
-            setMenuOpen(!menuOpen);
+            setMenuOpen(!menuOpen)
           }}
           style={{
-            width: "100vw",
-            display: "flex",
+            width: '100vw',
+            display: 'flex',
             flex: 1,
-            alignContent: "center",
-            justifyContent: "flex-end",
+            alignContent: 'center',
+            justifyContent: 'flex-end',
             backgroundColor: backgroundColor,
-            lineHeight: lineHeight,
+            lineHeight: lineHeight
           }}
         >
-          {type === "main" && (
-            <Menu.Item key="back" style={{ marginRight: "auto" }}>
+          {type === 'main' && (
+            <Menu.Item key="back" style={{ marginRight: 'auto' }}>
               <Link
-                to={"/"}
+                to={'/'}
                 className={`${styles.ui_font}`}
                 data-cy="dashboard-link"
               >
-                <div style={{ fontSize: "24px" }}> Robobot </div>
+                <div style={{ fontSize: '24px' }}> Robobot </div>
               </Link>
             </Menu.Item>
           )}
 
-          {!(type === "main") && (
+          {!(type === 'main') && (
             <Menu.Item key="back" style={{}}>
-              <Link to={"/practice"} className={`${styles.ui_font}`}>
-                <ArrowLeftOutlined style={{ width: "10px" }} />
+              <Link to={'/practice'} className={`${styles.ui_font}`}>
+                <ArrowLeftOutlined style={{ width: '10px' }} />
               </Link>
             </Menu.Item>
           )}
 
-          {!(type === "main") && (
-            <div className={`${styles.ui_font}`} style={{ margin: "auto" }}>
+          {!(type === 'main') && (
+            <div className={`${styles.ui_font}`} style={{ margin: 'auto' }}>
               {title}
             </div>
           )}
 
           {!appContext.isAuth && (
             <SubMenu
-              style={{ marginTop: "5px" }}
+              style={{ marginTop: '5px' }}
               title={
                 <div>
                   <UserOutlined className="user-icon" data-cy="nav-bar-menu" />
@@ -138,7 +138,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: "spin 0.25s linear forwards",
+                        animation: 'spin 0.25s linear forwards'
                       }}
                     />
                   )}
@@ -146,7 +146,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: "reverse-spin 0.25s linear forwards",
+                        animation: 'reverse-spin 0.25s linear forwards'
                       }}
                     />
                   )}
@@ -156,7 +156,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
               <Menu.Item
                 key="login/register"
                 data-cy="login-register-link"
-                style={{ marginBottom: "3px" }}
+                style={{ marginBottom: '3px' }}
               >
                 Login / Register
               </Menu.Item>
@@ -165,7 +165,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
 
           {appContext.isAuth && (
             <SubMenu
-              style={{ marginTop: `${type === "main" ? "7px" : "8px"}` }}
+              style={{ marginTop: `${type === 'main' ? '7px' : '8px'}` }}
               title={
                 <div>
                   <UserOutlined className="user-icon" data-cy="nav-bar-menu" />
@@ -174,7 +174,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: "spin 0.25s linear forwards",
+                        animation: 'spin 0.25s linear forwards'
                       }}
                     />
                   )}
@@ -182,7 +182,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: "reverse-spin 0.25s linear forwards",
+                        animation: 'reverse-spin 0.25s linear forwards'
                       }}
                     />
                   )}
@@ -194,7 +194,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                 {appContext.username}
               </div>
               <Divider className="top-nav-bar-divider" />
-              {appContext.user_group === "admin" && (
+              {appContext.user_group === 'admin' && (
                 <Menu.Item key="admin" data-cy="admin-console-link">
                   Admin Console
                 </Menu.Item>
@@ -202,7 +202,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
               <Menu.Item
                 key="logout"
                 data-cy="logout-link"
-                style={{ marginBottom: "20px" }}
+                style={{ marginBottom: '20px' }}
               >
                 Logout
               </Menu.Item>
@@ -211,7 +211,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
         </Menu>
       </div>
     </div>
-  );
+  )
 }
 
-export default TopNavBar;
+export default TopNavBar

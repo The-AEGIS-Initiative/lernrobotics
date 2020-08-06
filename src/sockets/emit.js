@@ -2,7 +2,7 @@
  * @module sockets/emit
  */
 
-import { socket } from "../index";
+import { socket } from '../index'
 
 /**
  * Function to submit user code
@@ -17,14 +17,14 @@ import { socket } from "../index";
  * </Button>
  */
 export const submitUserCode = (userCode) => {
-  console.log("User code submitted");
+  console.log('User code submitted')
   if (checkUserCode(userCode)) {
-    socket.emit("submitUserCode", {
+    socket.emit('submitUserCode', {
       client_id: sessionStorage.client_id,
-      data: userCode,
-    });
+      data: userCode
+    })
   }
-};
+}
 
 /**
  * Function to stop current running user code
@@ -38,20 +38,20 @@ export const submitUserCode = (userCode) => {
  * </Button>
  */
 export const stopUserCode = () => {
-  console.log("User code stopped");
-  socket.emit("stopUserCode", { client_id: sessionStorage.client_id });
-};
+  console.log('User code stopped')
+  socket.emit('stopUserCode', { client_id: sessionStorage.client_id })
+}
 
 // Check for dangerous statements
 // return true if safe
 // 				false if dangerous
 const checkUserCode = (code) => {
-  return true;
+  return true
 
   // Matches import statements
   // TODO: Check all import statements and ensure they are either numpy or AEGISCore
-  var regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/;
+  var regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/
 
-  var result = regex.exec(code);
-  console.log(result);
-};
+  var result = regex.exec(code)
+  console.log(result)
+}

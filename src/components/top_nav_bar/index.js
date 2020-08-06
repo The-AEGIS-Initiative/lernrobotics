@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import { Menu, Divider } from "antd";
+import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
 import cookie from "react-cookies";
@@ -193,7 +193,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                 <UserOutlined className="top-nav-bar-submenu-profile-icon" />
                 {appContext.username}
               </div>
-              <Divider className="top-nav-bar-divider" />
+              <div className="top-nav-bar-divider" />
               {appContext.user_group === "admin" && (
                 <Menu.Item key="admin" data-cy="admin-console-link">
                   Admin Console

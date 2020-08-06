@@ -32,7 +32,6 @@ if (amplify_build_env === "dev") {
 }
 
 if (amplify_build_env === "staging") {
-  console.log = function no_console() {};
   configUpdate.oauth.redirectSignIn =
     "https://staging-robobot.aegisinitiative.io/";
   configUpdate.oauth.redirectSignOut =

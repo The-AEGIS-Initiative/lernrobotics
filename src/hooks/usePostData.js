@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-axios.defaults.withCredentials = true
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 /**
  * Custom Hook to POST data to API
@@ -22,27 +22,27 @@ axios.defaults.withCredentials = true
  *   )
  * }
  */
-export default function usePostData (url, data) {
-  const [res, setRes] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+export default function usePostData(url, data) {
+  const [res, setRes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const headers = {
-    'Content-Type': 'application/json'
-  }
+    "Content-Type": "application/json",
+  };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
       .post(url, data, { headers: headers })
       .then((res) => {
-        setRes(JSON.stringify(res.data))
-        setLoading(false)
+        setRes(JSON.stringify(res.data));
+        setLoading(false);
       })
       .catch((e) => {
-        setError(JSON.stringify(e))
-      })
-  }, [data, headers, url])
+        setError(JSON.stringify(e));
+      });
+  }, [data, headers, url]);
 
-  return { res, loading, error }
+  return { res, loading, error };
 }

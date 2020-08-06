@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 /** Hook to simplify form logic
  * Usage example)
@@ -6,26 +6,26 @@ import { useState } from 'react'
  *   const { values, handleChange, handleSubmit } = useForm(initialValues, login);
  */
 const useForm = (initialValues, callback) => {
-  const [values, setValues] = useState(initialValues)
+  const [values, setValues] = useState(initialValues);
 
   const handleSubmit = (event) => {
-    if (event) event.preventDefault()
-    callback()
-  }
+    if (event) event.preventDefault();
+    callback();
+  };
 
   const handleChange = (event) => {
-    event.persist()
+    event.persist();
     setValues((values) => ({
       ...values,
-      [event.target.name]: event.target.value
-    }))
-  }
+      [event.target.name]: event.target.value,
+    }));
+  };
 
   return {
     handleChange,
     handleSubmit,
-    values
-  }
-}
+    values,
+  };
+};
 
-export default useForm
+export default useForm;

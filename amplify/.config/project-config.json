@@ -2,7 +2,7 @@
     "providers": [
         "awscloudformation"
     ],
-    "projectName": "Robobot",
+    "projectName": "robobot",
     "version": "3.0",
     "frontend": "javascript",
     "javascript": {

@@ -55,6 +55,7 @@
     "start:headless": "BROWSER=none react-app-rewired start",
     "build": "react-app-rewired build",
     "build:dev": "REACT_APP_BUILD_ENV=dev REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
+    "build:staging": "REACT_APP_BUILD_ENV=staging REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
     "build:prod": "REACT_APP_BUILD_ENV=prod REACT_APP_BACKEND_URL=$BACKEND_URL react-app-rewired build",
     "test": "cypress open --env baseUrl=http://localhost:3000",
     "test:local": "cypress run --spec 'cypress/integration/local/*.spec.js' --env baseUrl=http://localhost:3000",

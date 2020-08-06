@@ -2,6 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
 [![](https://img.shields.io/badge/powered--by-AWS_Amplify-brightgreen)](https://aws.amazon.com/amplify/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=The-AEGIS-Initiative_robobot&metric=alert_status)](https://sonarcloud.io/dashboard?id=The-AEGIS-Initiative_robobot)
 
 This repo is the codebase for the main [Robobot](https://robobot.aegisinitiative.io/) app. 
 

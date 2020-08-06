@@ -78,13 +78,13 @@ the free tiers AWS provides.
 
 ...And you are done!
 
-## Development Workflow
+## Development Guidelines
 
 ### Before making changes:
 
 *  Run app using:
     `npm start`
-*  Run Robobot back-end in a 2nd terminal
+*  Run [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) in a 2nd terminal
 *  Start cypress in a 3rd terminal:
     `npm test`
 
@@ -102,11 +102,7 @@ This project uses primarily Cypress for running tests. See Writing Tests section
 
 *  `git add <your-changed-files>`
 *  `git commit -m "<your-commit-message>"`
-  *  Commit message should follow semantic convention such as:
-    *  major(api): API rewrite, not backwards compatible!
-    *  feat(log): add new logging feature
-    *  fix(config): always load config first
-    *  chore(ci): semantic commit without triggering new version
+  *  Write clear commit messages!
 
 *  `git push -U origin <your-branch-name>`
   *  A pre-push git hook will run your changes against the cypress testing suite to ensure passes
@@ -115,19 +111,14 @@ This project uses primarily Cypress for running tests. See Writing Tests section
 
 When your changes are complete, make a pull request into the `master` branch.
 
-*  Once your PR is approved, you may merge your branch into the master branch. This will trigger a rebuild of the development-robobot app.
-
-*  Log-in to the AWS Amplify console and confirm that the development branch is green.
-  *  If there are errors, fix them ASAP.
-
 ## Writing Tests
 
 Cypress tests are stored in the `cypress/integration/` folder. This project breaks up the tests into 2 folders:
 
-*  `cypress/integration/front-end-only`
+*  `cypress/integration/local`
   *  These tests only require the front-end (this app) running.
-*  `cypress/integratoin/front-and-back-end`
-  *  These tests require the back-end to be running. These are usually end-2-end (E2E) tests.
+*  `cypress/integratoin/production`
+  *  These tests require the robobot-code-sandbox to be running. These are usually end-2-end (E2E) tests.
 
 Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html)
 
@@ -135,6 +126,15 @@ Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.
 ### File Structure
 ```sh
 robobot/
-├── src        # Front-end react 
-└── test     # Worker server (search indexing; syncing with Algolia)
+├── src/
+  ├── components/               # React components that are reused in multiple views
+  ├── contexts/                 # React contexts
+  ├── graphql/                  # GraphQL wrappers for Amplify GraphQL API
+  ├── hooks/                    # Render-less hooks
+  ├── pages/                    # App views
+    ├── ExamplePage/            # An example page component
+      ├── components/           # Components specific to this view only
+      ├── index.js             
+      └── index.css
+  └── sockets                   # Socket.io wrappers for robobot-code-sandbox connections
 ```

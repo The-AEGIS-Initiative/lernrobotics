@@ -41,11 +41,12 @@ cypress.env.json
 
 .vs/
 
+!/public/unity_webgl/robobot/Build
+
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/mock-data
-temp/
 amplify/backend/amplify-meta.json
 amplify/backend/awscloudformation
 build/
@@ -58,5 +59,3 @@ amplify-build-config.json
 amplify-gradle-config.json
 amplifyxc.config
 team-provider-info.json
-
-!/public/unity_webgl/robobot/Build

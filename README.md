@@ -1,28 +1,28 @@
-# Robobot
+# LernRobotics
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
 [![](https://img.shields.io/badge/powered--by-AWS_Amplify-brightgreen)](https://aws.amazon.com/amplify/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=The-AEGIS-Initiative_robobot&metric=alert_status)](https://sonarcloud.io/dashboard?id=The-AEGIS-Initiative_robobot)
 
-This repo is the codebase for the main [Robobot](https://robobot.aegisinitiative.io/) app. 
+This repo is the codebase for the main [LernRobotics](https://robobot.aegisinitiative.io/) app. 
 
 See [robobot-code-sandbox](https://github.com/The-AEGIS-Initiative/robobot-code-sandbox) for the code-sandbox microservice.
 See [robobot-game-server](https://github.com/The-AEGIS-Initiative/python-game-server) for the python robot API.
 
-## What is Robobot?
-**Robobot is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
+## What is LernRobotics?
+**LernRobotics is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
 
-Robobot is open-source projected developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
+LernRobotics is open-source projected developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
 
 ## Status
-Robobot has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
+LernRobotics has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
 
 ## Table of Contents
   * [Development Setup](#development-setup)
     + [Step 0) Prerequisites](#step-0-prerequisites)
     + [Step 1) Configure AWS Amplify](#step-1-configure-aws-amplify)
     + [Step 2) Set up the app](#step-2-set-up-the-app)
-    + [Step 3) Create a Robobot Account](#step-3-create-a-robobot-account)
+    + [Step 3) Create a LernRobotics Account](#step-3-create-a-robobot-account)
     + [Step 4) Configure Cypress Environment](#step-4-configure-cypress-environment)
   * [Development Guidelines](#development-guidelines)
     + [Before making changes](#before-making-changes)
@@ -62,10 +62,10 @@ Now you should have your own AWS account, an IAM user for Amplify, and a fully c
     - Are you sure you want to continue? `Yes`
     - Do you want to update code for your updated GraphQL API? `No`
 
-At this point you will have your own fully functional copy of the Robobot app to develop on. All back-end resources for auth and APIs are provisioned on your own AWS account. For dev purposes, AWS usage falls well within
+At this point you will have your own fully functional copy of the LernRobotics app to develop on. All back-end resources for auth and APIs are provisioned on your own AWS account. For dev purposes, AWS usage falls well within
 the free tiers AWS provides. 
 
-### Step 3) Create a Robobot Account
+### Step 3) Create a LernRobotics Account
 1. Start the robobot app locally: `npm start`
 2. Create an general purpose developer admin account (for manual local app usage)
     - Create the account in your local robobot app

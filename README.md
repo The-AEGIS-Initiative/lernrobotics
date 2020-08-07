@@ -19,7 +19,7 @@ Robobot has been in active development since Janurary 2020. This project would n
 
 ## Table of Contents
   * [Development Setup](#development-setup)
-    + [Step 0) Configure AWS Amplify](#step-0-prerequisites)
+    + [Step 0) Prerequisites](#step-0-prerequisites)
     + [Step 1) Configure AWS Amplify](#step-1-configure-aws-amplify)
     + [Step 2) Set up the app](#step-2-set-up-the-app)
     + [Step 3) Create a Robobot Account](#step-3-create-a-robobot-account)

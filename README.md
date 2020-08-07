@@ -23,9 +23,17 @@ Robobot has been in active development since Janurary 2020. This project would n
     + [Step 2) Set up the app](#step-2-set-up-the-app)
     + [Step 3) Create a Robobot Account](#step-3-create-a-robobot-account)
     + [Step 4) Configure Cypress Environment](#step-4-configure-cypress-environment)
-  * [Development Workflow](#development-workflow)
+  * [Development Guidelines](#development-guidelines)
+    + [Before making changes](#before-making-changes)
+    + [While making changes](#while-making-changes)
+    + [After making changes](#after-making-changes)
   * [Writing Tests](#writing-tests)
-
+  * [Codebase](#codebase)
+    + [File Structure](#file-structure)
+    + [Component Organization](#component-organization)
+    + [Contexts](#contexts)
+    + [GraphQL](#graphql)
+    
 ## Development Setup
 
 As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
@@ -107,9 +115,7 @@ This project uses primarily Cypress for running tests. See Writing Tests section
 *  `git push -U origin <your-branch-name>`
   *  A pre-push git hook will run your changes against the cypress testing suite to ensure passes
 
-### Pull Requests and Merging
-
-When your changes are complete, make a pull request into the `master` branch.
+* When your changes are complete, make a PR request into master.
 
 ## Writing Tests
 

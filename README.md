@@ -126,13 +126,17 @@ Cypress is incredibly intuitive to use. Get started here: [https://docs.cypress.
 ### File Structure
 ```sh
 robobot/
-├── src/
-  ├── components/               # React components that are reused in multiple views
-  ├── contexts/                 # React contexts
-  ├── graphql/                  # GraphQL wrappers for Amplify GraphQL API
-  ├── hooks/                    # Render-less hooks
-  ├── pages/                    # App views
-  └── sockets/                  # Socket.io wrappers for robobot-code-sandbox connections
+  ├── amplify/                    # Amplify configuration files
+  ├── cypress/                    # Cypress integration tests
+  ├── public/                    
+    ├── unity_webgl/              # Unity WebGL build files
+  ├── src/
+    ├── components/               # React components that are reused in multiple views
+    ├── contexts/                 # React contexts
+    ├── graphql/                  # GraphQL wrappers for Amplify GraphQL API
+    ├── hooks/                    # Render-less hooks
+    ├── pages/                    # App views
+    └── sockets/                  # Socket.io wrappers for robobot-code-sandbox connections
 ```
 
 ### Component Organization
@@ -155,3 +159,19 @@ robobot/
   ├── AppContext.js             # Contains user authentication state
   └── GamePageContext.js        # State management for the GamePage  
 ```
+
+### GraphQL
+```sh
+├── graphql/
+  ├── graphql-controller.js     # Contains CRUD functions to manipulate database
+  ├── mutations.js              # Auto-generated file
+  ├── queries.js                # Auto-generated file
+  └── subscriptions.js          # Auto-generated file
+```
+`graphql-controller.js` contains many helpful functions for performing CRUD operations on the database. 
+
+The graphQL database schema is defined in
+`amplify/backend/api/databaseAPI/schema.graphql`
+
+Amplify provisions DynamoDB resources based on the `schema.graphql` file. You may see the database tables in the AWS DynamoDB Console
+

@@ -132,9 +132,26 @@ robobot/
   ├── graphql/                  # GraphQL wrappers for Amplify GraphQL API
   ├── hooks/                    # Render-less hooks
   ├── pages/                    # App views
-    ├── ExamplePage/            # An example page component
-      ├── components/           # Components specific to this view only
-      ├── index.js             
-      └── index.css
-  └── sockets                   # Socket.io wrappers for robobot-code-sandbox connections
+  └── sockets/                  # Socket.io wrappers for robobot-code-sandbox connections
+```
+
+### Component Organization
+```sh
+├── components/                 # Shared components go here
+  ├── SharedComponentA/    
+  └── SharedComponentB/     
+├── pages/                 
+  ├── PageA/                
+    └── components/             # Components specific to PageA
+  ├── PageB/               
+    └── components/             # Components specific to PageB
+```
+- Components that are shared by multiple pages go inside the root component/ folder.
+- Every page also has its own components folder for local components
+
+### Contexts
+```sh
+├── contexts/
+  ├── AppContext.js             # Contains user authentication state
+  └── GamePageContext.js        # State management for the GamePage  
 ```

@@ -19,6 +19,7 @@ Robobot has been in active development since Janurary 2020. This project would n
 
 ## Table of Contents
   * [Development Setup](#development-setup)
+    + [Step 0) Configure AWS Amplify](#step-0-prerequisites)
     + [Step 1) Configure AWS Amplify](#step-1-configure-aws-amplify)
     + [Step 2) Set up the app](#step-2-set-up-the-app)
     + [Step 3) Create a Robobot Account](#step-3-create-a-robobot-account)
@@ -38,7 +39,7 @@ Robobot has been in active development since Janurary 2020. This project would n
 
 As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
 
-### Prerequisites
+### Step 0) Prerequisites
 Node.js / NPM: [https://nodejs.org/en/](https://nodejs.org/en/)
 
 ### Step 1) Configure AWS Amplify

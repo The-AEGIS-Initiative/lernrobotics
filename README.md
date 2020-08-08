@@ -12,7 +12,7 @@ See [lernrobotics-game-server](https://github.com/The-AEGIS-Initiative/lernrobot
 ## What is LernRobotics?
 **LernRobotics is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
 
-LernRobotics is open-source project developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
+LernRobotics is an open-source project developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
 
 ## Status
 LernRobotics has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.

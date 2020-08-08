@@ -32,9 +32,9 @@ function StartPage() {
         <div className="text-container">
           <h1 className="heading">Learn Robotics in your Browser</h1>
           <h4 className="description">
-            We provide an educational robotics environment in your browser where
-            you can program your own autonomous robot to accomplish challenging
-            tasks and compete with other robots.
+            We provide an educational robotics environment in the browser where
+            you program your own autonomous robot to carry out challenging tasks
+            and compete with other robots.
           </h4>
           <Fade>
             <Button

@@ -12,7 +12,7 @@ export default function Footer() {
             href={"https://lernrobotics.aegisinitiative.io/"}
             target={"_blank"}
           >
-            LERNrobotics
+            LERNRobotics
           </a>
         </div>
 

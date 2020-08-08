@@ -12,6 +12,7 @@ import {
 
 import { AppContext } from "contexts/AppContext";
 import LoginRegisterModal from "../login_register_modal";
+import LogoName from "../LogoName";
 
 import { Auth } from "aws-amplify";
 
@@ -108,7 +109,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
               data-cy="dashboard-link"
             >
               <Link to={"/"} className={`${styles.ui_font}`}>
-                <div style={{ fontSize: "24px" }}> LERNrobotics </div>
+                <LogoName />
               </Link>
             </Menu.Item>
           )}

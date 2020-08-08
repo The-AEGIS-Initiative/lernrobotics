@@ -103,6 +103,7 @@ where `<change-type>` could be `feature`, `bugfix`, `refactor`, `experimental`, 
 Please follow this PR naming convention:
 ```
 #<ticket-id> <description>
+```
 
 ### Before making changes:
 

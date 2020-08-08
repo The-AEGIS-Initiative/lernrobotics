@@ -21,7 +21,7 @@ function StartPage() {
     if (appContext.isAuth) {
       history.push("/dashboard");
     }
-  }, [appContext.isAuth]);
+  }, [appContext.isAuth, history]);
 
   const navBarColor = "#172437";
 

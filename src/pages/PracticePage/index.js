@@ -1,52 +1,52 @@
-import React, { useRef, useContext, useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { useRef, useContext, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import { Card, Button } from 'antd'
+import { Card, Button } from "antd";
 
-import LoginRegisterModal from 'components/login_register_modal'
-import TopNavBar from 'components/top_nav_bar'
-import LevelCard from 'components/level_card'
-import Footer from 'components/footer'
+import LoginRegisterModal from "components/login_register_modal";
+import TopNavBar from "components/top_nav_bar";
+import LevelCard from "components/level_card";
+import Footer from "components/footer";
 
-import { AppContext } from 'contexts/AppContext'
-import { Auth } from 'aws-amplify'
+import { AppContext } from "contexts/AppContext";
+import { Auth } from "aws-amplify";
 
-import './index.css'
+import "./index.css";
 
-import * as graphqlController from 'graphql/graphql-controller'
+import * as graphqlController from "graphql/graphql-controller";
 
-const { Meta } = Card
+const { Meta } = Card;
 
-function PracticePage () {
-  const appContext = useContext(AppContext)
-  const [contentSchema, setContentSchema] = useState({})
-  const [progress, setProgress] = useState([])
-  const history = useHistory()
+function PracticePage() {
+  const appContext = useContext(AppContext);
+  const [contentSchema, setContentSchema] = useState({});
+  const [progress, setProgress] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     if (!appContext.isAuth) {
-      history.push('/')
+      history.push("/");
     }
 
     // Content schema defines the organization of levels
     const fetchData = async () => {
       const contentData = await graphqlController.getDoc({
-        doc_name: 'ContentSchema'
-      })
+        doc_name: "ContentSchema",
+      });
 
-      const progress = await graphqlController.listProgress()
-      setProgress(progress)
+      const progress = await graphqlController.listProgress();
+      setProgress(progress);
 
       if (contentData.length > 0) {
-        setContentSchema(JSON.parse(contentData[0].doc_content))
+        setContentSchema(JSON.parse(contentData[0].doc_content));
       }
-    }
+    };
 
     // Fetch Content Data
-    fetchData()
-  }, [appContext.isAuth])
+    fetchData();
+  }, [appContext.isAuth, history]);
 
-  const navBarColor = '#172437'
+  const navBarColor = "#172437";
 
   return (
     <div className="home-page" data-cy="practice-levels">
@@ -54,28 +54,28 @@ function PracticePage () {
       <nav>
         <ul
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            paddingTop: '40px'
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            paddingTop: "40px",
           }}
         >
           {contentSchema.modules &&
             contentSchema.modules.map((module) => {
-              console.log(contentSchema)
+              console.log(contentSchema);
               return (
                 <div className="module">
                   <h1 className="module-title" key={module.name}>
-                    {' '}
-                    {module.name}{' '}
+                    {" "}
+                    {module.name}{" "}
                   </h1>
                   {module.levels.map((level) => {
                     var level_progress = progress.find(
                       (o) => o.level_name == level.level_name
-                    )
-                    var stars = 0
+                    );
+                    var stars = 0;
                     if (level_progress != null) {
-                      var stars = level_progress.stars
+                      var stars = level_progress.stars;
                     }
 
                     return (
@@ -87,30 +87,30 @@ function PracticePage () {
                         difficulty={level.difficulty}
                         stars={stars}
                       />
-                    )
+                    );
                   })}
                 </div>
-              )
+              );
             })}
         </ul>
       </nav>
       <LoginRegisterModal />
-      {process.env.NODE_ENV == 'development' && (
+      {process.env.NODE_ENV == "development" && (
         <Button
           onClick={async () => {
             var jsonObject = await graphqlController.getDoc({
-              doc_name: 'test2'
-            })
-            console.log(jsonObject)
+              doc_name: "test2",
+            });
+            console.log(jsonObject);
           }}
         >
-          {' '}
-          User{' '}
+          {" "}
+          User{" "}
         </Button>
       )}
       <Footer />
     </div>
-  )
+  );
 }
 
-export default PracticePage
+export default PracticePage;

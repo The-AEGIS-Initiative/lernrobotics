@@ -1,22 +1,22 @@
-import React from 'react'
-import { Card, Button } from 'antd'
-import { StarOutlined, StarFilled } from '@ant-design/icons'
+import React from "react";
+import { Card, Button } from "antd";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
 
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-import './index.css'
-import styles from 'style.module.css'
+import "./index.css";
+import styles from "style.module.css";
 
-const { Meta } = Card
+const { Meta } = Card;
 
-function LevelCard ({ title, description, link, difficulty, stars }) {
+function LevelCard({ title, description, link, difficulty, stars }) {
   return (
     <div className="level-card" data-cy="level-card">
       <Link to={link}>
         <Card
           style={{
-            width: '600px',
-            height: '175px'
+            width: "600px",
+            height: "175px",
           }}
         >
           <Meta title={title} description={description} />
@@ -43,7 +43,7 @@ function LevelCard ({ title, description, link, difficulty, stars }) {
         </Card>
       </Link>
     </div>
-  )
+  );
 }
 
-export default LevelCard
+export default LevelCard;

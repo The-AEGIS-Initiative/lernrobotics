@@ -28,11 +28,12 @@ Cypress.Commands.add("login", () => {
 const resizeObserverLoopErrRe = /^ResizeObserver loop limit exceeded/;
 
 Cypress.on("uncaught:exception", (err) => {
-  if (resizeObserverLoopErrRe.test(err.message)) {
+  if (err.message.includes('ResizeObserver')) {
     // returning false here prevents Cypress from
     // failing the test
     return false;
   }
+  return true
 });
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

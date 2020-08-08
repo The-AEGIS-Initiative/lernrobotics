@@ -3,6 +3,7 @@
 ![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
 [![](https://img.shields.io/badge/powered--by-AWS_Amplify-brightgreen)](https://aws.amazon.com/amplify/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=The-AEGIS-Initiative_robobot&metric=alert_status)](https://sonarcloud.io/dashboard?id=The-AEGIS-Initiative_robobot)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=The-AEGIS-Initiative_robobot&metric=code_smells)](https://sonarcloud.io/dashboard?id=The-AEGIS-Initiative_robobot)
 
 This repo is the codebase for the main [LernRobotics](https://lernrobotics.aegisinitiative.io/) app. 
 

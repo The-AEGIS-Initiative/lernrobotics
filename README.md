@@ -92,6 +92,18 @@ the free tiers AWS provides.
 
 ## Development Guidelines
 
+### Creating Branches
+Please follow this branch name convention:
+```
+<change-type>/<2-3 word summary>/<ticket-id>
+```
+where `<change-type>` could be `feature`, `bugfix`, `refactor`, `experimental`, or `hotfix`
+
+### Making Pull Requests
+Please follow this PR naming convention:
+```
+#<ticket-id> <description>
+
 ### Before making changes:
 
 *  Run app using:

@@ -108,7 +108,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
               data-cy="dashboard-link"
             >
               <Link to={"/"} className={`${styles.ui_font}`}>
-                <div style={{ fontSize: "24px" }}> LERNRobotics </div>
+                <div style={{ fontSize: "24px" }}> LERNrobotics </div>
               </Link>
             </Menu.Item>
           )}

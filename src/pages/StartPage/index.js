@@ -1,29 +1,29 @@
-import React, { useRef, useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useRef, useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Card, Button } from "antd";
+import Fade from "react-reveal/Fade";
 
-import { Card, Button } from 'antd'
+import LoginRegisterModal from "components/login_register_modal";
+import TopNavBar from "components/top_nav_bar";
+import { AppContext } from "contexts/AppContext";
+import { Auth } from "aws-amplify";
+import SplitContainer from "components/split_container";
+import "./index.css";
+import styles from "style.module.css";
+import Footer from "components/footer";
 
-import LoginRegisterModal from 'components/login_register_modal'
-import TopNavBar from 'components/top_nav_bar'
-import { AppContext } from 'contexts/AppContext'
-import { Auth } from 'aws-amplify'
-import SplitContainer from 'components/split_container'
-import './index.css'
-import styles from 'style.module.css'
-import Footer from 'components/footer'
-
-function StartPage () {
-  const appContext = useContext(AppContext)
-  const [loginVisible, setLoginVisible] = useState(false)
-  const history = useHistory()
+function StartPage() {
+  const appContext = useContext(AppContext);
+  const [loginVisible, setLoginVisible] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (appContext.isAuth) {
-      history.push('/dashboard')
+      history.push("/dashboard");
     }
-  }, [appContext.isAuth])
+  }, [appContext.isAuth]);
 
-  const navBarColor = '#172437'
+  const navBarColor = "#172437";
 
   return (
     <div className="start-page-container" data-cy="start-page">
@@ -36,14 +36,16 @@ function StartPage () {
             you can program your own autonomous robot to accomplish challenging
             tasks and compete with other robots.
           </h4>
-          <Button
-            onClick={() => {
-              setLoginVisible(true)
-            }}
-            className="start-button"
-          >
-            Get Started!
-          </Button>
+          <Fade>
+            <Button
+              onClick={() => {
+                setLoginVisible(true);
+              }}
+              className="start-button"
+            >
+              Get Started!
+            </Button>
+          </Fade>
         </div>
       </div>
       <div className="text-container">
@@ -51,9 +53,9 @@ function StartPage () {
           <div>
             <h2> Learn </h2>
             <p>
-              {' '}
+              {" "}
               Learn applied concepts and algorithms in Robotics in our hands-on
-              educational tutorials.{' '}
+              educational tutorials.{" "}
             </p>
           </div>
           <div>
@@ -81,16 +83,18 @@ function StartPage () {
 
       <div className="text-container">
         <SplitContainer leftSize={9}>
-          <div style={{ width: '100%' }}>
+          <div style={{ width: "100%" }}>
             <h2> Excited? </h2>
-            <Button
-              onClick={() => {
-                setLoginVisible(true)
-              }}
-              className="start-button"
-            >
-              Get Started!
-            </Button>
+            <Fade bottom>
+              <Button
+                onClick={() => {
+                  setLoginVisible(true);
+                }}
+                className="start-button"
+              >
+                Get Started!
+              </Button>
+            </Fade>
           </div>
           <div>
             <img src="/assets/tutorial_page.png" />
@@ -103,7 +107,7 @@ function StartPage () {
         handleCancel={() => setLoginVisible(false)}
       />
     </div>
-  )
+  );
 }
 
-export default StartPage
+export default StartPage;

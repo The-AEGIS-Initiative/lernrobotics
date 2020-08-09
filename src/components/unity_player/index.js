@@ -16,6 +16,17 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
     (useWindowSize().height - 45 - 35) * 1.77777777778
   );
   // console.log(maxWidth);
+
+  const setKeyboardInput = () => {
+    console.log(`Unity capturing keyboard input: ${inFocus}`);
+    if (inFocus) {
+      // unityContent.send only allows sending strings
+      unityContent.send("WebSocket Manager", "SetKeyboardInput", "true");
+    } else {
+      unityContent.send("WebSocket Manager", "SetKeyboardInput", "false");
+    }
+  };
+
   useEffect(() => {
     // When unity webgl has loaded, send assigned port
     // to unity so that unity knows which websocket to connect
@@ -61,15 +72,6 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
     }
   }, [gamePageContext.isLoading, inFocus, setKeyboardInput]);
 
-  const setKeyboardInput = () => {
-    console.log(`Unity capturing keyboard input: ${inFocus}`);
-    if (inFocus) {
-      // unityContent.send only allows sending strings
-      unityContent.send("WebSocket Manager", "SetKeyboardInput", "true");
-    } else {
-      unityContent.send("WebSocket Manager", "SetKeyboardInput", "false");
-    }
-  };
   // console.log(`levelData: ${levelData}`);
   return (
     <div className="unity-player" style={{ maxWidth: `${maxWidth}px` }}>

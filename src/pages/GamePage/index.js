@@ -71,6 +71,22 @@ function GamePage({ unityContent, level }) {
   // console.log(windowSize);
   const { TabPane } = Tabs;
 
+  // Update user progress with specified number of stars
+  const updateProgressStars = async ({ stars }) => {
+    const progressData = await graphqlController.getProgress({
+      username: appContext.username,
+      level_name: level,
+    });
+    console.log(progressData[0].user_code);
+    const res = await graphqlController.upsertProgress({
+      level_name: level,
+      user_code: progressData[0].user_code,
+      default_code: defaultCode,
+      stars: stars,
+    });
+    console.log(res);
+  };
+
   // Fetch level data and user progress from graphql api
   useEffect(() => {
     async function fetchData() {
@@ -323,22 +339,6 @@ function GamePage({ unityContent, level }) {
       console.log(res);
       submitUserCode(gamePageContext.editorContent);
     }
-  };
-
-  // Update user progress with specified number of stars
-  const updateProgressStars = async ({ stars }) => {
-    const progressData = await graphqlController.getProgress({
-      username: appContext.username,
-      level_name: level,
-    });
-    console.log(progressData[0].user_code);
-    const res = await graphqlController.upsertProgress({
-      level_name: level,
-      user_code: progressData[0].user_code,
-      default_code: defaultCode,
-      stars: stars,
-    });
-    console.log(res);
   };
 
   const onboardingSteps = [

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
-import Unity from "react-unity-webgl";
+import Unity, { UnityContent } from "react-unity-webgl";
 import { GamePageContext } from "contexts/GamePageContext";
-import { UnityContent } from "react-unity-webgl";
+
 import { useWindowSize } from "hooks/useWindowSize";
 
 import "./index.css";
@@ -15,11 +15,22 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
   const maxWidth = Math.round(
     (useWindowSize().height - 45 - 35) * 1.77777777778
   );
-  //console.log(maxWidth);
+  // console.log(maxWidth);
+
+  const setKeyboardInput = () => {
+    console.log(`Unity capturing keyboard input: ${inFocus}`);
+    if (inFocus) {
+      // unityContent.send only allows sending strings
+      unityContent.send("WebSocket Manager", "SetKeyboardInput", "true");
+    } else {
+      unityContent.send("WebSocket Manager", "SetKeyboardInput", "false");
+    }
+  };
+
   useEffect(() => {
     // When unity webgl has loaded, send assigned port
     // to unity so that unity knows which websocket to connect
-    //console.log(`levelData: ${levelData}`);
+    // console.log(`levelData: ${levelData}`);
     unityContent.on("Loaded", () => {
       gamePageContext.setLoading(false);
 
@@ -59,18 +70,9 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
     if (!gamePageContext.isLoading) {
       setKeyboardInput();
     }
-  }, [gamePageContext.isLoading, inFocus]);
+  }, [gamePageContext.isLoading, inFocus, setKeyboardInput]);
 
-  const setKeyboardInput = () => {
-    console.log(`Unity capturing keyboard input: ${inFocus}`);
-    if (inFocus) {
-      // unityContent.send only allows sending strings
-      unityContent.send("WebSocket Manager", "SetKeyboardInput", "true");
-    } else {
-      unityContent.send("WebSocket Manager", "SetKeyboardInput", "false");
-    }
-  };
-  //console.log(`levelData: ${levelData}`);
+  // console.log(`levelData: ${levelData}`);
   return (
     <div className="unity-player" style={{ maxWidth: `${maxWidth}px` }}>
       <Unity

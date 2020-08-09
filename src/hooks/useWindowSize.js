@@ -29,7 +29,7 @@ export function useWindowSize() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [getSize, isClient]); // Empty array ensures that effect is only run on mount and unmount
+  }, [getSize, isClient, windowSize.Height, windowSize.width]); // Empty array ensures that effect is only run on mount and unmount
 
   return windowSize;
 }

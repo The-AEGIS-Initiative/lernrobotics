@@ -47,18 +47,18 @@ export class AppContextProvider extends React.Component {
   }
 
   async setAuth() {
-    //checkAuthStatusCache();
+    // checkAuthStatusCache();
 
     await Auth.currentAuthenticatedUser()
       .then((user) => {
-        //console.log(user);
+        // console.log(user);
         const access_token = user.signInUserSession.accessToken;
         var user_group = "user";
         if (access_token.payload["cognito:groups"] != null) {
           user_group = access_token.payload["cognito:groups"][0];
         }
-        //console.log(access_token.payload["cognito:groups"]);
-        //console.log(user_group)
+        // console.log(access_token.payload["cognito:groups"]);
+        // console.log(user_group)
         this.setState({
           isAuth: true,
           username: user.username,
@@ -67,7 +67,7 @@ export class AppContextProvider extends React.Component {
           isLoadingAuth: false,
           authModalVisible: false,
         });
-        //this.setAuthModalVisible(false);
+        // this.setAuthModalVisible(false);
         localStorage.setItem("user", {
           username: user.username,
           user_group: user_group,

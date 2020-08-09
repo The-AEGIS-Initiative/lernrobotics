@@ -85,8 +85,8 @@ function LevelBuilderPage({ unityContent, levelName }) {
     }
 
     fetchData();
-    //console.log(`levelData: ${levelData}`);
-  }, []);
+    // console.log(`levelData: ${levelData}`);
+  }, [levelName]);
 
   useEffect(() => {
     unityContent.on("SaveLevelData", (jsonString) => {

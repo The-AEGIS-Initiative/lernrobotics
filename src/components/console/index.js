@@ -14,13 +14,13 @@ function Console({ height, width, unityContent }) {
       console.log(logs);
       setLogs([...logs, ...log.split("\n")]);
     });
-  }, [logs]);
+  }, [logs, unityContent]);
 
   useEffect(() => {
     unityContent.on("Start", () => {
       setLogs([]);
     });
-  }, []);
+  }, [unityContent]);
 
   function Row({ index, style }) {
     console.log(index);
@@ -28,7 +28,7 @@ function Console({ height, width, unityContent }) {
   }
 
   return (
-    <div style={{ height: `100%`, width: "100%" }} ref={parent}>
+    <div style={{ height: "100%", width: "100%" }} ref={parent}>
       <button
         style={{ position: "absolute", margin: 0, right: 0, zIndex: "1" }}
         className={`${styles.ui_font} ${styles.dark_buttons}`}
@@ -40,7 +40,7 @@ function Console({ height, width, unityContent }) {
       <div
         className="console"
         style={{
-          height: `100%`,
+          height: "100%",
           width: "100%",
           backgroundColor: "black",
         }}
@@ -78,11 +78,11 @@ const filter = (log) => {
   pattern = /WS error: WebSocket error/;
   log = log.replace(pattern, "");
 
-  //Remove "Unloading ? unused Assets to reduce memory usage"
+  // Remove "Unloading ? unused Assets to reduce memory usage"
   pattern = /Unloading \d unused Assets to reduce memory usage/;
   log = log.replace(pattern, "");
 
-  //Remove "Unloading ? Unused Serialized files (Serialized files now loaded: ?)"
+  // Remove "Unloading ? Unused Serialized files (Serialized files now loaded: ?)"
   pattern = /Unloading \d Unused Serialized files \(Serialized files now loaded: \d\)/;
   log = log.replace(pattern, "");
 

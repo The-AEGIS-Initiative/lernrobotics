@@ -38,7 +38,7 @@ export function ProtectedRoute({
           return <Component {...rest} {...props} />;
         } else {
           console.log("Protected route access not authorized ");
-          //history.push("/unauthorized");
+          // history.push("/unauthorized");
           if (redirect) {
             history.push(redirect);
           }

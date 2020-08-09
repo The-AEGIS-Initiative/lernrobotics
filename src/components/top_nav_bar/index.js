@@ -1,8 +1,6 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
-
-import cookie from "react-cookies";
 
 import {
   ArrowLeftOutlined,
@@ -25,7 +23,6 @@ import "./index.css";
  * theme: dark or light
  */
 function TopNavBar({ type, theme, backgroundColor, title }) {
-  const [currentTab, setCurrentTab] = useState("");
   const [loginVisible, setLoginVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(null);
 
@@ -36,7 +33,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
   const { SubMenu } = Menu;
 
   var lineHeight = "4vh";
-  if (type == "main") {
+  if (type === "main") {
     lineHeight = "60px";
   } else {
     lineHeight = "45px";
@@ -45,7 +42,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
   // Handle nav bar clicks
   const handleClick = (click) => {
     console.log("click ", click);
-    if (click.key == "login/register") {
+    if (click.key === "login/register") {
       // Clicking login/register button
       // LoginRegisterModalRef.current.openModal()
       // Auth.federatedSignIn();
@@ -85,7 +82,6 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
       >
         <Menu
           onClick={handleClick}
-          selectedKeys={[currentTab]}
           mode="horizontal"
           theme={theme}
           triggerSubMenuAction="click"
@@ -98,7 +94,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             flex: 1,
             alignContent: "center",
             justifyContent: "flex-end",
-            backgroundColor: backgroundColor,
+            backgroundColor: "#243041",
             lineHeight: lineHeight,
           }}
         >

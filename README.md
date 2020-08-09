@@ -1,22 +1,22 @@
-# LernRobotics
+![LERNRobotics](https://github.com/The-AEGIS-Initiative/lernrobotics/blob/master/public/readme_banner.PNG)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
 [![](https://img.shields.io/badge/powered--by-AWS_Amplify-brightgreen)](https://aws.amazon.com/amplify/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=The-AEGIS-Initiative_robobot&metric=alert_status)](https://sonarcloud.io/dashboard?id=The-AEGIS-Initiative_robobot)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=The-AEGIS-Initiative_robobot&metric=code_smells)](https://sonarcloud.io/dashboard?id=The-AEGIS-Initiative_robobot)
 
-This repo is the codebase for the main [LernRobotics](https://lernrobotics.aegisinitiative.io/) app. 
+This repo is the codebase for the main [LERNRobotics](https://lernrobotics.aegisinitiative.io/) app. 
 
 See [lernrobotics-code-sandbox](https://github.com/The-AEGIS-Initiative/lernrobotics-code-sandbox) for the code-sandbox microservice.
 See [lernrobotics-game-server](https://github.com/The-AEGIS-Initiative/lernrobotics-game-server) for the python robot API.
 
 ## What is LernRobotics?
-**LernRobotics is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
+**LERNRobotics is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
 
-LernRobotics is an open-source project developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
+LERNRobotics is an open-source project developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.
 
 ## Status
-LernRobotics has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
+LERNRobotics has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
 
 ## Table of Contents
   * [Development Setup](#development-setup)

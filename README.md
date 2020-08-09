@@ -1,4 +1,5 @@
 ![LERNRobotics](https://github.com/The-AEGIS-Initiative/lernrobotics/blob/master/public/readme_banner.PNG)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
 [![](https://img.shields.io/badge/powered--by-AWS_Amplify-brightgreen)](https://aws.amazon.com/amplify/)
@@ -10,7 +11,7 @@ This repo is the codebase for the main [LERNRobotics](https://lernrobotics.aegis
 See [lernrobotics-code-sandbox](https://github.com/The-AEGIS-Initiative/lernrobotics-code-sandbox) for the code-sandbox microservice.
 See [lernrobotics-game-server](https://github.com/The-AEGIS-Initiative/lernrobotics-game-server) for the python robot API.
 
-## What is LernRobotics?
+## What is LERNRobotics?
 **LERNRobotics is an educational robotics coding platform** that aims to provide a hands-on robotics experience for everyone without the need for expensive kits or access to resources in schools. All you need to get started is a device with internet (and preferrably a keyboard as well). 
 
 LERNRobotics is an open-source project developed and maintained by [The AEGIS Initiative](https://www.aegisinitiative.io/), a non-profit organization dedicated to making educational resources more accessible for everyone.

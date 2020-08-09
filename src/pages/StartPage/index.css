@@ -14,6 +14,7 @@ html {
   justify-content: center;
   align-items: center;
   background-color: #005b86;
+  background: linear-gradient(180deg,#243041 15%,#334461 70%);
   padding: 50px;
   height: 500px;
 }

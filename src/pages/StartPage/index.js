@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
 import { Card, Button } from "antd";
+import Fade from "react-reveal/Fade";
 
 import LoginRegisterModal from "components/login_register_modal";
 import TopNavBar from "components/top_nav_bar";
@@ -21,7 +21,7 @@ function StartPage() {
     if (appContext.isAuth) {
       history.push("/dashboard");
     }
-  }, [appContext.isAuth]);
+  }, [appContext.isAuth, history]);
 
   const navBarColor = "#172437";
 
@@ -32,18 +32,20 @@ function StartPage() {
         <div className="text-container">
           <h1 className="heading">Learn Robotics in your Browser</h1>
           <h4 className="description">
-            We provide an educational robotics environment in your browser where
-            you can program your own autonomous robot to accomplish challenging
-            tasks and compete with other robots.
+            We provide an educational robotics environment in the browser where
+            you program your own autonomous robot to carry out challenging tasks
+            and compete with other robots.
           </h4>
-          <Button
-            onClick={() => {
-              setLoginVisible(true);
-            }}
-            className="start-button"
-          >
-            Get Started!
-          </Button>
+          <Fade>
+            <Button
+              onClick={() => {
+                setLoginVisible(true);
+              }}
+              className="start-button"
+            >
+              Get Started!
+            </Button>
+          </Fade>
         </div>
       </div>
       <div className="text-container">
@@ -83,14 +85,16 @@ function StartPage() {
         <SplitContainer leftSize={9}>
           <div style={{ width: "100%" }}>
             <h2> Excited? </h2>
-            <Button
-              onClick={() => {
-                setLoginVisible(true);
-              }}
-              className="start-button"
-            >
-              Get Started!
-            </Button>
+            <Fade bottom>
+              <Button
+                onClick={() => {
+                  setLoginVisible(true);
+                }}
+                className="start-button"
+              >
+                Get Started!
+              </Button>
+            </Fade>
           </div>
           <div>
             <img src="/assets/tutorial_page.png" />

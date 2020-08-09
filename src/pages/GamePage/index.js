@@ -68,8 +68,24 @@ function GamePage({ unityContent, level }) {
   const [isSubmitting, setIsSubmitting] = useState(false); // Tracks whether code is currently being submitted
 
   const windowSize = useWindowSize();
-  //console.log(windowSize);
+  // console.log(windowSize);
   const { TabPane } = Tabs;
+
+  // Update user progress with specified number of stars
+  const updateProgressStars = async ({ stars }) => {
+    const progressData = await graphqlController.getProgress({
+      username: appContext.username,
+      level_name: level,
+    });
+    console.log(progressData[0].user_code);
+    const res = await graphqlController.upsertProgress({
+      level_name: level,
+      user_code: progressData[0].user_code,
+      default_code: defaultCode,
+      stars: stars,
+    });
+    console.log(res);
+  };
 
   // Fetch level data and user progress from graphql api
   useEffect(() => {
@@ -208,8 +224,8 @@ function GamePage({ unityContent, level }) {
     fetchData();
     setIsLoading(false);
 
-    //console.log(`levelData: ${levelData}`);
-  }, []);
+    // console.log(`levelData: ${levelData}`);
+  }, [appContext.isAuth, appContext.username, gamePageContext, level]);
 
   useEffect(() => {
     async function updateLeaderboard(gameOverData) {
@@ -271,7 +287,7 @@ function GamePage({ unityContent, level }) {
     unityContent.on("Start", () => {
       console.log("Game started");
     });
-  }, [appContext.username, level, unityContent]);
+  }, [appContext.username, level, unityContent, updateProgressStars]);
 
   useEffect(() => {
     if (!gamePageContext.isLoading && level != "hello_world") {
@@ -302,7 +318,7 @@ function GamePage({ unityContent, level }) {
       { stringSeperator: /\s{1}/ }
     );
     console.log(result.result);
-    //return user_code
+    // return user_code
     return result.result
       .join(" ")
       .split("\\n")
@@ -323,22 +339,6 @@ function GamePage({ unityContent, level }) {
       console.log(res);
       submitUserCode(gamePageContext.editorContent);
     }
-  };
-
-  // Update user progress with specified number of stars
-  const updateProgressStars = async ({ stars }) => {
-    const progressData = await graphqlController.getProgress({
-      username: appContext.username,
-      level_name: level,
-    });
-    console.log(progressData[0].user_code);
-    const res = await graphqlController.upsertProgress({
-      level_name: level,
-      user_code: progressData[0].user_code,
-      default_code: defaultCode,
-      stars: stars,
-    });
-    console.log(res);
   };
 
   const onboardingSteps = [
@@ -414,7 +414,7 @@ function GamePage({ unityContent, level }) {
 
   // Necessary check to ensure unity content waits until level data is fetched
   if (levelData != "") {
-    //console.log(`levelData: ${levelData}`);
+    // console.log(`levelData: ${levelData}`);
     return (
       <div style={{ overflow: "hidden", height: "100vh" }}>
         <div className="game-container">
@@ -486,9 +486,9 @@ function GamePage({ unityContent, level }) {
               >
                 <Leaderboard rankings={rankings} />
               </TabPane>
-              {/**<TabPane tab={<SolutionOutlined data-tip="FAQ"/>} key="5" data-cy="tab" >
+              {/** <TabPane tab={<SolutionOutlined data-tip="FAQ"/>} key="5" data-cy="tab" >
                 <MarkdownViewer markdownText={faq} />
-              </TabPane>*/}
+              </TabPane> */}
               <TabPane
                 tab={<FileTextOutlined data-tip="API" />}
                 key="6"

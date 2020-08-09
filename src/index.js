@@ -24,14 +24,14 @@ if (process.env.NODE_ENV === "development") {
   configUpdate.oauth.redirectSignOut = "http://localhost:3000/";
 }
 
-if (amplify_build_env === "dev") {
+if (amplify_build_env == "dev") {
   configUpdate.oauth.redirectSignIn =
     "https://development-robobot.aegisinitiative.io/";
   configUpdate.oauth.redirectSignOut =
     "https://development-robobot.aegisinitiative.io/";
 }
 
-if (amplify_build_env === "staging") {
+if (amplify_build_env == "staging") {
   configUpdate.oauth.redirectSignIn =
     "https://staging-robobot.aegisinitiative.io/";
   configUpdate.oauth.redirectSignOut =
@@ -51,8 +51,8 @@ console.log(configUpdate);
 Amplify.configure(configUpdate);
 
 const unityContent = new UnityContent(
-  `/unity_webgl/robobot/Build/robobot.json`,
-  `/unity_webgl/robobot/Build/UnityLoader.js`
+  "/unity_webgl/robobot/Build/robobot.json",
+  "/unity_webgl/robobot/Build/UnityLoader.js"
 );
 
 // Configure and initialize socket connection to back-end

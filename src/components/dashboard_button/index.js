@@ -8,7 +8,7 @@ export default function DashboardButton({
   width,
   height,
   content,
-  link,
+  link = "/",
   disabled,
 }) {
   return (

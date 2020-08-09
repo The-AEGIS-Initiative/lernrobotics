@@ -84,5 +84,5 @@ function AdminPage() {
     </div>
   );
 }
-//onclick: link to intermediate page w features, then to the level builder page
+// onclick: link to intermediate page w features, then to the level builder page
 export default AdminPage;

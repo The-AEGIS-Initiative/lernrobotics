@@ -14,13 +14,19 @@ import StartPage from "./pages/StartPage";
 import AdminLevelPage from "./pages/AdminLevelPage";
 import DashboardPage from "./pages/DashboardPage";
 
-import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 
 import { GamePageProvider } from "./contexts/GamePageContext";
 import { AppContext } from "./contexts/AppContext";
 import { LevelBuilderProvider } from "./contexts/LevelBuilderContext";
 import { ProtectedRoute } from "./hooks/auth";
-import { useHistory } from "react-router-dom";
+
 import { stopUserCode } from "./sockets/emit";
 
 import loadScript from "load-script";
@@ -49,7 +55,7 @@ function App({ unityContent }) {
   console.log(appContext.user);
   const history = useHistory();
 
-  //const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     loadScript(MATHJAX_SCRIPT, () => {

@@ -1,8 +1,6 @@
-import React, { useState, useRef, useContext } from "react";
-import { Menu, Divider } from "antd";
+import React, { useState, useContext } from "react";
+import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
-
-import cookie from "react-cookies";
 
 import {
   ArrowLeftOutlined,
@@ -12,6 +10,7 @@ import {
 
 import { AppContext } from "contexts/AppContext";
 import LoginRegisterModal from "../login_register_modal";
+import LogoName from "../LogoName";
 
 import { Auth } from "aws-amplify";
 
@@ -24,7 +23,6 @@ import "./index.css";
  * theme: dark or light
  */
 function TopNavBar({ type, theme, backgroundColor, title }) {
-  const [currentTab, setCurrentTab] = useState("");
   const [loginVisible, setLoginVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(null);
 
@@ -35,7 +33,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
   const { SubMenu } = Menu;
 
   var lineHeight = "4vh";
-  if (type == "main") {
+  if (type === "main") {
     lineHeight = "60px";
   } else {
     lineHeight = "45px";
@@ -44,10 +42,10 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
   // Handle nav bar clicks
   const handleClick = (click) => {
     console.log("click ", click);
-    if (click.key == "login/register") {
+    if (click.key === "login/register") {
       // Clicking login/register button
       // LoginRegisterModalRef.current.openModal()
-      //Auth.federatedSignIn();
+      // Auth.federatedSignIn();
       setLoginVisible(true);
     } else if (click.key === "logout") {
       // Clicking logout button
@@ -84,12 +82,11 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
       >
         <Menu
           onClick={handleClick}
-          selectedKeys={[currentTab]}
           mode="horizontal"
           theme={theme}
           triggerSubMenuAction="click"
           onOpenChange={() => {
-            setMenuOpen(menuOpen ? false : true);
+            setMenuOpen(!menuOpen);
           }}
           style={{
             width: "100vw",
@@ -97,18 +94,18 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             flex: 1,
             alignContent: "center",
             justifyContent: "flex-end",
-            backgroundColor: backgroundColor,
+            backgroundColor: "#243041",
             lineHeight: lineHeight,
           }}
         >
           {type === "main" && (
-            <Menu.Item key="back" style={{ marginRight: "auto" }}>
-              <Link
-                to={"/"}
-                className={`${styles.ui_font}`}
-                data-cy="dashboard-link"
-              >
-                <div style={{ fontSize: "24px" }}> Robobot </div>
+            <Menu.Item
+              key="back"
+              style={{ marginRight: "auto" }}
+              data-cy="dashboard-link"
+            >
+              <Link to={"/"} className={`${styles.ui_font}`}>
+                <LogoName />
               </Link>
             </Menu.Item>
           )}
@@ -138,7 +135,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `spin 0.25s linear forwards`,
+                        animation: "spin 0.25s linear forwards",
                       }}
                     />
                   )}
@@ -146,7 +143,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `reverse-spin 0.25s linear forwards`,
+                        animation: "reverse-spin 0.25s linear forwards",
                       }}
                     />
                   )}
@@ -174,7 +171,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `spin 0.25s linear forwards`,
+                        animation: "spin 0.25s linear forwards",
                       }}
                     />
                   )}
@@ -182,7 +179,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                     <DownOutlined
                       className="menu-arrow"
                       style={{
-                        animation: `reverse-spin 0.25s linear forwards`,
+                        animation: "reverse-spin 0.25s linear forwards",
                       }}
                     />
                   )}
@@ -193,7 +190,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
                 <UserOutlined className="top-nav-bar-submenu-profile-icon" />
                 {appContext.username}
               </div>
-              <Divider className="top-nav-bar-divider" />
+              <div className="top-nav-bar-divider" />
               {appContext.user_group === "admin" && (
                 <Menu.Item key="admin" data-cy="admin-console-link">
                   Admin Console

@@ -29,7 +29,7 @@ export default function DocumentEditorPage({ docName }) {
     }
 
     fetchData();
-  }, []);
+  }, [docName]);
 
   const publishDocument = async () => {
     // Syntax check JSON files

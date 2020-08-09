@@ -5,7 +5,7 @@ import { List, Card } from "antd";
 // renderItem takes in item and returns {title: "", description: ""}
 function LevelList({ onClick, level_list, renderItem }) {
   console.log(level_list);
-  //var level_list = await graphqlController.listLevels();
+  // var level_list = await graphqlController.listLevels();
   console.log("started level list");
   return (
     <div className="grid-list">

@@ -44,7 +44,7 @@ function PracticePage() {
 
     // Fetch Content Data
     fetchData();
-  }, [appContext.isAuth]);
+  }, [appContext.isAuth, history]);
 
   const navBarColor = "#172437";
 

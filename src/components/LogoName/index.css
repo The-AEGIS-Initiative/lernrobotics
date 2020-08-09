@@ -1,0 +1,14 @@
+.logo-name .lern {
+	display: inline-block;
+	font-size: 24px;
+	font-weight: 700;
+	color: #e99e24;
+	font-family: "Open Sans", sans-serif !important;
+}
+
+.logo-name .robotics {
+	display: inline-block;
+	font-size: 24px;
+	color: #e6ffff;
+	font-family: "Open Sans", sans-serif !important;
+}

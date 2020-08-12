@@ -70,11 +70,6 @@ export default function Footer() {
             contact@aegisinitiative.io
           </a>
           <br />
-          <p>
-            AEGIS Initiative <br />
-            1521 Shattuck Ave. #9419 <br />
-            Berkeley, CA, 94709 <br />
-          </p>
           <br />
           <p>
             &copy; Copyright 2020 The AEGIS Initiative <br />

@@ -46,12 +46,13 @@ export const stopUserCode = () => {
 // return true if safe
 // 				false if dangerous
 const checkUserCode = (code) => {
-  return true;
+  
 
   // Matches import statements
   // TODO: Check all import statements and ensure they are either numpy or AEGISCore
-  const regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/;
+  /**const regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/;
 
   const result = regex.exec(code);
-  console.log(result);
+  console.log(result);*/
+  return true;
 };

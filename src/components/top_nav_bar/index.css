@@ -68,3 +68,7 @@
   color: black !important;
   font-family: "Montserrat", sans-serif;
 }
+
+.top-nav-bar .ant-menu-item-selected {
+  background-color: #243041 !important;
+}

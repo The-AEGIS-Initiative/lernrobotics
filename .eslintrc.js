@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    'prettier'
   ],
   globals: {
     Atomics: 'readonly',
@@ -20,10 +21,15 @@ module.exports = {
   },
   plugins: [
     'react',
+    'prettier',
     'unused-imports'
   ],
   rules: {
     "no-unused-vars": "off",
+    "no-console": "off",
+    "react/jsx-filename-extension": [0],
+    "prettier/prettier": "error",
+    "import/no-unresolved": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
         "warn",

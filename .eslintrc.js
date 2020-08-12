@@ -29,6 +29,7 @@ module.exports = {
     "no-console": "off",
     "react/jsx-filename-extension": [0],
     "prettier/prettier": "error",
+    "import/no-cycle": "off",
     "import/no-unresolved": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [

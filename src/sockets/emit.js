@@ -4,6 +4,20 @@
 
 import { socket } from "../index";
 
+// Check for dangerous statements
+// return true if safe
+//        false if dangerous
+const checkUserCode = (code) => {
+  // Matches import statements
+  // TODO: Check all import statements and ensure they are either numpy or AEGISCore
+  /** const regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/;
+
+  const result = regex.exec(code);
+  console.log(result); */
+  console.log(code);
+  return true;
+};
+
 /**
  * Function to submit user code
  * @function
@@ -40,19 +54,4 @@ export const submitUserCode = (userCode) => {
 export const stopUserCode = () => {
   console.log("User code stopped");
   socket.emit("stopUserCode", { client_id: sessionStorage.client_id });
-};
-
-// Check for dangerous statements
-// return true if safe
-// 				false if dangerous
-const checkUserCode = (code) => {
-  
-
-  // Matches import statements
-  // TODO: Check all import statements and ensure they are either numpy or AEGISCore
-  /**const regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/;
-
-  const result = regex.exec(code);
-  console.log(result);*/
-  return true;
 };

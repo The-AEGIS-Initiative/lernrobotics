@@ -1,9 +1,5 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import { Row, Col, Button } from "antd";
-import styles from "style.module.css";
-
-import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-monokai";
 
@@ -37,7 +33,7 @@ function MarkdownEditor({ handleChange, placeholder, mode }) {
           handleChange(e);
         }}
       />
-      <MarkdownViewer markdownText={content}></MarkdownViewer>
+      <MarkdownViewer markdownText={content} />
     </SplitterLayout>
   );
 }

@@ -1,5 +1,5 @@
-import React, { useRef, useContext, useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { Card, Button } from "antd";
 
@@ -9,7 +9,6 @@ import LevelCard from "components/level_card";
 import Footer from "components/footer";
 
 import { AppContext } from "contexts/AppContext";
-import { Auth } from "aws-amplify";
 
 import "./index.css";
 
@@ -70,12 +69,12 @@ function PracticePage() {
                     {module.name}{" "}
                   </h1>
                   {module.levels.map((level) => {
-                    var level_progress = progress.find(
+                    const level_progress = progress.find(
                       (o) => o.level_name == level.level_name
                     );
                     var stars = 0;
                     if (level_progress != null) {
-                      var stars = level_progress.stars;
+                      var { stars } = level_progress;
                     }
 
                     return (
@@ -98,7 +97,7 @@ function PracticePage() {
       {process.env.NODE_ENV == "development" && (
         <Button
           onClick={async () => {
-            var jsonObject = await graphqlController.getDoc({
+            const jsonObject = await graphqlController.getDoc({
               doc_name: "test2",
             });
             console.log(jsonObject);

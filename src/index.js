@@ -1,22 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+import connectSocket from "socket.io-client";
+import { UnityContent } from "react-unity-webgl";
+import Amplify from "aws-amplify";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { AppContextProvider } from "./contexts/AppContext";
-import { BrowserRouter } from "react-router-dom";
 
-import connectSocket from "socket.io-client";
 import { registerInitEvent } from "./sockets/events.js";
 
-import { UnityContent } from "react-unity-webgl";
-
-import Amplify from "aws-amplify";
 import config from "./aws-exports";
 
 // Configure Amplify Environment
 const amplify_build_env = process.env.REACT_APP_BUILD_ENV;
-var configUpdate = config;
+const configUpdate = config;
 
 console.log(`amplify_build_env: ${amplify_build_env}`);
 if (process.env.NODE_ENV === "development") {

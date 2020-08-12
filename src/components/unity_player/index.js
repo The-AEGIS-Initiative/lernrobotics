@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useState } from "react";
-import Unity, { UnityContent } from "react-unity-webgl";
+import React, { useEffect, useContext } from "react";
+import Unity from "react-unity-webgl";
 import { GamePageContext } from "contexts/GamePageContext";
 
 import { useWindowSize } from "hooks/useWindowSize";
@@ -39,12 +39,11 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
         if (game_server_url.match(/.*localhost.*/g)) {
           var url = `ws://${game_server_url}`;
         } else {
-          var subdomain = game_server_url.match(/ec2-\d*-\d*-\d*-\d*/g);
-          var port = game_server_url.match(/\d\d\d\d/g);
+          const subdomain = game_server_url.match(/ec2-\d*-\d*-\d*-\d*/g);
+          const port = game_server_url.match(/\d\d\d\d/g);
           var url = `wss://${subdomain}.aegisinitiative.io:${port}/websocket`;
         }
 
-        console.log(url);
         // console.log(`levelData: ${levelData}`);
 
         if (level_name != "level_builder") {
@@ -70,7 +69,7 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
     if (!gamePageContext.isLoading) {
       setKeyboardInput();
     }
-  }, [gamePageContext.isLoading, inFocus, setKeyboardInput]);
+  }, [gamePageContext.isLoading, inFocus]);
 
   // console.log(`levelData: ${levelData}`);
   return (

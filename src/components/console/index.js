@@ -30,7 +30,12 @@ function Console({ height, width, unityContent }) {
   return (
     <div style={{ height: "100%", width: "100%" }} ref={parent}>
       <button
-        style={{ position: "absolute", margin: 0, right: 0, zIndex: "1" }}
+        style={{
+          position: "absolute",
+          margin: 0,
+          right: 0,
+          zIndex: "1",
+        }}
         className={`${styles.ui_font} ${styles.dark_buttons}`}
         onClick={() => setLogs([])}
       >
@@ -67,7 +72,7 @@ const filter = (log) => {
     return "";
   }
   // Remove line: "(Filename: ./Runtime/Export/Debug/Debug.bindings.h Line: 35)"
-  var pattern = /\n\s\n*\(.*\)/;
+  let pattern = /\n\s\n*\(.*\)/;
   log = log.replace(pattern, "");
 
   // Remove "[UnityCache]" logs

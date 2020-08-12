@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-import { Row, Col } from "antd";
-
-import { useWindowSize } from "hooks/useWindowSize";
+import { Row } from "antd";
 
 // Dynamically allocates remaining vertical screen-space to the dependent component
 // dependent = "top" or dependent = "bottom"
@@ -56,25 +54,24 @@ function HorizontalSplitLayout({
         <div ref={botRef}>{bottom_section}</div>
       </div>
     );
-  } else {
-    return (
-      <div style={{ width: "100%" }}>
-        <div ref={topRef}>
-          <Row>{top_section}</Row>
-        </div>
-        <div ref={botRef}>
-          <Row
-            style={{
-              height: `${dependentHeight}px`,
-              width: `${dependentWidth}px`,
-            }}
-          >
-            {bottom_section}
-          </Row>
-        </div>
-      </div>
-    );
   }
+  return (
+    <div style={{ width: "100%" }}>
+      <div ref={topRef}>
+        <Row>{top_section}</Row>
+      </div>
+      <div ref={botRef}>
+        <Row
+          style={{
+            height: `${dependentHeight}px`,
+            width: `${dependentWidth}px`,
+          }}
+        >
+          {bottom_section}
+        </Row>
+      </div>
+    </div>
+  );
 }
 
 export default HorizontalSplitLayout;

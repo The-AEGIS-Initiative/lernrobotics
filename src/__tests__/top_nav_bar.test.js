@@ -1,7 +1,10 @@
+/* eslint-disable */
+// prettier-ignore
+
 import React from "react";
-import ReactDOM from "react-dom";
+
 import { BrowserRouter } from "react-router-dom";
-import { render, fireEvent, cleanup } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 
 import TopNavBar from "../components/top_nav_bar.js";
 import { AppContext } from "../contexts/AppContext.js";
@@ -11,7 +14,7 @@ afterEach(cleanup);
 function renderNavBar(isAuth, type) {
   return render(
     <BrowserRouter>
-      <AppContext.Provider value={{ isAuth: isAuth }}>
+      <AppContext.Provider value={{ isAuth }}>
         <TopNavBar type={type} />
       </AppContext.Provider>
     </BrowserRouter>

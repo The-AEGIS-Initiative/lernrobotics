@@ -1,4 +1,4 @@
-import React, { Text, useState, useEffect } from "react";
+import React from "react";
 import { Modal } from "antd";
 
 import "./index.css";
@@ -18,9 +18,9 @@ function GameModal({ visible, title, message, handleOk, handleCancel }) {
           handleCancel();
         }}
       >
-        {message.split(";").map((value, index) => {
-          return <p>{value}</p>;
-        })}
+        {message.split(";").map((value, index) => (
+          <p>{value}</p>
+        ))}
       </Modal>
     </div>
   );

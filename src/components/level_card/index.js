@@ -1,11 +1,10 @@
 import React from "react";
-import { Card, Button } from "antd";
+import { Card } from "antd";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
 import "./index.css";
-import styles from "style.module.css";
 
 const { Meta } = Card;
 

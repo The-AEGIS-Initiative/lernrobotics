@@ -1,4 +1,4 @@
-import React, { Text, useState, useEffect } from "react";
+import React from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 
@@ -18,8 +18,8 @@ export default function DashboardButton({
           className="raise"
           disabled={disabled}
           style={{
-            width: width,
-            height: height,
+            width,
+            height,
           }}
         >
           {content}

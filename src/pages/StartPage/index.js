@@ -85,7 +85,7 @@ function StartPage() {
         <SplitContainer leftSize={9}>
           <div style={{ width: "100%" }}>
             <h2> Excited? </h2>
-            <Fade bottom>
+            <Fade>
               <Button
                 onClick={() => {
                   setLoginVisible(true);

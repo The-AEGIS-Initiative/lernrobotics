@@ -24,33 +24,33 @@ function DashboardPage() {
     // Seed Mock Data
     if (
       process.env.NODE_ENV === "development" &&
-      appContext.user_group == "admin"
+      appContext.user_group === "admin"
     ) {
       const fetchData = async () => {
         const levelList = await graphqlController.listLevels();
         console.log(`levellist: ${levelList}`);
 
-        if (levelList == "") {
+        if (levelList === "") {
           // Seed mock data if no existing data
           console.log("Empty level list, seeding mock data");
           fetch("mock_data/mock_practice_levels.json")
             .then((r) => r.json())
-            .then(async (mock_data) => {
+            .then(async (mockData) => {
               const levels = [];
-              await mock_data.map(async (level_data) => {
-                await graphqlController.createLevel(level_data);
-                await graphqlController.createPublishedLevel(level_data);
+              await mockData.map(async (levelData) => {
+                await graphqlController.createLevel(levelData);
+                await graphqlController.createPublishedLevel(levelData);
                 const level = await graphqlController.getPublishedLevel({
-                  level_name: level_data.level_name,
+                  level_name: levelData.level_name,
                 });
                 levels.push({
-                  title: level_data.level_name,
+                  title: levelData.level_name,
                   description: "level description",
                   level_id: level[0].id,
-                  level_name: level_data.level_name,
+                  level_name: levelData.level_name,
                   difficulty: "N/A",
                 });
-                if (levels.Length == mock_data.Length) {
+                if (levels.Length === mockData.Length) {
                   const contentSchema = {
                     modules: [{ name: "Mock Data", levels }],
                   };

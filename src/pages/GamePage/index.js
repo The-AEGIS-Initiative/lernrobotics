@@ -71,7 +71,7 @@ function GamePage({ unityContent, level }) {
   const { TabPane } = Tabs;
 
   // Update user progress with specified number of stars
-  const updateProgressStars = async ({ stars }) => {
+  const updateProgressStars = async ({ newStars }) => {
     const progressData = await graphqlController.getProgress({
       username: appContext.username,
       level_name: level,
@@ -80,19 +80,39 @@ function GamePage({ unityContent, level }) {
       level_name: level,
       user_code: progressData[0].user_code,
       default_code: defaultCode,
-      stars,
+      newStars,
     });
+  };
+
+  const mergeUserCode = (oldDefault, newDefault, userCode) => {
+    /**
+     * Merge Process:
+     * 1) Compute patches from old_default_code and user_code
+     * 2) Apply patches to new_default_code
+     */
+    const result = Diff3.merge(
+      newDefault.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      oldDefault.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      userCode.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
+      { stringSeperator: /\s{1}/ }
+    );
+    // return user_code
+    return result.result
+      .join(" ")
+      .split("\\n")
+      .join("\n")
+      .replace(/\\t/g, "    ");
   };
 
   // Fetch level data and user progress from graphql api
   useEffect(() => {
     async function fetchData() {
       const { username } = appContext;
-      const level_name = level;
+      const levelName = level;
 
       // Fetch level data
       const data = await graphqlController.getPublishedLevel({
-        level_name,
+        levelName,
       });
       if (data.length === 0) {
         // No level data, invalid level!
@@ -127,7 +147,7 @@ function GamePage({ unityContent, level }) {
         const contentData = JSON.parse(contentSchema[0].doc_content);
 
         contentData.modules.map((module) => {
-          const displayName = module.levels.find((o) => o.level_name == level);
+          const displayName = module.levels.find((o) => o.level_name === level);
           if (displayName != null) {
             setLevelDisplayName(displayName.title);
           }
@@ -137,9 +157,9 @@ function GamePage({ unityContent, level }) {
         if (appContext.isAuth) {
           const progressData = await graphqlController.getProgress({
             username,
-            level_name,
+            levelName,
           });
-          if (progressData.length == 0) {
+          if (progressData.length === 0) {
             // No user progress
             setDefaultCode(data[0].default_code);
             gamePageContext.setEditorContent(data[0].default_code);
@@ -147,21 +167,21 @@ function GamePage({ unityContent, level }) {
             // Existing user progress
 
             // Attempt to apply any skeleton code updates to user code.
-            const old_default_code = progressData[0].default_code;
-            const new_default_code = data[0].default_code;
-            const { user_code } = progressData[0];
+            const oldDefaultCode = progressData[0].default_code;
+            const newDefaultCode = data[0].default_code;
+            const userCode = progressData[0].user_code;
 
-            setDefaultCode(new_default_code); // Not what is displayed in editor necessarily. Just storing in state for future use.
+            setDefaultCode(newDefaultCode); // Not what is displayed in editor necessarily. Just storing in state for future use.
 
-            if (old_default_code == null || old_default_code == "") {
+            if (oldDefaultCode === null || oldDefaultCode === "") {
               // Backwards compatibility for when progressData did not contain default_code info
               gamePageContext.setEditorContent(progressData[0].user_code);
             } else {
               // Merge skeleton code changes into user code (prioritizes user changes over default code changes)
               const mergedUserCode = mergeUserCode(
-                old_default_code,
-                new_default_code,
-                user_code
+                oldDefaultCode,
+                newDefaultCode,
+                userCode
               );
               gamePageContext.setEditorContent(mergedUserCode);
             }
@@ -169,7 +189,7 @@ function GamePage({ unityContent, level }) {
 
           // Fetch leaderboard
           const rankingData = await graphqlController.getLevelSubmissions({
-            level_name,
+            levelName,
           });
           setRankings(rankingData);
 
@@ -223,20 +243,20 @@ function GamePage({ unityContent, level }) {
     async function updateLeaderboard(gameOverData) {
       if (gameOverData.isSuccess) {
         // If passed level
-        const cur_submission = await graphqlController.getUserSubmission({
+        const curSubmission = await graphqlController.getUserSubmission({
           username: appContext.username,
           level_name: level,
         });
 
-        if (cur_submission.length > 0) {
+        if (curSubmission.length > 0) {
           // If previous submission exists
-          const score = parseFloat(cur_submission[0].score);
+          const score = parseFloat(curSubmission[0].score);
           if (parseFloat(gameOverData.timeTaken) <= score) {
             // TODO: Handle both maximizing score and minimizing time
             // Update current highscore
             console.log("updating previous entry!");
             await graphqlController.updateUserSubmission({
-              submission_id: cur_submission[0].id,
+              submission_id: curSubmission[0].id,
               score: gameOverData.timeTaken.toString(),
             });
           }
@@ -280,9 +300,9 @@ function GamePage({ unityContent, level }) {
   }, [appContext.username, level, unityContent]);
 
   useEffect(() => {
-    if (!gamePageContext.isLoading && level != "hello_world") {
+    if (!gamePageContext.isLoading && level !== "hello_world") {
       // Intro modal
-      if (modalContent.title != "") {
+      if (modalContent.title !== "") {
         setModalContent({
           visible: true,
           title: modalContent.title,
@@ -291,26 +311,6 @@ function GamePage({ unityContent, level }) {
       }
     }
   }, [gamePageContext.isLoading, level, modalContent.msg, modalContent.title]);
-
-  const mergeUserCode = (old_default, new_default, user_code) => {
-    /**
-     * Merge Process:
-     * 1) Compute patches from old_default_code and user_code
-     * 2) Apply patches to new_default_code
-     */
-    const result = Diff3.merge(
-      new_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
-      old_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
-      user_code.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
-      { stringSeperator: /\s{1}/ }
-    );
-    // return user_code
-    return result.result
-      .join(" ")
-      .split("\\n")
-      .join("\n")
-      .replace(/\\t/g, "    ");
-  };
 
   // Sandbox and execute user code
   // Save user code to backend database
@@ -397,12 +397,12 @@ function GamePage({ unityContent, level }) {
   ];
 
   // Necessary check to ensure unity content waits until level data is fetched
-  if (levelData != "") {
+  if (levelData !== "") {
     // console.log(`levelData: ${levelData}`);
     return (
       <div style={{ overflow: "hidden", height: "100vh" }}>
         <div className="game-container">
-          {!gamePageContext.isLoading && level == "hello_world" && (
+          {!gamePageContext.isLoading && level === "hello_world" && (
             <Joyride steps={onboardingSteps} continuous showSkipButton />
           )}
           <TopNavBar

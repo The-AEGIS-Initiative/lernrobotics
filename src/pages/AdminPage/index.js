@@ -14,7 +14,7 @@ function AdminPage() {
 
   // async lambda here to pull the level list
   useEffect(() => {
-    async function get_data() {
+    async function getData() {
       const jsonObject = await graphqlController.listLevels();
       console.log(jsonObject);
       setLevelList(jsonObject);
@@ -22,7 +22,7 @@ function AdminPage() {
       setDocuments(await graphqlController.listDocs());
     }
 
-    get_data();
+    getData();
   }, []);
 
   return (

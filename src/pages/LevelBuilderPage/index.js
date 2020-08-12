@@ -52,7 +52,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
       const data = await graphqlController.getLevel({
         level_name: levelName,
       });
-      if (data.length == 0) {
+      if (data.length === 0) {
         setLevelData("blank level");
         console.log("New Level!");
       } else {
@@ -95,6 +95,25 @@ function LevelBuilderPage({ unityContent, levelName }) {
     setTabKey(key);
   };
 
+  const pushLevelData = async () => {
+    console.log(levelName);
+    console.log(defaultCodeContent);
+    console.log(appContext.username);
+    console.log(taskContent);
+    console.log(tutorialContent);
+    console.log(levelData);
+    setIsSubmitting(true);
+    const jsonObject = await graphqlController.upsertLevel({
+      level_name: levelName,
+      default_code: defaultCodeContent,
+      creator: appContext.username,
+      task: taskContent,
+      tutorial: tutorialContent,
+      level_data: levelData,
+    });
+    setIsSubmitting(false);
+  };
+
   const publishLevelData = async () => {
     pushLevelData();
     console.log(levelName);
@@ -115,27 +134,8 @@ function LevelBuilderPage({ unityContent, levelName }) {
     setIsSubmitting(false);
   };
 
-  const pushLevelData = async () => {
-    console.log(levelName);
-    console.log(defaultCodeContent);
-    console.log(appContext.username);
-    console.log(taskContent);
-    console.log(tutorialContent);
-    console.log(levelData);
-    setIsSubmitting(true);
-    const jsonObject = await graphqlController.upsertLevel({
-      level_name: levelName,
-      default_code: defaultCodeContent,
-      creator: appContext.username,
-      task: taskContent,
-      tutorial: tutorialContent,
-      level_data: levelData,
-    });
-    setIsSubmitting(false);
-  };
-
   // Necessary check to ensure unity content waits until level data is fetched
-  if (levelData != "") {
+  if (levelData !== "") {
     console.log(`taskContent: ${taskContent}`);
     console.log(`tutorialContent: ${tutorialContent}`);
     return (
@@ -159,7 +159,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
               unityContent={unityContent}
               level_name="level_builder"
               levelData={levelData}
-              inFocus={tabKey == "1"}
+              inFocus={tabKey === "1"}
             />
           </TabPane>
           <TabPane tab="Default Code" key="2">

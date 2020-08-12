@@ -19,7 +19,7 @@ export default function DocumentEditorPage({ docName }) {
       });
       console.log(data);
 
-      if (data.length == 0) {
+      if (data.length === 0) {
         setContent("");
         console.log("New document!");
       } else {
@@ -34,7 +34,7 @@ export default function DocumentEditorPage({ docName }) {
   const publishDocument = async () => {
     // Syntax check JSON files
     // ContentSchema errors will instantly break website. Hardcode a syntax check.
-    if (mode == "json" || docName == "ContentSchema") {
+    if (mode === "json" || docName === "ContentSchema") {
       try {
         JSON.parse(content);
       } catch (e) {

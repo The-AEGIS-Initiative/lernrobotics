@@ -23,13 +23,13 @@ function AdminLevelPage({ levelID }) {
 
   const { Search } = Input;
   useEffect(() => {
-    async function get_data() {
+    async function getData() {
       const jsonObject = await graphqlController.getLevelByID({ id: levelID });
 
       setLevel(jsonObject);
     }
 
-    get_data();
+    getData();
   }, [levelID]);
 
   // TODO : styles.css for admin pages

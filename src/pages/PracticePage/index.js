@@ -33,8 +33,8 @@ function PracticePage() {
         doc_name: "ContentSchema",
       });
 
-      const progress = await graphqlController.listProgress();
-      setProgress(progress);
+      const progressList = await graphqlController.listProgress();
+      setProgress(progressList);
 
       if (contentData.length > 0) {
         setContentSchema(JSON.parse(contentData[0].doc_content));
@@ -69,12 +69,12 @@ function PracticePage() {
                     {module.name}{" "}
                   </h1>
                   {module.levels.map((level) => {
-                    const level_progress = progress.find(
-                      (o) => o.level_name == level.level_name
+                    const levelProgress = progress.find(
+                      (o) => o.level_name === level.level_name
                     );
-                    var stars = 0;
-                    if (level_progress != null) {
-                      var { stars } = level_progress;
+                    let stars = 0;
+                    if (levelProgress != null) {
+                      stars = levelProgress.stars;
                     }
 
                     return (
@@ -94,7 +94,7 @@ function PracticePage() {
         </ul>
       </nav>
       <LoginRegisterModal />
-      {process.env.NODE_ENV == "development" && (
+      {process.env.NODE_ENV === "development" && (
         <Button
           onClick={async () => {
             const jsonObject = await graphqlController.getDoc({

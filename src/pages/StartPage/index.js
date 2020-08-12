@@ -59,7 +59,7 @@ function StartPage() {
             </p>
           </div>
           <div>
-            <img src="/assets/tutorial_page.png" />
+            <img src="/assets/tutorial_page.png" alt="" />
           </div>
         </SplitContainer>
       </div>
@@ -68,7 +68,7 @@ function StartPage() {
         <div className="text-container">
           <SplitContainer leftSize={15}>
             <div>
-              <img src="/assets/game_page.png" />
+              <img src="/assets/game_page.png" alt="" />
             </div>
             <div>
               <h2> Compete </h2>
@@ -97,7 +97,7 @@ function StartPage() {
             </Fade>
           </div>
           <div>
-            <img src="/assets/tutorial_page.png" />
+            <img src="/assets/tutorial_page.png" alt="" />
           </div>
         </SplitContainer>
       </div>

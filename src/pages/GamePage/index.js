@@ -77,14 +77,12 @@ function GamePage({ unityContent, level }) {
       username: appContext.username,
       level_name: level,
     });
-    console.log(progressData[0].user_code);
     const res = await graphqlController.upsertProgress({
       level_name: level,
       user_code: progressData[0].user_code,
       default_code: defaultCode,
       stars: stars,
     });
-    console.log(res);
   };
 
   // Fetch level data and user progress from graphql api
@@ -100,8 +98,6 @@ function GamePage({ unityContent, level }) {
       if (data.length === 0) {
         // No level data, invalid level!
         // history.push("/"); // Redirect to home
-        console.log(level);
-        console.log("wefodi");
       } else {
         // Set task, tutorial, and leveldata content
         setTask(data[0].task);
@@ -115,7 +111,6 @@ function GamePage({ unityContent, level }) {
         data[0].task.split("\n").forEach((line) => {
           if (line !== "") {
             if (i === 1) {
-              console.log(i);
               setModalContent({
                 visible: false,
                 title: "Your Task",
@@ -133,7 +128,6 @@ function GamePage({ unityContent, level }) {
         const contentData = JSON.parse(contentSchema[0].doc_content);
 
         contentData.modules.map((module) => {
-          console.log(module);
           var displayName = module.levels.find((o) => o.level_name == level);
           if (displayName != null) {
             setLevelDisplayName(displayName.title);
@@ -223,9 +217,8 @@ function GamePage({ unityContent, level }) {
 
     fetchData();
     setIsLoading(false);
-
     // console.log(`levelData: ${levelData}`);
-  }, [appContext.isAuth, appContext.username, gamePageContext, level]);
+  }, [appContext.isAuth, appContext.username, level]);
 
   useEffect(() => {
     async function updateLeaderboard(gameOverData) {
@@ -239,7 +232,6 @@ function GamePage({ unityContent, level }) {
         if (cur_submission.length > 0) {
           // If previous submission exists
           const score = parseFloat(cur_submission[0].score);
-          console.log(score);
           if (parseFloat(gameOverData.timeTaken) <= score) {
             // TODO: Handle both maximizing score and minimizing time
             // Update current highscore
@@ -266,7 +258,6 @@ function GamePage({ unityContent, level }) {
       }
     }
     unityContent.on("GameOver", (gameOverJson) => {
-      console.log(gameOverJson);
       const data = JSON.parse(gameOverJson);
       setIsSuccess(data.isSuccess);
 
@@ -287,7 +278,7 @@ function GamePage({ unityContent, level }) {
     unityContent.on("Start", () => {
       console.log("Game started");
     });
-  }, [appContext.username, level, unityContent, updateProgressStars]);
+  }, [appContext.username, level, unityContent]);
 
   useEffect(() => {
     if (!gamePageContext.isLoading && level != "hello_world") {
@@ -308,16 +299,12 @@ function GamePage({ unityContent, level }) {
      * 1) Compute patches from old_default_code and user_code
      * 2) Apply patches to new_default_code
      */
-    console.log(old_default);
-    console.log(new_default);
-    console.log(user_code);
     const result = Diff3.merge(
       new_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
       old_default.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
       user_code.replace(/\n/g, "\\n").replace(/t* {4}/g, "\\t"),
       { stringSeperator: /\s{1}/ }
     );
-    console.log(result.result);
     // return user_code
     return result.result
       .join(" ")
@@ -336,7 +323,6 @@ function GamePage({ unityContent, level }) {
         default_code: defaultCode,
         stars: 0,
       });
-      console.log(res);
       submitUserCode(gamePageContext.editorContent);
     }
   };
@@ -344,7 +330,7 @@ function GamePage({ unityContent, level }) {
   const onboardingSteps = [
     {
       target: "body",
-      title: "Welcome to Robobot!",
+      title: "Welcome to LERNRobotics!",
       content: "Take a quick tour of your robotics workspace!",
       placement: "center",
       disableBeacon: true,
@@ -368,39 +354,38 @@ function GamePage({ unityContent, level }) {
     {
       target: ".ace_scroller",
       title: "Code Editor",
-      content: "Program your robot using this python code editor",
+      content: "Program your robot using python",
       placement: "left",
+      disableBeacon: true,
+    },
+    {
+      target: ".task-tab",
+      title: "Task",
+      content: "This tab contains your task specifications",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: ".tutorial-tab",
+      title: "Tutorial",
+      content:
+        "This tab contains educational material to help you complete the level",
+      placement: "auto",
+      disableBeacon: true,
+    },
+    {
+      target: ".leaderboard-tab",
+      title: "Leaderboard",
+      content:
+        "See how your robot stacks up against robots all around the world",
+      placement: "auto",
       disableBeacon: true,
     },
     {
       target: ".layout-splitter",
       title: "Resize your workspace",
-      content: "You can click and drag this splitter bar",
+      content: "You can click and drag here to resize your workspace",
       placement: "right",
-      disableBeacon: true,
-    },
-    {
-      target: "#tab-2",
-      title: "Task",
-      content:
-        "This tab contains the level specs (the task for your robot to complete)",
-      placement: "auto",
-      disableBeacon: true,
-    },
-    {
-      target: "#tab-3",
-      title: "Tutorial",
-      content:
-        "This tab contains educational resources to help you complete the level",
-      placement: "auto",
-      disableBeacon: true,
-    },
-    {
-      target: "#tab-4",
-      title: "Leaderboard",
-      content:
-        "See how your robot stacks up against robots all around the world",
-      placement: "auto",
       disableBeacon: true,
     },
     {
@@ -466,21 +451,28 @@ function GamePage({ unityContent, level }) {
                 />
               </TabPane>
               <TabPane
-                tab={<BuildOutlined data-tip="Tasks" />}
+                tab={<BuildOutlined data-tip="Tasks" className="task-tab" />}
                 key="2"
                 data-cy="tab"
               >
                 <MarkdownViewer markdownText={task} />
               </TabPane>
               <TabPane
-                tab={<BulbOutlined data-tip="Tutorials" />}
+                tab={
+                  <BulbOutlined data-tip="Tutorials" className="tutorial-tab" />
+                }
                 key="3"
                 data-cy="tab"
               >
                 <MarkdownViewer markdownText={tutorial} />
               </TabPane>
               <TabPane
-                tab={<TrophyOutlined data-tip="Leaderboard" />}
+                tab={
+                  <TrophyOutlined
+                    data-tip="Leaderboard"
+                    className="leaderboard-tab"
+                  />
+                }
                 key="4"
                 data-cy="tab"
               >

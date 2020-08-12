@@ -44,7 +44,6 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
           var url = `wss://${subdomain}.aegisinitiative.io:${port}/websocket`;
         }
 
-        console.log(url);
         // console.log(`levelData: ${levelData}`);
 
         if (level_name != "level_builder") {
@@ -70,7 +69,7 @@ function UnityPlayer({ unityContent, level_name, levelData, inFocus }) {
     if (!gamePageContext.isLoading) {
       setKeyboardInput();
     }
-  }, [gamePageContext.isLoading, inFocus, setKeyboardInput]);
+  }, [gamePageContext.isLoading, inFocus]);
 
   // console.log(`levelData: ${levelData}`);
   return (

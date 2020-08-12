@@ -50,8 +50,8 @@ const checkUserCode = (code) => {
 
   // Matches import statements
   // TODO: Check all import statements and ensure they are either numpy or AEGISCore
-  var regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/;
+  const regex = /(import)\s+(\w+(?:\s*,\s*\w+)*)/;
 
-  var result = regex.exec(code);
+  const result = regex.exec(code);
   console.log(result);
 };

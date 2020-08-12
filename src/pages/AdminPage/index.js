@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Button, Input } from "antd";
+import { Input } from "antd";
 import LevelList from "components/level_list";
 import * as graphqlController from "graphql/graphql-controller";
 
@@ -15,7 +15,7 @@ function AdminPage() {
   // async lambda here to pull the level list
   useEffect(() => {
     async function get_data() {
-      var jsonObject = await graphqlController.listLevels();
+      const jsonObject = await graphqlController.listLevels();
       console.log(jsonObject);
       setLevelList(jsonObject);
 
@@ -39,7 +39,7 @@ function AdminPage() {
           <h2> Game Content </h2>
           <div style={{ marginBottom: "20px" }}>
             <Search
-              placeholder={"level name (no spaces)"}
+              placeholder="level name (no spaces)"
               onSearch={(value) => history.push(`/admin/levelbuilder/${value}`)}
               enterButton="Create Level"
             />
@@ -60,7 +60,7 @@ function AdminPage() {
 
           <div style={{ marginBottom: "20px" }}>
             <Search
-              placeholder={"Enter name for new document"}
+              placeholder="Enter name for new document"
               onSearch={(value) => history.push(`/admin/editor/${value}`)}
               enterButton="Create Document"
             />

@@ -1,24 +1,20 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 
-import { Row, Col, Tabs, Button } from "antd";
+import { Tabs, Button } from "antd";
 
-import Unity from "react-unity-webgl";
-
-import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import "./index.css";
 import styles from "style.module.css";
 
 import { GamePageContext } from "contexts/GamePageContext";
 import { AppContext } from "contexts/AppContext";
-import { LevelBuilderContext } from "contexts/LevelBuilderContext";
 
 import { useWindowSize } from "hooks/useWindowSize";
 
 import TopNavBar from "components/top_nav_bar";
 import MarkdownViewer from "components/markdown_viewer";
 import UnityPlayer from "components/unity_player";
-import HorizontalSplitLayout from "components/horizontal_split_layout";
+
 import CodeEditor from "components/code_editor";
 import MarkdownEditor from "components/markdown_editor";
 
@@ -42,7 +38,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
 
   const { TabPane } = Tabs;
 
-  var playTestMode = false;
+  const playTestMode = false;
 
   const [editMode, setEditMode] = useState(true);
   const [taskContent, setTaskContent] = useState("");
@@ -108,7 +104,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
     console.log(tutorialContent);
     console.log(levelData);
     setIsSubmitting(true);
-    var jsonObject = await graphqlController.upsertPublishedLevel({
+    const jsonObject = await graphqlController.upsertPublishedLevel({
       level_name: levelName,
       default_code: defaultCodeContent,
       creator: appContext.username,
@@ -127,7 +123,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
     console.log(tutorialContent);
     console.log(levelData);
     setIsSubmitting(true);
-    var jsonObject = await graphqlController.upsertLevel({
+    const jsonObject = await graphqlController.upsertLevel({
       level_name: levelName,
       default_code: defaultCodeContent,
       creator: appContext.username,
@@ -153,7 +149,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
         />
 
         <Tabs
-          tabPosition={"left"}
+          tabPosition="left"
           activeKey={tabKey}
           onChange={handleTabChange}
           className="content-container"
@@ -175,7 +171,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
           </TabPane>
           <TabPane tab="Prompt" key="3">
             <MarkdownEditor
-              mode={"markdown"}
+              mode="markdown"
               placeholder={taskContent}
               handleChange={(e) => {
                 setTaskContent(e);
@@ -184,7 +180,7 @@ function LevelBuilderPage({ unityContent, levelName }) {
           </TabPane>
           <TabPane tab="Learn" key="4">
             <MarkdownEditor
-              mode={"markdown"}
+              mode="markdown"
               placeholder={tutorialContent}
               handleChange={(e) => {
                 setTutorialContent(e);
@@ -226,9 +222,8 @@ function LevelBuilderPage({ unityContent, levelName }) {
         </div>
       </div>
     );
-  } else {
-    return null;
   }
+  return null;
 }
 
 export default LevelBuilderPage;

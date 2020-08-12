@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Route, Redirect, useHistory } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, useHistory } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
 
 /**
@@ -21,7 +21,8 @@ export function ProtectedRoute({
         if (appContext.isLoadingAuth) {
           console.log("Still loading auth state");
           return <h1> Loading </h1>;
-        } else if (
+        }
+        if (
           !appContext.isLoadingAuth &&
           appContext.user &&
           protection_level === "admin" &&
@@ -29,21 +30,21 @@ export function ProtectedRoute({
         ) {
           console.log("Admin protected route access authorized ");
           return <Component {...rest} {...props} />;
-        } else if (
+        }
+        if (
           !appContext.isLoadingAuth &&
           appContext.user &&
           protection_level === "user"
         ) {
           console.log("User protected route access authorized ");
           return <Component {...rest} {...props} />;
-        } else {
-          console.log("Protected route access not authorized ");
-          // history.push("/unauthorized");
-          if (redirect) {
-            history.push(redirect);
-          }
-          return <h1> Unauthorized access! </h1>;
         }
+        console.log("Protected route access not authorized ");
+        // history.push("/unauthorized");
+        if (redirect) {
+          history.push(redirect);
+        }
+        return <h1> Unauthorized access! </h1>;
       }}
     />
   );

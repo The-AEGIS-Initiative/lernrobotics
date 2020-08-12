@@ -3,8 +3,9 @@
  * @requires axios
  */
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+
 axios.defaults.withCredentials = false;
 
 /**
@@ -52,7 +53,7 @@ export function postData(url, data, callback) {
     body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
-    }, //, credentials: 'include'
+    }, // , credentials: 'include'
   })
     .then((res) => {
       callback(res);
@@ -71,7 +72,7 @@ export function getData(url, callback) {
       "Content-Type": "application/json",
       // Prevent using cache with out of date response
       "Cache-Control": "no-cache",
-    }, //, credentials: 'include'
+    }, // , credentials: 'include'
   })
     .then((res) => {
       callback(res);

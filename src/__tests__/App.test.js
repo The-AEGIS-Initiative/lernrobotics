@@ -1,7 +1,7 @@
 import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 import App from "../App";
 import { AppContextProvider } from "../contexts/AppContext";
@@ -12,8 +12,8 @@ describe("App routing", () => {
     function () {
       return {
         matches: false,
-        addListener: function () {},
-        removeListener: function () {},
+        addListener() {},
+        removeListener() {},
       };
     };
 
@@ -30,7 +30,7 @@ describe("App routing", () => {
     expect(history.location.pathname).toBe("/");
 
     getAllByText("Start!").forEach((e) => {
-      var path = e.href.match(/\/game\/.*/g);
+      const path = e.href.match(/\/game\/.*/g);
       expect(path).toBeTruthy();
     });
   });

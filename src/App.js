@@ -3,6 +3,8 @@
  */
 import React, { useEffect, useContext } from "react";
 
+import { Switch, Route, useHistory } from "react-router-dom";
+import loadScript from "load-script";
 import GamePage from "./pages/GamePage";
 import PracticePage from "./pages/PracticePage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
@@ -14,22 +16,12 @@ import StartPage from "./pages/StartPage";
 import AdminLevelPage from "./pages/AdminLevelPage";
 import DashboardPage from "./pages/DashboardPage";
 
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
-
 import { GamePageProvider } from "./contexts/GamePageContext";
 import { AppContext } from "./contexts/AppContext";
-import { LevelBuilderProvider } from "./contexts/LevelBuilderContext";
+
 import { ProtectedRoute } from "./hooks/auth";
 
 import { stopUserCode } from "./sockets/emit";
-
-import loadScript from "load-script";
 
 // Configure markdown latex options
 const MATHJAX_SCRIPT =

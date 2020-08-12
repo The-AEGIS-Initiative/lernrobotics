@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
-import { Row, Col, Tabs, Button, Space } from "antd";
+import { Tabs, Button } from "antd";
 
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
@@ -36,7 +36,6 @@ import {
   BuildOutlined,
   BulbOutlined,
   FileTextOutlined,
-  SolutionOutlined,
   TrophyOutlined,
 } from "@ant-design/icons";
 
@@ -81,19 +80,19 @@ function GamePage({ unityContent, level }) {
       level_name: level,
       user_code: progressData[0].user_code,
       default_code: defaultCode,
-      stars: stars,
+      stars,
     });
   };
 
   // Fetch level data and user progress from graphql api
   useEffect(() => {
     async function fetchData() {
-      const username = appContext.username;
+      const { username } = appContext;
       const level_name = level;
 
       // Fetch level data
       const data = await graphqlController.getPublishedLevel({
-        level_name: level_name,
+        level_name,
       });
       if (data.length === 0) {
         // No level data, invalid level!
@@ -107,7 +106,7 @@ function GamePage({ unityContent, level }) {
 
         // Parse task for intro modal
         // Get 2nd non-empty line
-        var i = 0;
+        let i = 0;
         data[0].task.split("\n").forEach((line) => {
           if (line !== "") {
             if (i === 1) {
@@ -128,7 +127,7 @@ function GamePage({ unityContent, level }) {
         const contentData = JSON.parse(contentSchema[0].doc_content);
 
         contentData.modules.map((module) => {
-          var displayName = module.levels.find((o) => o.level_name == level);
+          const displayName = module.levels.find((o) => o.level_name == level);
           if (displayName != null) {
             setLevelDisplayName(displayName.title);
           }
@@ -137,8 +136,8 @@ function GamePage({ unityContent, level }) {
         // Fetch user progress
         if (appContext.isAuth) {
           const progressData = await graphqlController.getProgress({
-            username: username,
-            level_name: level_name,
+            username,
+            level_name,
           });
           if (progressData.length == 0) {
             // No user progress
@@ -150,7 +149,7 @@ function GamePage({ unityContent, level }) {
             // Attempt to apply any skeleton code updates to user code.
             const old_default_code = progressData[0].default_code;
             const new_default_code = data[0].default_code;
-            const user_code = progressData[0].user_code;
+            const { user_code } = progressData[0];
 
             setDefaultCode(new_default_code); // Not what is displayed in editor necessarily. Just storing in state for future use.
 
@@ -170,7 +169,7 @@ function GamePage({ unityContent, level }) {
 
           // Fetch leaderboard
           const rankingData = await graphqlController.getLevelSubmissions({
-            level_name: level_name,
+            level_name,
           });
           setRankings(rankingData);
 
@@ -404,11 +403,7 @@ function GamePage({ unityContent, level }) {
       <div style={{ overflow: "hidden", height: "100vh" }}>
         <div className="game-container">
           {!gamePageContext.isLoading && level == "hello_world" && (
-            <Joyride
-              steps={onboardingSteps}
-              continuous={true}
-              showSkipButton={true}
-            />
+            <Joyride steps={onboardingSteps} continuous showSkipButton />
           )}
           <TopNavBar
             type="sub"
@@ -419,15 +414,12 @@ function GamePage({ unityContent, level }) {
           />
           <SplitterLayout
             className="content-container"
-            percentage={true}
+            percentage
             onDragEnd={() => {
               setResizedflag(!resizedFlag);
             }}
           >
-            <Tabs
-              tabPosition={"left"}
-              style={{ color: "white", width: "100%" }}
-            >
+            <Tabs tabPosition="left" style={{ color: "white", width: "100%" }}>
               <TabPane tab={<RocketOutlined data-tip="Simulation" />} key="1">
                 <HorizontalSplitLayout
                   top_section={
@@ -435,12 +427,12 @@ function GamePage({ unityContent, level }) {
                       unityContent={unityContent}
                       level_name={level}
                       levelData={levelData}
-                      className={"unity_viewport"}
+                      className="unity_viewport"
                     />
                   }
                   bottom_section={
                     <Console
-                      className={"console"}
+                      className="console"
                       style={{ backgroundColor: "black" }}
                       unityContent={unityContent}
                     />
@@ -498,7 +490,7 @@ function GamePage({ unityContent, level }) {
                     gamePageContext.setEditorContent(value)
                   }
                   isLoading={gamePageContext.isLoading}
-                  className={"code-editor"}
+                  className="code-editor"
                 />
               </div>
               <div className="footer-container">
@@ -554,9 +546,8 @@ function GamePage({ unityContent, level }) {
         <ReactTooltip place="right" effect="solid" backgroundColor="#172437" />
       </div>
     );
-  } else {
-    return null;
   }
+  return null;
 }
 
 export default GamePage;

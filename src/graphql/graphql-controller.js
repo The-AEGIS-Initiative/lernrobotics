@@ -11,10 +11,10 @@ export const createProgress = async ({
   const data = await API.graphql(
     graphqlOperation(mutations.createProgress, {
       input: {
-        level_name: level_name,
-        user_code: user_code,
+        level_name,
+        user_code,
         stars: 0,
-        default_code: default_code,
+        default_code,
       },
     })
   );
@@ -28,28 +28,28 @@ export const upsertProgress = async ({
   stars,
 }) => {
   const currentProgress = await getProgress({
-    level_name: level_name,
+    level_name,
   });
 
   if (currentProgress.length == 0) {
     // Create progress
     console.log("Creating now progress");
     await createProgress({
-      level_name: level_name,
-      user_code: user_code,
-      stars: stars,
-      default_code: default_code,
+      level_name,
+      user_code,
+      stars,
+      default_code,
     });
   } else {
     // Update progress
     console.log("Updating existing progress");
-    const id = currentProgress[0].id;
+    const { id } = currentProgress[0];
     await updateProgress({
       id: currentProgress[0].id,
-      user_code: user_code,
+      user_code,
       level_name: currentProgress[0].level_name,
-      stars: stars,
-      default_code: default_code,
+      stars,
+      default_code,
     });
   }
 };
@@ -65,10 +65,10 @@ export const updateProgress = async ({
   const data = await API.graphql(
     graphqlOperation(mutations.updateProgress, {
       input: {
-        id: id,
-        user_code: user_code,
-        default_code: default_code,
-        stars: stars,
+        id,
+        user_code,
+        default_code,
+        stars,
       },
     })
   );
@@ -79,12 +79,12 @@ export const updateProgress = async ({
 // Get current progress
 export const getProgress = async ({ level_name }) => {
   const data = await API.graphql(
-    graphqlOperation(queries.progressByLevelName, { level_name: level_name })
+    graphqlOperation(queries.progressByLevelName, { level_name })
   );
 
-  const dataByDate = data.data.progressByLevelName.items.sort((e1, e2) => {
-    return Date.parse(e2.createdAt) - Date.parse(e1.createdAt);
-  });
+  const dataByDate = data.data.progressByLevelName.items.sort(
+    (e1, e2) => Date.parse(e2.createdAt) - Date.parse(e1.createdAt)
+  );
 
   return dataByDate;
 };
@@ -109,12 +109,12 @@ export const createLevel = async ({
   const data = await API.graphql(
     graphqlOperation(mutations.createLevel, {
       input: {
-        level_name: level_name,
-        default_code: default_code,
-        task: task,
-        creator: creator,
-        tutorial: tutorial,
-        level_data: level_data,
+        level_name,
+        default_code,
+        task,
+        creator,
+        tutorial,
+        level_data,
       },
     })
   );
@@ -132,12 +132,12 @@ export const createPublishedLevel = async ({
   const data = await API.graphql(
     graphqlOperation(mutations.createPublishedLevel, {
       input: {
-        level_name: level_name,
-        creator: creator,
-        default_code: default_code,
-        task: task,
-        tutorial: tutorial,
-        level_data: level_data,
+        level_name,
+        creator,
+        default_code,
+        task,
+        tutorial,
+        level_data,
       },
     })
   );
@@ -154,7 +154,7 @@ export const listLevels = async () => {
 // Get level data
 export const getLevel = async ({ level_name }) => {
   const data = await API.graphql(
-    graphqlOperation(queries.getLevelByName, { level_name: level_name })
+    graphqlOperation(queries.getLevelByName, { level_name })
   );
 
   const levelData = data.data.getLevelByName.items;
@@ -166,7 +166,7 @@ export const getLevel = async ({ level_name }) => {
 export const getLevelAsGuest = async ({ level_name }) => {
   const data = await API.graphql({
     query: queries.getPublishedLevelByName,
-    variables: { level_name: level_name },
+    variables: { level_name },
     authMode: "API_KEY",
   });
 
@@ -175,9 +175,7 @@ export const getLevelAsGuest = async ({ level_name }) => {
 
 // Get level data
 export const getLevelByID = async ({ id }) => {
-  const data = await API.graphql(
-    graphqlOperation(queries.getLevel, { id: id })
-  );
+  const data = await API.graphql(graphqlOperation(queries.getLevel, { id }));
   const levelData = data.data.getLevel;
 
   return levelData;
@@ -187,7 +185,7 @@ export const getLevelByID = async ({ id }) => {
 export const getPublishedLevel = async ({ level_name }) => {
   const data = await API.graphql(
     graphqlOperation(queries.getPublishedLevelByName, {
-      level_name: level_name,
+      level_name,
     })
   );
 
@@ -218,13 +216,13 @@ export const updateLevel = async ({
   const data = await API.graphql(
     graphqlOperation(mutations.updateLevel, {
       input: {
-        id: id,
-        level_name: level_name,
-        default_code: default_code,
-        task: task,
-        creator: creator,
-        tutorial: tutorial,
-        level_data: level_data,
+        id,
+        level_name,
+        default_code,
+        task,
+        creator,
+        tutorial,
+        level_data,
       },
     })
   );
@@ -243,13 +241,13 @@ export const updatePublishedLevel = async ({
   const data = await API.graphql(
     graphqlOperation(mutations.updatePublishedLevel, {
       input: {
-        id: id,
-        level_name: level_name,
-        default_code: default_code,
-        task: task,
-        creator: creator,
-        tutorial: tutorial,
-        level_data: level_data,
+        id,
+        level_name,
+        default_code,
+        task,
+        creator,
+        tutorial,
+        level_data,
       },
     })
   );
@@ -264,27 +262,27 @@ export const upsertLevel = async ({
   tutorial,
   level_data,
 }) => {
-  const level = await getLevel({ level_name: level_name });
+  const level = await getLevel({ level_name });
 
   if (level.length == 0) {
     // No existing level data
     await createLevel({
-      level_name: level_name,
-      creator: creator,
-      default_code: default_code,
-      task: task,
-      tutorial: tutorial,
-      level_data: level_data,
+      level_name,
+      creator,
+      default_code,
+      task,
+      tutorial,
+      level_data,
     });
   } else {
     await updateLevel({
       id: level[0].id,
-      level_name: level_name,
+      level_name,
       creator: level[0].creator,
-      default_code: default_code,
-      task: task,
-      tutorial: tutorial,
-      level_data: level_data,
+      default_code,
+      task,
+      tutorial,
+      level_data,
     });
   }
 };
@@ -298,27 +296,27 @@ export const upsertPublishedLevel = async ({
   tutorial,
   level_data,
 }) => {
-  const level = await getPublishedLevel({ level_name: level_name });
+  const level = await getPublishedLevel({ level_name });
 
   if (level.length == 0) {
     // No existing level data
     await createPublishedLevel({
-      level_name: level_name,
-      creator: creator,
-      default_code: default_code,
-      task: task,
-      tutorial: tutorial,
-      level_data: level_data,
+      level_name,
+      creator,
+      default_code,
+      task,
+      tutorial,
+      level_data,
     });
   } else {
     await updatePublishedLevel({
       id: level[0].id,
-      level_name: level_name,
+      level_name,
       creator: level[0].creator,
-      default_code: default_code,
-      task: task,
-      tutorial: tutorial,
-      level_data: level_data,
+      default_code,
+      task,
+      tutorial,
+      level_data,
     });
   }
 };
@@ -327,9 +325,9 @@ export const createSubmission = async ({ level_name, username, score }) => {
   const submission = await API.graphql(
     graphqlOperation(mutations.createSubmissions, {
       input: {
-        level_name: level_name,
-        username: username,
-        score: score,
+        level_name,
+        username,
+        score,
       },
     })
   );
@@ -340,7 +338,7 @@ export const createSubmission = async ({ level_name, username, score }) => {
 export const getUserSubmission = async ({ level_name, username }) => {
   const submission = await API.graphql(
     graphqlOperation(queries.getLevelSubmissions, {
-      level_name: level_name,
+      level_name,
       filter: { username: { eq: username } },
     })
   );
@@ -350,7 +348,7 @@ export const getUserSubmission = async ({ level_name, username }) => {
 export const getLevelSubmissions = async ({ level_name }) => {
   const submission = await API.graphql(
     graphqlOperation(queries.getLevelSubmissions, {
-      level_name: level_name,
+      level_name,
     })
   );
   return submission.data.getLevelSubmissions.items;
@@ -361,7 +359,7 @@ export const updateUserSubmission = async ({ submission_id, score }) => {
     graphqlOperation(mutations.updateSubmissions, {
       input: {
         id: submission_id,
-        score: score,
+        score,
       },
     })
   );
@@ -371,7 +369,7 @@ export const updateUserSubmission = async ({ submission_id, score }) => {
 export const getDoc = async ({ doc_name }) => {
   const response = await API.graphql(
     graphqlOperation(queries.getDocByName, {
-      doc_name: doc_name,
+      doc_name,
     })
   );
 
@@ -381,7 +379,7 @@ export const getDoc = async ({ doc_name }) => {
 export const getDocAsGuest = async ({ doc_name }) => {
   const data = await API.graphql({
     query: queries.getDocByName,
-    variables: { doc_name: doc_name },
+    variables: { doc_name },
     authMode: "API_KEY",
   });
 
@@ -393,8 +391,8 @@ export const updateDoc = async ({ doc_id, doc_name, doc_content }) => {
     graphqlOperation(mutations.updateMarkdownDocs, {
       input: {
         id: doc_id,
-        doc_name: doc_name,
-        doc_content: doc_content,
+        doc_name,
+        doc_content,
       },
     })
   );
@@ -406,8 +404,8 @@ export const createDoc = async ({ doc_name, doc_content }) => {
   const response = await API.graphql(
     graphqlOperation(mutations.createMarkdownDocs, {
       input: {
-        doc_name: doc_name,
-        doc_content: doc_content,
+        doc_name,
+        doc_content,
       },
     })
   );
@@ -417,22 +415,21 @@ export const createDoc = async ({ doc_name, doc_content }) => {
 
 export const upsertDoc = async ({ doc_name, doc_content }) => {
   const cur_docs = await getDoc({
-    doc_name: doc_name,
+    doc_name,
   });
 
   if (cur_docs.length == 0) {
     // Create new document
     return await createDoc({
-      doc_name: doc_name,
-      doc_content: doc_content,
-    });
-  } else {
-    return await updateDoc({
-      doc_id: cur_docs[0].id,
-      doc_name: doc_name,
-      doc_content: doc_content,
+      doc_name,
+      doc_content,
     });
   }
+  return await updateDoc({
+    doc_id: cur_docs[0].id,
+    doc_name,
+    doc_content,
+  });
 };
 
 export const listDocs = async () => {

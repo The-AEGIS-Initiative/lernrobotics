@@ -1,4 +1,4 @@
-import React, { Text, useState, useEffect } from "react";
+import React from "react";
 import { Table } from "antd";
 
 import "./index.css";

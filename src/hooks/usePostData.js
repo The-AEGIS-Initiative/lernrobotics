@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+
 axios.defaults.withCredentials = true;
 
 /**
@@ -34,7 +35,7 @@ export default function usePostData(url, data) {
   useEffect(() => {
     setLoading(true);
     axios
-      .post(url, data, { headers: headers })
+      .post(url, data, { headers })
       .then((res) => {
         setRes(JSON.stringify(res.data));
         setLoading(false);

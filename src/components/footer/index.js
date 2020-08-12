@@ -9,8 +9,9 @@ export default function Footer() {
           <p className="col-title"> Products </p>
           <a
             className="col-item"
-            href={"https://lernrobotics.aegisinitiative.io/"}
-            target={"_blank"}
+            href="https://lernrobotics.aegisinitiative.io/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             LERNRobotics
           </a>
@@ -20,8 +21,9 @@ export default function Footer() {
           <p className="col-title"> For Developers </p>
           <a
             className="col-item"
-            href={"https://bitbucket.org/theaegisinitiative/"}
-            target={"_blank"}
+            href="https://github.com/The-AEGIS-Initiative/lernrobotics"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Contribute
           </a>
@@ -32,32 +34,47 @@ export default function Footer() {
           <p className="col-title"> The AEGIS Initiative </p>
           <a
             className="col-item"
-            href={"https://www.aegisinitiative.io/who-we-are"}
-            target={"_blank"}
+            href="https://www.aegisinitiative.io/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             About Us
           </a>
-
+          <a
+            className="col-item"
+            href="https://www.aegisinitiative.io/support-us"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Support Us
+          </a>
           <p className="col-item"> Our Team </p>
-          <p className="col-item"> Support Us </p>
         </div>
 
         <div className="column">
           <p className="col-title"> Contact Us </p>
           <a
             className="col-item"
-            href={"https://discord.gg/sDgHhzj"}
-            target={"_blank"}
+            href="https://discord.gg/sDgHhzj"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Our Discord Server
           </a>
           <a
             className="col-item email-link"
-            href={"mailto:contact@aegisinitiative.io"}
-            target={"_blank"}
+            href="mailto:contact@aegisinitiative.io"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             contact@aegisinitiative.io
           </a>
+          <br />
+          <br />
+          <p>
+            &copy; Copyright 2020 The AEGIS Initiative <br />
+            All rights reserved.
+          </p>
         </div>
       </div>
     </div>

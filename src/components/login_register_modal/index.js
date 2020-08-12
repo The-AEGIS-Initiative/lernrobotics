@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import { Modal } from "antd";
 
@@ -8,7 +8,6 @@ import {
   AmplifySignUp,
   AmplifyConfirmSignUp,
 } from "@aws-amplify/ui-react";
-import { Auth } from "aws-amplify";
 
 import { AppContext } from "contexts/AppContext";
 
@@ -26,7 +25,7 @@ function LoginRegisterModal({ onSubmit, visible, handleCancel }) {
       <Modal
         title="Basic Modal"
         visible={visible}
-        maskClosable={true}
+        maskClosable
         onCancel={handleCancel}
         footer={null}
         title=""

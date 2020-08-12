@@ -1,5 +1,5 @@
-import React, { useEffect, useState, createContext } from "react";
-import { getData } from "../components/HttpController";
+import React, { createContext } from "react";
+
 import { Auth, Hub } from "aws-amplify";
 
 export const AppContext = createContext();
@@ -36,14 +36,13 @@ export class AppContextProvider extends React.Component {
         user_group: null,
       });
       return false;
-    } else {
-      this.setState({
-        isAuth: true,
-        username: userCookie.username,
-        user_group: userCookie.user_group,
-      });
-      return true;
     }
+    this.setState({
+      isAuth: true,
+      username: userCookie.username,
+      user_group: userCookie.user_group,
+    });
+    return true;
   }
 
   async setAuth() {
@@ -53,7 +52,7 @@ export class AppContextProvider extends React.Component {
       .then((user) => {
         // console.log(user);
         const access_token = user.signInUserSession.accessToken;
-        var user_group = "user";
+        let user_group = "user";
         if (access_token.payload["cognito:groups"] != null) {
           user_group = access_token.payload["cognito:groups"][0];
         }
@@ -62,15 +61,15 @@ export class AppContextProvider extends React.Component {
         this.setState({
           isAuth: true,
           username: user.username,
-          user: user,
-          user_group: user_group,
+          user,
+          user_group,
           isLoadingAuth: false,
           authModalVisible: false,
         });
         // this.setAuthModalVisible(false);
         localStorage.setItem("user", {
           username: user.username,
-          user_group: user_group,
+          user_group,
         });
       })
       .catch((err) => {

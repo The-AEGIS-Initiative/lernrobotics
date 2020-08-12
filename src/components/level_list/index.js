@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Card } from "antd";
+import { List } from "antd";
 
 // TODO : onclick
 // renderItem takes in item and returns {title: "", description: ""}
@@ -17,7 +17,7 @@ function LevelList({ onClick, level_list, renderItem }) {
             <List.Item.Meta {...renderItem(item)} />
           </List.Item>
         )}
-      ></List>
+      />
     </div>
   );
 }

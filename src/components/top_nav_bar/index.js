@@ -9,12 +9,10 @@ import {
 } from "@ant-design/icons";
 
 import { AppContext } from "contexts/AppContext";
+import { Auth } from "aws-amplify";
+import styles from "style.module.css";
 import LoginRegisterModal from "../login_register_modal";
 import LogoName from "../LogoName";
-
-import { Auth } from "aws-amplify";
-
-import styles from "style.module.css";
 
 import "./index.css";
 
@@ -32,7 +30,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
 
   const { SubMenu } = Menu;
 
-  var lineHeight = "4vh";
+  let lineHeight = "4vh";
   if (type === "main") {
     lineHeight = "60px";
   } else {
@@ -95,7 +93,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
             alignContent: "center",
             justifyContent: "flex-end",
             backgroundColor: "#243041",
-            lineHeight: lineHeight,
+            lineHeight,
           }}
         >
           {type === "main" && (
@@ -104,7 +102,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
               style={{ marginRight: "auto" }}
               data-cy="dashboard-link"
             >
-              <Link to={"/"} className={`${styles.ui_font}`}>
+              <Link to="/" className={`${styles.ui_font}`}>
                 <LogoName />
               </Link>
             </Menu.Item>
@@ -112,7 +110,7 @@ function TopNavBar({ type, theme, backgroundColor, title }) {
 
           {!(type === "main") && (
             <Menu.Item key="back" style={{}}>
-              <Link to={"/practice"} className={`${styles.ui_font}`}>
+              <Link to="/practice" className={`${styles.ui_font}`}>
                 <ArrowLeftOutlined style={{ width: "10px" }} />
               </Link>
             </Menu.Item>

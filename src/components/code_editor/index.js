@@ -1,7 +1,4 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
-
-import { Row, Col, Button } from "antd";
-import styles from "style.module.css";
+import React, { useRef, useState, useEffect } from "react";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
@@ -14,10 +11,6 @@ import "ace-builds/src-noconflict/snippets/python";
 import "ace-builds/src-noconflict/theme-github";
 import "brace/snippets/python";
 import "brace/ext/language_tools";
-
-import { useHotkeys } from "react-hotkeys-hook";
-
-import { submitUserCode, stopUserCode } from "sockets/emit";
 
 /**
  * Code editor
@@ -35,7 +28,7 @@ function CodeEditor({ mode, placeholder, handleChange, isLoading }) {
       editorRef.current.editor.commands.addCommand({
         name: "save",
         bindKey: { win: "Ctrl-S", mac: "Cmd-S" },
-        exec: function (editor) {
+        exec(editor) {
           console.log("captured ctrl+s from editor");
         },
       });
@@ -76,7 +69,7 @@ function CodeEditor({ mode, placeholder, handleChange, isLoading }) {
         showPrintMargin={false}
         fontSize="16px"
         style={{ zIndex: 0, height: "100%", width: "100%" }}
-        enableLiveAutocompletion={true}
+        enableLiveAutocompletion
       />
     </div>
   );

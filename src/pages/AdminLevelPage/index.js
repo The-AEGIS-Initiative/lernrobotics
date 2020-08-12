@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Button, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Input } from "antd";
 import * as graphqlController from "graphql/graphql-controller";
 
 async function changeLevelName(value, level) {
@@ -24,7 +24,7 @@ function AdminLevelPage({ levelID }) {
   const { Search } = Input;
   useEffect(() => {
     async function get_data() {
-      var jsonObject = await graphqlController.getLevelByID({ id: levelID });
+      const jsonObject = await graphqlController.getLevelByID({ id: levelID });
 
       setLevel(jsonObject);
     }
@@ -36,7 +36,11 @@ function AdminLevelPage({ levelID }) {
 
   return (
     <>
-      <h1> Level Management Page: {level.level_name}</h1>
+      <h1>
+        {" "}
+        Level Management Page:
+        {level.level_name}
+      </h1>
       <h2> Edit Level Name: </h2>
       <p>
         Temporarily disabled name change because it will desync the way levels

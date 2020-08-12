@@ -53,40 +53,39 @@ export default function DocumentEditorPage({ docName }) {
 
   if (content == null) {
     return null;
-  } else {
-    return (
-      <div style={{ backgroundColor: "#333333" }}>
-        <Button
-          onClick={() => {
-            setMode("markdown");
-          }}
-          className={`${styles.ui_font} ${styles.dark_buttons}`}
-        >
-          Markdown mode
-        </Button>
-        <Button
-          onClick={() => {
-            setMode("json");
-          }}
-          className={`${styles.ui_font} ${styles.dark_buttons}`}
-        >
-          JSON mode
-        </Button>
-        <MarkdownEditor
-          mode={mode}
-          placeholder={content}
-          handleChange={(e) => setContent(e)}
-        />
-        <Button
-          loading={isSubmitting}
-          onClick={() => {
-            publishDocument();
-          }}
-          className={`${styles.ui_font} ${styles.dark_buttons}`}
-        >
-          Publish Document
-        </Button>
-      </div>
-    );
   }
+  return (
+    <div style={{ backgroundColor: "#333333" }}>
+      <Button
+        onClick={() => {
+          setMode("markdown");
+        }}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
+      >
+        Markdown mode
+      </Button>
+      <Button
+        onClick={() => {
+          setMode("json");
+        }}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
+      >
+        JSON mode
+      </Button>
+      <MarkdownEditor
+        mode={mode}
+        placeholder={content}
+        handleChange={(e) => setContent(e)}
+      />
+      <Button
+        loading={isSubmitting}
+        onClick={() => {
+          publishDocument();
+        }}
+        className={`${styles.ui_font} ${styles.dark_buttons}`}
+      >
+        Publish Document
+      </Button>
+    </div>
+  );
 }

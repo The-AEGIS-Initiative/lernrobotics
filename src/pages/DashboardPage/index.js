@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Row, Col, Space } from "antd";
 import { useHistory } from "react-router-dom";
 
@@ -52,7 +52,7 @@ function DashboardPage() {
                 });
                 if (levels.Length == mock_data.Length) {
                   const contentSchema = {
-                    modules: [{ name: "Mock Data", levels: levels }],
+                    modules: [{ name: "Mock Data", levels }],
                   };
                   console.log(JSON.stringify(contentSchema));
                   await graphqlController.createDoc({
@@ -89,7 +89,7 @@ function DashboardPage() {
                   width="400px"
                   height="200px"
                   content="Compete"
-                  disabled={true}
+                  disabled
                 />
               </Col>
             </Space>
@@ -101,7 +101,7 @@ function DashboardPage() {
                   width="266px"
                   height="200px"
                   content="Leaderboards"
-                  disabled={true}
+                  disabled
                 />
               </Col>
 
@@ -110,7 +110,7 @@ function DashboardPage() {
                   width="252px"
                   height="200px"
                   content="Profile"
-                  disabled={true}
+                  disabled
                 />
               </Col>
               <Col span={8}>
@@ -118,7 +118,7 @@ function DashboardPage() {
                   width="266px"
                   height="200px"
                   content="Settings"
-                  disabled={true}
+                  disabled
                 />
               </Col>
             </Space>

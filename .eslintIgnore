@@ -1,0 +1,6 @@
+**/__tests__/*
+**/app.worker.js
+**/serviceWorker.js
+**/aws-exports.js
+**/setupTests.js
+**/WebWorker.jsgit

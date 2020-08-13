@@ -1,4 +1,4 @@
-![LERNRobotics](https://github.com/The-AEGIS-Initiative/lernrobotics/blob/master/public/readme_banner.PNG)
+[![LERNRobotics](https://github.com/The-AEGIS-Initiative/lernrobotics/blob/master/public/readme_banner.PNG)](https://lernrobotics.aegisinitiative.io)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)

@@ -20,6 +20,7 @@ LERNRobotics is an open-source project developed and maintained by [The AEGIS In
 LERNRobotics has been in active development since Janurary 2020. This project would not be possbile without the contributions of our volunteers and our community. We welcome all contributions that would help push this project forward.
 
 ## Table of Contents
+  * [Getting Started](#getting-started)
   * [Development Setup](#development-setup)
     + [Step 0) Prerequisites](#step-0-prerequisites)
     + [Step 1) Configure AWS Amplify](#step-1-configure-aws-amplify)
@@ -36,7 +37,10 @@ LERNRobotics has been in active development since Janurary 2020. This project wo
     + [Component Organization](#component-organization)
     + [Contexts](#contexts)
     + [GraphQL](#graphql)
-    
+
+## Getting Started
+Check our issue board for [Good First Issues](https://github.com/The-AEGIS-Initiative/lernrobotics/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22). These tasks are a great starting point to get yourself familiarized with the codebase. 
+
 ## Development Setup
 
 As this is an multi-component application built on AWS, the development setup is rather involved. Feel free to reach out to us on our [Discord](https://discord.gg/sDgHhzj) with any questions!
